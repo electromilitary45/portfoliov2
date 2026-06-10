@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     siteName: "Portfolio Derek Leiva",
     images: [
       {
-        url: "https://portfolio.villalobossebas.me/preview.png",
+        url: "/preview.png",
         width: 1200,
         height: 630,
         alt: "Portfolio Derek Leiva - Preview",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     description: "Portfolio personal de desarrollo web, proyectos y blog.",
     images: [
       {
-        url: "https://portfolio.villalobossebas.me/preview.png",
+        url: "/preview.png",
         alt: "Portfolio Derek Leiva - Preview",
       },
     ],
