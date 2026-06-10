@@ -102,3 +102,30 @@ export async function getFeaturedProjects(): Promise<Project[]> {
     return featuredProjects.filter((project) => project.isFeatured);
   }
 }
+
+export async function getProjectBySlug(slug: string): Promise<Project | null> {
+  if (shouldUseMockProjects()) {
+    return featuredProjects.find((project) => project.slug === slug) ?? null;
+  }
+
+  try {
+    const supabase = createSupabaseServerClient();
+
+    const { data, error } = await supabase
+      .from("projects")
+      .select(
+        "id,title,slug,summary,description,status,stack,github_url,demo_url,image_url,image_alt,is_featured,sort_order,published_at,created_at,updated_at",
+      )
+      .eq("status", "published")
+      .eq("slug", slug)
+      .single();
+
+    if (error || !data) {
+      return featuredProjects.find((project) => project.slug === slug) ?? null;
+    }
+
+    return mapProjectRow(data as SupabaseProjectRow);
+  } catch {
+    return featuredProjects.find((project) => project.slug === slug) ?? null;
+  }
+}
