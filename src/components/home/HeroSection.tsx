@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Button } from "@/components/ui/Button";
 
 export function HeroSection() {
     return (
@@ -19,19 +19,10 @@ export function HeroSection() {
                 </p>
 
                 <div className="mt-10 flex flex-wrap gap-4">
-                    <Link
-                        href="/proyectos"
-                        className="bg-neutral-950 px-6 py-3 text-sm font-medium text-white transition hover:bg-red-600"
-                    >
-                        Ver proyectos
-                    </Link>
-
-                    <Link
-                        href="/contactame"
-                        className="border border-neutral-300 px-6 py-3 text-sm font-medium transition hover:border-neutral-950"
-                    >
+                    <Button href="/proyectos">Ver proyectos</Button>
+                    <Button href="/contactame" variant="secondary">
                         Contactarme
-                    </Link>
+                    </Button>
                 </div>
             </div>
 
