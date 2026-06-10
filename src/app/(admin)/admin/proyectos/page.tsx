@@ -3,6 +3,7 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { getAdminProjects } from "@/features/projects/project.service";
 import { CreateProjectModal } from "@/features/projects/components/CreateProjectModal";
 import { DeleteProjectButton } from "@/features/projects/components/DeleteProjectButton";
+import { ProjectStatusAction } from "@/features/projects/components/ProjectStatusAction";
 
 export default async function AdminProjectsPage() {
     const projects = await getAdminProjects();
@@ -96,15 +97,20 @@ export default async function AdminProjectsPage() {
                                 </div>
 
                                 <div className="flex flex-col items-start gap-3 md:items-end">
-                                    <a
-                                        href={`/proyectos/${project.slug}`}
-                                        target="_blank"
-                                        className="text-sm text-neutral-400 underline underline-offset-4 transition hover:text-white"
-                                    >
-                                        Ver público
-                                    </a>
+                                    {project.status === "published" ? (
+                                        <a
+                                            href={`/proyectos/${project.slug}`}
+                                            target="_blank"
+                                            className="text-sm text-neutral-400 underline underline-offset-4 transition hover:text-white"
+                                        >
+                                            Ver público
+                                        </a>
+                                    ) : null}
 
-                                    <DeleteProjectButton projectId={project.id} projectTitle={project.title} />
+                                    <div className="flex flex-wrap gap-2 md:justify-end">
+                                        <ProjectStatusAction project={project} />
+                                        <DeleteProjectButton projectId={project.id} projectTitle={project.title} />
+                                    </div>
                                 </div>
                             </article>
                         ))}
