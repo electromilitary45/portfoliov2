@@ -1,18 +1,17 @@
+import { Container } from "@/components/ui/Container";
+import { PageHeader } from "@/components/ui/PageHeader";
+
 export default function AdminProjectsPage() {
     return (
-        <section className="min-h-screen px-6 py-20 lg:px-12">
-            <p className="font-mono text-sm uppercase tracking-[0.35em] text-red-500">
-                Admin / Proyectos
-            </p>
-
-            <h1 className="mt-6 text-5xl font-semibold tracking-[-0.05em]">
-                Gestionar proyectos.
-            </h1>
-
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-neutral-400">
-                Aquí construiremos el CRUD para crear, editar, publicar y ordenar los
-                proyectos del portfolio.
-            </p>
+        <section className="min-h-screen py-20">
+            <Container className="lg:px-12">
+                <PageHeader
+                    variant="admin"
+                    label="Admin / Proyectos"
+                    title="Gestionar proyectos."
+                    description="Aquí construiremos el CRUD para crear, editar, publicar y ordenar los proyectos del portfolio."
+                />
+            </Container>
         </section>
     );
 }
