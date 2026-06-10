@@ -1,8 +1,9 @@
+import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { getBlogPostBySlug } from "@/features/blog/blog-post.service";
-import Image from "next/image";
 
 type BlogPostDetailPageProps = {
     params: Promise<{
@@ -21,9 +22,16 @@ export default async function BlogPostDetailPage({
     }
 
     return (
-        <main className="min-h-[calc(100vh-161px)] py-20">
+        <main className="min-h-[calc(100vh-161px)] bg-neutral-50 py-20">
             <Container>
                 <article className="mx-auto max-w-3xl">
+                    <Link
+                        href="/blog"
+                        className="mb-10 inline-flex font-mono text-xs uppercase tracking-[0.25em] text-neutral-500 transition hover:text-neutral-950"
+                    >
+                        ← Volver al blog
+                    </Link>
+
                     <SectionLabel>Blog</SectionLabel>
 
                     <h1 className="mt-6 text-5xl font-semibold tracking-[-0.05em] text-neutral-950">
@@ -44,7 +52,7 @@ export default async function BlogPostDetailPage({
                         {post.tags.map((tag) => (
                             <span
                                 key={tag}
-                                className="border border-neutral-200 px-3 py-1 font-mono text-xs uppercase tracking-[0.18em] text-neutral-500"
+                                className="border border-neutral-200 bg-white px-3 py-1 font-mono text-xs uppercase tracking-[0.18em] text-neutral-500"
                             >
                                 {tag}
                             </span>
@@ -64,7 +72,7 @@ export default async function BlogPostDetailPage({
                         </div>
                     ) : null}
 
-                    <div className="mt-16 border-t border-neutral-200 pt-10">
+                    <div className="mt-16 border-t border-neutral-200 bg-white p-8">
                         <p className="leading-8 text-neutral-600">
                             Este es un placeholder para el contenido completo del artículo.
                             Más adelante aquí renderizaremos contenido desde Supabase, MDX o
