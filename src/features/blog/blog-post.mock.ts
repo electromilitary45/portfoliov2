@@ -11,6 +11,8 @@ export const blogPosts: BlogPost[] = [
     readingTime: "4 min",
     publishedAt: "2026-06-10",
     tags: ["Next.js", "Portfolio", "Arquitectura"],
+    coverImageUrl: "/blog/nextjs-portfolio-cover.png",
+    coverImageAlt: "Interfaz minimalista de un portfolio construido con Next.js",
   },
   {
     id: 2,
@@ -22,5 +24,7 @@ export const blogPosts: BlogPost[] = [
     readingTime: "3 min",
     publishedAt: "2026-06-10",
     tags: ["Clean Code", "Frontend"],
+    coverImageUrl: "/blog/features-architecture-cover.png",
+    coverImageAlt: "Diagrama conceptual de una arquitectura frontend por features",
   },
 ];

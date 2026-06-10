@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { getBlogPostBySlug } from "@/features/blog/blog-post.service";
+import Image from "next/image";
 
 type BlogPostDetailPageProps = {
     params: Promise<{
@@ -49,6 +50,19 @@ export default async function BlogPostDetailPage({
                             </span>
                         ))}
                     </div>
+
+                    {post.coverImageUrl ? (
+                        <div className="relative mt-12 aspect-[16/9] overflow-hidden border border-neutral-200 bg-neutral-100">
+                            <Image
+                                src={post.coverImageUrl}
+                                alt={post.coverImageAlt ?? post.title}
+                                fill
+                                className="object-cover"
+                                sizes="(min-width: 768px) 768px, 100vw"
+                                priority
+                            />
+                        </div>
+                    ) : null}
 
                     <div className="mt-16 border-t border-neutral-200 pt-10">
                         <p className="leading-8 text-neutral-600">
