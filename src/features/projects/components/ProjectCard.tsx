@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { Project } from "@/features/projects/project.model";
+import type { Project } from "@/features/projects/project.type";
 
 type ProjectCardProps = {
     project: Project;

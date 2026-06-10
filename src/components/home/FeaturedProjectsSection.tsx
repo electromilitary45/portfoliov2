@@ -2,9 +2,11 @@ import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { ProjectCard } from "@/features/projects/components/ProjectCard";
-import { featuredProjects } from "@/features/projects/project.mock";
+import { getFeaturedProjects } from "@/features/projects/project.service";
 
 export function FeaturedProjectsSection() {
+    const projects = getFeaturedProjects();
+
     return (
         <section className="border-t border-neutral-200 bg-neutral-50 py-24">
             <Container>
@@ -23,7 +25,7 @@ export function FeaturedProjectsSection() {
                 </div>
 
                 <div className="mt-14 grid overflow-hidden border border-neutral-200 bg-neutral-200 md:grid-cols-3">
-                    {featuredProjects.map((project) => (
+                    {projects.map((project) => (
                         <ProjectCard key={project.id} project={project} />
                     ))}
                 </div>
