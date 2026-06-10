@@ -1,25 +1,11 @@
 import { Container } from "@/components/ui/Container";
 import { PageHeader } from "@/components/ui/PageHeader";
+import { getProjects } from "@/features/projects/project.service";
+import { CreateProjectModal } from "@/features/projects/components/CreateProjectModal";
 
-const projectAdminActions = [
-    {
-        number: "01",
-        title: "Crear proyecto",
-        description: "Formulario para registrar título, descripción, stack, imágenes y links.",
-    },
-    {
-        number: "02",
-        title: "Editar contenido",
-        description: "Actualizar información, estado, repositorio, demo e imágenes.",
-    },
-    {
-        number: "03",
-        title: "Publicar",
-        description: "Controlar qué proyectos aparecen en el sitio público.",
-    },
-];
+export default async function AdminProjectsPage() {
+    const projects = await getProjects();
 
-export default function AdminProjectsPage() {
     return (
         <section className="min-h-screen py-20">
             <Container className="lg:px-12">
@@ -27,43 +13,70 @@ export default function AdminProjectsPage() {
                     variant="admin"
                     label="Admin / Proyectos"
                     title="Gestionar proyectos."
-                    description="Aquí construiremos el CRUD para crear, editar, publicar y ordenar los proyectos del portfolio."
+                    description="Crea proyectos para publicarlos en el portfolio, marcarlos como destacados y agregar links a GitHub o demo."
                 />
 
                 <section className="mt-14 border-t border-white/10 pt-10">
-                    <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+                    <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
                         <div>
                             <p className="font-mono text-xs uppercase tracking-[0.25em] text-red-500">
                                 Project CMS
                             </p>
 
                             <h2 className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-white">
-                                Flujo de administración
+                                Administración de proyectos
+                            </h2>
+
+                            <p className="mt-4 max-w-2xl text-sm leading-6 text-neutral-500">
+                                Crea proyectos desde un modal y visualiza los publicados debajo. Luego
+                                agregaremos edición, borrado, filtros por estado e imágenes.
+                            </p>
+                        </div>
+
+                        <CreateProjectModal />
+                    </div>
+                </section>
+
+                <section className="mt-14 border-t border-white/10 pt-10">
+                    <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+                        <div>
+                            <p className="font-mono text-xs uppercase tracking-[0.25em] text-red-500">
+                                Project List
+                            </p>
+
+                            <h2 className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-white">
+                                Proyectos publicados
                             </h2>
                         </div>
 
                         <p className="max-w-md text-sm leading-6 text-neutral-500">
-                            Por ahora esta sección es placeholder. Más adelante se conectará
-                            con Supabase, Storage y server actions.
+                            Por ahora mostramos los proyectos publicados. Luego agregaremos
+                            edición, borrado, filtros por estado y subida de imágenes.
                         </p>
                     </div>
 
-                    <div className="mt-10 grid overflow-hidden border border-white/10 bg-white/10 md:grid-cols-3">
-                        {projectAdminActions.map((action) => (
+                    <div className="mt-10 overflow-hidden border border-white/10">
+                        {projects.map((project) => (
                             <article
-                                key={action.number}
-                                className="min-h-[240px] bg-neutral-950 p-6 transition hover:bg-neutral-900"
+                                key={project.id}
+                                className="grid gap-4 border-b border-white/10 bg-neutral-950 p-5 last:border-b-0 md:grid-cols-[1fr_auto]"
                             >
-                                <p className="font-mono text-sm text-red-500">
-                                    {action.number}
-                                </p>
+                                <div>
+                                    <p className="font-mono text-xs uppercase tracking-[0.2em] text-red-500">
+                                        {project.status}
+                                    </p>
 
-                                <h3 className="mt-6 text-2xl font-semibold tracking-[-0.04em] text-white">
-                                    {action.title}
-                                </h3>
+                                    <h3 className="mt-3 text-xl font-semibold text-white">
+                                        {project.title}
+                                    </h3>
 
-                                <p className="mt-3 text-sm leading-6 text-neutral-400">
-                                    {action.description}
+                                    <p className="mt-2 max-w-2xl text-sm leading-6 text-neutral-400">
+                                        {project.summary}
+                                    </p>
+                                </div>
+
+                                <p className="font-mono text-xs uppercase tracking-[0.2em] text-neutral-500">
+                                    {project.stack.join(" / ")}
                                 </p>
                             </article>
                         ))}
