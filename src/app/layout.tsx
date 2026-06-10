@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Developer Portfolio",
-  description: "Portfolio personal de desarrollo web, proyectos y blog técnico.",
+  title: "Portfolio Derek Leiva",
+  description: "Portfolio personal de desarrollo web, proyectos y blog.",
 };
 
 export default function RootLayout({
