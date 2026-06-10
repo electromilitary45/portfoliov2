@@ -129,3 +129,28 @@ export async function getProjectBySlug(slug: string): Promise<Project | null> {
     return featuredProjects.find((project) => project.slug === slug) ?? null;
   }
 }
+
+export async function getAdminProjects(): Promise<Project[]> {
+  if (shouldUseMockProjects()) {
+    return featuredProjects;
+  }
+
+  try {
+    const supabase = await createSupabaseServerClient();
+
+    const { data, error } = await supabase
+      .from("projects")
+      .select(
+        "id,title,slug,summary,description,status,stack,github_url,demo_url,image_url,image_alt,is_featured,sort_order,published_at,created_at,updated_at",
+      )
+      .order("created_at", { ascending: false });
+
+    if (error || !data) {
+      return featuredProjects;
+    }
+
+    return data.map((row) => mapProjectRow(row as SupabaseProjectRow));
+  } catch {
+    return featuredProjects;
+  }
+}

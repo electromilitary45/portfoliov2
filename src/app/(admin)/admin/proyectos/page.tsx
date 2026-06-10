@@ -1,10 +1,10 @@
 import { Container } from "@/components/ui/Container";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { getProjects } from "@/features/projects/project.service";
+import { getAdminProjects } from "@/features/projects/project.service";
 import { CreateProjectModal } from "@/features/projects/components/CreateProjectModal";
 
 export default async function AdminProjectsPage() {
-    const projects = await getProjects();
+    const projects = await getAdminProjects();
 
     return (
         <section className="min-h-screen py-20">
@@ -45,13 +45,14 @@ export default async function AdminProjectsPage() {
                             </p>
 
                             <h2 className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-white">
-                                Proyectos publicados
+                                Todos los proyectos
                             </h2>
                         </div>
 
                         <p className="max-w-md text-sm leading-6 text-neutral-500">
-                            Por ahora mostramos los proyectos publicados. Luego agregaremos
-                            edición, borrado, filtros por estado y subida de imágenes.
+                            Mostramos todos los proyectos registrados, incluyendo drafts,
+                            publicados y archivados. Luego agregaremos edición, borrado,
+                            filtros por estado y subida de imágenes.
                         </p>
                     </div>
 
@@ -62,7 +63,14 @@ export default async function AdminProjectsPage() {
                                 className="grid gap-4 border-b border-white/10 bg-neutral-950 p-5 last:border-b-0 md:grid-cols-[1fr_auto]"
                             >
                                 <div>
-                                    <p className="font-mono text-xs uppercase tracking-[0.2em] text-red-500">
+                                    <p
+                                        className={`font-mono text-xs uppercase tracking-[0.2em] ${project.status === "published"
+                                                ? "text-red-500"
+                                                : project.status === "draft"
+                                                    ? "text-neutral-400"
+                                                    : "text-neutral-600"
+                                            }`}
+                                    >
                                         {project.status}
                                     </p>
 
