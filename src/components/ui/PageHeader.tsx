@@ -23,7 +23,7 @@ export function PageHeader({
         <header>
             <SectionLabel variant={variant}>{label}</SectionLabel>
 
-            <h1 className="mt-6 max-w-5xl text-5xl font-semibold tracking-[-0.05em]">
+            <h1 className="mt-6 max-w-5xl text-5xl font-semibold tracking-[-0.05em] text-neutral-950">
                 {title}
             </h1>
 
