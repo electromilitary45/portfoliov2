@@ -4,6 +4,7 @@ import { getAdminProjects } from "@/features/projects/project.service";
 import { CreateProjectModal } from "@/features/projects/components/CreateProjectModal";
 import { DeleteProjectButton } from "@/features/projects/components/DeleteProjectButton";
 import { ProjectStatusAction } from "@/features/projects/components/ProjectStatusAction";
+import { EditProjectButton } from "@/features/projects/components/EditProjectButton";
 
 export default async function AdminProjectsPage() {
     const projects = await getAdminProjects();
@@ -108,6 +109,7 @@ export default async function AdminProjectsPage() {
                                     ) : null}
 
                                     <div className="flex flex-wrap gap-2 md:justify-end">
+                                        <EditProjectButton project={project} />
                                         <ProjectStatusAction project={project} />
                                         <DeleteProjectButton projectId={project.id} projectTitle={project.title} />
                                     </div>
