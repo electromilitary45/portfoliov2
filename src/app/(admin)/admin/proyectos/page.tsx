@@ -2,7 +2,7 @@ import { Container } from "@/components/ui/Container";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { getAdminProjects } from "@/features/projects/project.service";
 import { CreateProjectModal } from "@/features/projects/components/CreateProjectModal";
-import { deleteProjectAction } from "@/app/actions/projects/delete-project.action";
+import { DeleteProjectButton } from "@/features/projects/components/DeleteProjectButton";
 
 export default async function AdminProjectsPage() {
     const projects = await getAdminProjects();
@@ -66,10 +66,10 @@ export default async function AdminProjectsPage() {
                                 <div>
                                     <p
                                         className={`font-mono text-xs uppercase tracking-[0.2em] ${project.status === "published"
-                                                ? "text-red-500"
-                                                : project.status === "draft"
-                                                    ? "text-neutral-400"
-                                                    : "text-neutral-600"
+                                            ? "text-red-500"
+                                            : project.status === "draft"
+                                                ? "text-neutral-400"
+                                                : "text-neutral-600"
                                             }`}
                                     >
                                         {project.status}
@@ -104,16 +104,7 @@ export default async function AdminProjectsPage() {
                                         Ver público
                                     </a>
 
-                                    <form action={deleteProjectAction}>
-                                        <input type="hidden" name="projectId" value={project.id} />
-
-                                        <button
-                                            type="submit"
-                                            className="border border-red-500/40 px-4 py-2 text-sm text-red-400 transition hover:border-red-500 hover:bg-red-500 hover:text-white"
-                                        >
-                                            Eliminar
-                                        </button>
-                                    </form>
+                                    <DeleteProjectButton projectId={project.id} projectTitle={project.title} />
                                 </div>
                             </article>
                         ))}
