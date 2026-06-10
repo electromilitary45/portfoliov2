@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Button } from "@/components/ui/Button";
 
 const navItems = [
     { label: "Inicio", href: "/" },
@@ -10,10 +11,13 @@ const navItems = [
 
 export function GuestNavbar() {
     return (
-        <header className="border-b border-neutral-200 bg-neutral-50/80 backdrop-blur">
+        <header className="sticky top-0 z-50 border-b border-neutral-200 bg-white/80 backdrop-blur-xl">
             <nav className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
-                <Link href="/" className="font-mono text-sm uppercase tracking-[0.35em]">
-                    Portfolio
+                <Link href="/" className="group flex items-center gap-3">
+                    <span className="h-3 w-3 rounded-full bg-red-600 transition group-hover:scale-125" />
+                    <span className="font-mono text-sm uppercase tracking-[0.35em] text-neutral-950">
+                        Portfolio
+                    </span>
                 </Link>
 
                 <div className="hidden items-center gap-8 md:flex">
@@ -21,19 +25,16 @@ export function GuestNavbar() {
                         <Link
                             key={item.href}
                             href={item.href}
-                            className="text-sm text-neutral-600 transition hover:text-neutral-950"
+                            className="text-sm text-neutral-500 transition hover:text-neutral-950"
                         >
                             {item.label}
                         </Link>
                     ))}
                 </div>
 
-                <Link
-                    href="/admin"
-                    className="border border-neutral-300 px-4 py-2 text-sm transition hover:border-neutral-950 hover:bg-neutral-950 hover:text-white"
-                >
+                <Button href="/admin" variant="secondary" className="hidden md:inline-flex">
                     Admin
-                </Link>
+                </Button>
             </nav>
         </header>
     );
