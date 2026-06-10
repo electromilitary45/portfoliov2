@@ -15,7 +15,7 @@ export default async function BlogPostDetailPage({
     params,
 }: BlogPostDetailPageProps) {
     const { slug } = await params;
-    const post = getBlogPostBySlug(slug);
+    const post = await getBlogPostBySlug(slug);
 
     if (!post) {
         notFound();
@@ -74,9 +74,8 @@ export default async function BlogPostDetailPage({
 
                     <div className="mt-16 border-t border-neutral-200 bg-white p-8">
                         <p className="leading-8 text-neutral-600">
-                            Este es un placeholder para el contenido completo del artículo.
-                            Más adelante aquí renderizaremos contenido desde Supabase, MDX o
-                            un editor del admin.
+                            {post.content ??
+                                "Este es un placeholder para el contenido completo del artículo. Más adelante aquí renderizaremos contenido desde Supabase, MDX o un editor del admin."}
                         </p>
                     </div>
                 </article>

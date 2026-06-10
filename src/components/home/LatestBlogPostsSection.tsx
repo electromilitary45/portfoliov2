@@ -4,8 +4,8 @@ import { SectionLabel } from "@/components/ui/SectionLabel";
 import { BlogPostCard } from "@/features/blog/components/BlogPostCard";
 import { getPublishedBlogPosts } from "@/features/blog/blog-post.service";
 
-export function LatestBlogPostsSection() {
-    const posts = getPublishedBlogPosts().slice(0, 2);
+export async function LatestBlogPostsSection() {
+    const posts = (await getPublishedBlogPosts()).slice(0, 2);
 
     return (
         <section className="border-t border-neutral-200 bg-white py-24">

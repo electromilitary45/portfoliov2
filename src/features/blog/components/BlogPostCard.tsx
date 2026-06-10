@@ -9,7 +9,7 @@ type BlogPostCardProps = {
 export function BlogPostCard({ post }: BlogPostCardProps) {
     return (
         <Link
-            href={`/blog/${post.slug}`}
+            href={post.href}
             className="group block overflow-hidden border border-neutral-200 bg-white transition hover:border-neutral-950 hover:bg-neutral-950"
         >
             {post.coverImageUrl ? (
