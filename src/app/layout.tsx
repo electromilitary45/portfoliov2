@@ -16,6 +16,34 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Portfolio Derek Leiva",
   description: "Portfolio personal de desarrollo web, proyectos y blog.",
+  openGraph: {
+    title: "Portfolio Derek Leiva",
+    description: "Portfolio personal de desarrollo web, proyectos y blog.",
+    url: "https://portfolio.villalobossebas.me/",
+    siteName: "Portfolio Derek Leiva",
+    images: [
+      {
+        url: "https://portfolio.villalobossebas.me/preview.png",
+        width: 1200,
+        height: 630,
+        alt: "Portfolio Derek Leiva - Preview",
+      },
+    ],
+    locale: "es_ES",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Portfolio Derek Leiva",
+    description: "Portfolio personal de desarrollo web, proyectos y blog.",
+    images: [
+      {
+        url: "https://portfolio.villalobossebas.me/preview.png",
+        alt: "Portfolio Derek Leiva - Preview",
+      },
+    ],
+  },
+  
 };
 
 export default function RootLayout({
