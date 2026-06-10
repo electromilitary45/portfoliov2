@@ -1,5 +1,7 @@
+import Image from "next/image";
 import { updateProjectAction } from "@/app/actions/projects/update-project.action";
 import type { Project } from "@/features/projects/project.type";
+
 
 type EditProjectFormProps = {
     project: Project;
@@ -107,41 +109,70 @@ export function EditProjectForm({ project }: EditProjectFormProps) {
             </div>
 
             {/* Image Upload */}
-            <div className="grid gap-5 md:grid-cols-2">
-                <div>
-                    <label
-                        className="text-sm text-neutral-300"
-                        htmlFor={`imageFile-${project.id}`}
-                    >
-                        Reemplazar imagen
-                    </label>
-                    <input
-                        id={`imageFile-${project.id}`}
-                        name="imageFile"
-                        type="file"
-                        accept="image/*"
-                        className="mt-2 w-full border border-white/10 bg-neutral-900 px-4 py-3 text-sm text-neutral-300 outline-none transition file:mr-4 file:border-0 file:bg-white file:px-4 file:py-2 file:text-sm file:font-medium file:text-neutral-950 focus:border-red-500"
-                    />
-                    {project.imageUrl ? (
-                        <p className="mt-2 text-xs text-neutral-500">
-                            Ya existe una imagen guardada. Si subes otra, se reemplazará la URL.
-                        </p>
-                    ) : null}
-                </div>
+            <div className="space-y-4">
+                {project.imageUrl ? (
+                    <div>
+                        <p className="text-sm text-neutral-300">Imagen actual</p>
 
-                <div>
-                    <label
-                        className="text-sm text-neutral-300"
-                        htmlFor={`imageAlt-${project.id}`}
-                    >
-                        Image Alt
-                    </label>
-                    <input
-                        id={`imageAlt-${project.id}`}
-                        name="imageAlt"
-                        defaultValue={project.imageAlt ?? ""}
-                        className="mt-2 w-full border border-white/10 bg-neutral-900 px-4 py-3 text-white outline-none transition focus:border-red-500"
-                    />
+                        <div className="relative mt-2 aspect-[16/9] overflow-hidden border border-white/10 bg-neutral-900">
+                            <Image
+                                src={project.imageUrl}
+                                alt={project.imageAlt ?? project.title}
+                                fill
+                                className="object-cover"
+                                sizes="(min-width: 768px) 640px, 100vw"
+                            />
+                        </div>
+
+                        <p className="mt-2 break-all text-xs text-neutral-500">
+                            {project.imageUrl}
+                        </p>
+                    </div>
+                ) : (
+                    <div className="border border-dashed border-white/10 bg-neutral-900/60 p-4">
+                        <p className="text-sm text-neutral-400">
+                            Este proyecto todavía no tiene imagen.
+                        </p>
+                    </div>
+                )}
+
+                <div className="grid gap-5 md:grid-cols-2">
+                    <div>
+                        <label
+                            className="text-sm text-neutral-300"
+                            htmlFor={`imageFile-${project.id}`}
+                        >
+                            Reemplazar imagen
+                        </label>
+                        <input
+                            id={`imageFile-${project.id}`}
+                            name="imageFile"
+                            type="file"
+                            accept="image/*"
+                            className="mt-2 w-full border border-white/10 bg-neutral-900 px-4 py-3 text-sm text-neutral-300 outline-none transition file:mr-4 file:border-0 file:bg-white file:px-4 file:py-2 file:text-sm file:font-medium file:text-neutral-950 focus:border-red-500"
+                        />
+                        {project.imageUrl ? (
+                            <p className="mt-2 text-xs text-neutral-500">
+                                Si subes otra imagen, se reemplazará la URL guardada.
+                            </p>
+                        ) : null}
+                    </div>
+
+                    <div>
+                        <label
+                            className="text-sm text-neutral-300"
+                            htmlFor={`imageAlt-${project.id}`}
+                        >
+                            Texto alternativo
+                        </label>
+                        <input
+                            id={`imageAlt-${project.id}`}
+                            name="imageAlt"
+                            defaultValue={project.imageAlt ?? ""}
+                            className="mt-2 w-full border border-white/10 bg-neutral-900 px-4 py-3 text-white outline-none transition focus:border-red-500"
+                            placeholder="Screenshot del proyecto..."
+                        />
+                    </div>
                 </div>
             </div>
 
