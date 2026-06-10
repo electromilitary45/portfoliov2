@@ -1,6 +1,7 @@
 import { HeroSection } from "@/components/home/HeroSection";
 import { HomeHighlights } from "@/components/home/HomeHighlights";
 import { TechStackSection } from "@/components/home/TechStackSection";
+import { FeaturedProjectsSection } from "@/components/home/FeaturedProjectsSection";
 
 export default function HomePage() {
   return (
@@ -8,6 +9,7 @@ export default function HomePage() {
       <HeroSection />
       <HomeHighlights />
       <TechStackSection />
+      <FeaturedProjectsSection />
     </main>
   );
 }
