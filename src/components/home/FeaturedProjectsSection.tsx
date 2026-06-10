@@ -4,8 +4,8 @@ import { SectionLabel } from "@/components/ui/SectionLabel";
 import { ProjectCard } from "@/features/projects/components/ProjectCard";
 import { getFeaturedProjects } from "@/features/projects/project.service";
 
-export function FeaturedProjectsSection() {
-    const projects = getFeaturedProjects();
+export async function FeaturedProjectsSection() {
+    const projects = await getFeaturedProjects();
 
     return (
         <section className="border-t border-neutral-200 bg-neutral-50 py-24">

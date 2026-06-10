@@ -3,8 +3,8 @@ import { PageHeader } from "@/components/ui/PageHeader";
 import { ProjectCard } from "@/features/projects/components/ProjectCard";
 import { getProjects } from "@/features/projects/project.service";
 
-export default function ProjectsPage() {
-    const projects = getProjects();
+export default async function ProjectsPage() {
+    const projects = await getProjects();
 
     return (
         <main className="min-h-[calc(100vh-161px)] bg-neutral-50 py-20">
@@ -28,8 +28,9 @@ export default function ProjectsPage() {
                         </div>
 
                         <p className="max-w-md text-sm leading-6 text-neutral-500">
-                            Por ahora estos datos son mock. Más adelante vendrán desde
-                            Supabase y podrán administrarse desde el panel privado.
+                            Estos proyectos vienen desde Supabase cuando las variables de
+                            entorno están configuradas; en local puede usarse mock como
+                            respaldo.
                         </p>
                     </div>
 
