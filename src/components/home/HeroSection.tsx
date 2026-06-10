@@ -8,7 +8,7 @@ export function HeroSection() {
                     Developer Portfolio
                 </p>
 
-                <h1 className="mt-8 max-w-5xl text-5xl font-semibold tracking-[-0.06em] text-neutral-950 md:text-7xl">
+                <h1 className="mt-8 max-w-5xl text-5xl font-semibold tracking-[-0.06em] text-neutral-200 md:text-7xl">
                     Construyo interfaces limpias, rápidas y mantenibles.
                 </h1>
 
