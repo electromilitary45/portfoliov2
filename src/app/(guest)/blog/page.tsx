@@ -1,10 +1,5 @@
-import { GuestFooter } from "@/components/layout/GuestFooter";
-import { GuestNavbar } from "@/components/layout/GuestNavbar";
-
 export default function BlogPage() {
     return (
-        <>
-            <GuestNavbar />
             <main className="mx-auto min-h-[calc(100vh-161px)] max-w-7xl px-6 py-20">
                 <p className="font-mono text-sm uppercase tracking-[0.35em] text-red-600">
                     Blog
@@ -17,7 +12,5 @@ export default function BlogPage() {
                     slugs, contenido editable y vista individual de cada artículo.
                 </p>
             </main>
-            <GuestFooter />
-        </>
     );
 }
