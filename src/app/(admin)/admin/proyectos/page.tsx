@@ -2,6 +2,7 @@ import { Container } from "@/components/ui/Container";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { getAdminProjects } from "@/features/projects/project.service";
 import { CreateProjectModal } from "@/features/projects/components/CreateProjectModal";
+import { deleteProjectAction } from "@/app/actions/projects/delete-project.action";
 
 export default async function AdminProjectsPage() {
     const projects = await getAdminProjects();
@@ -81,11 +82,39 @@ export default async function AdminProjectsPage() {
                                     <p className="mt-2 max-w-2xl text-sm leading-6 text-neutral-400">
                                         {project.summary}
                                     </p>
+
+                                    <div className="mt-4 flex flex-wrap gap-2">
+                                        {project.stack.map((tech) => (
+                                            <span
+                                                key={tech}
+                                                className="border border-white/10 px-3 py-1 font-mono text-xs uppercase tracking-[0.18em] text-neutral-500"
+                                            >
+                                                {tech}
+                                            </span>
+                                        ))}
+                                    </div>
                                 </div>
 
-                                <p className="font-mono text-xs uppercase tracking-[0.2em] text-neutral-500">
-                                    {project.stack.join(" / ")}
-                                </p>
+                                <div className="flex flex-col items-start gap-3 md:items-end">
+                                    <a
+                                        href={`/proyectos/${project.slug}`}
+                                        target="_blank"
+                                        className="text-sm text-neutral-400 underline underline-offset-4 transition hover:text-white"
+                                    >
+                                        Ver público
+                                    </a>
+
+                                    <form action={deleteProjectAction}>
+                                        <input type="hidden" name="projectId" value={project.id} />
+
+                                        <button
+                                            type="submit"
+                                            className="border border-red-500/40 px-4 py-2 text-sm text-red-400 transition hover:border-red-500 hover:bg-red-500 hover:text-white"
+                                        >
+                                            Eliminar
+                                        </button>
+                                    </form>
+                                </div>
                             </article>
                         ))}
                     </div>
