@@ -1,43 +1,64 @@
-import { Container } from "@/components/ui/Container";
-import { PageHeader } from "@/components/ui/PageHeader";
+import Link from "next/link";
 
-export default function AdminPage() {
+const adminNavItems = [
+    { label: "Dashboard", href: "/admin" },
+    { label: "Proyectos", href: "/admin/proyectos" },
+    { label: "Blog", href: "/admin/blog" },
+    { label: "Perfil", href: "/admin/perfil" },
+];
+
+export default function AdminLayout({
+    children,
+}: Readonly<{
+    children: React.ReactNode;
+}>) {
     return (
-        <section className="min-h-screen py-20">
-            <Container className="lg:px-12">
-                <PageHeader
-                    variant="admin"
-                    label="Admin"
-                    title="Panel de administración."
-                    description="Aquí construiremos el dashboard para administrar proyectos, blog, certificados, experiencia y contenido del portfolio."
-                />
+        <div className="min-h-screen bg-neutral-950 text-white">
+            <aside className="fixed left-0 top-0 hidden h-screen w-72 border-r border-white/10 bg-neutral-950 p-6 lg:block">
+                <div className="flex h-full flex-col justify-between">
+                    <div>
+                        <Link href="/admin" className="group flex items-center gap-3">
+                            <span className="h-3 w-3 rounded-full bg-red-500 transition group-hover:scale-125" />
+                            <span className="font-mono text-sm uppercase tracking-[0.35em]">
+                                Admin
+                            </span>
+                        </Link>
 
-                <div className="mt-12 grid gap-4 md:grid-cols-3">
-                    <article className="border border-white/10 p-6">
-                        <p className="font-mono text-sm text-red-500">01</p>
-                        <h2 className="mt-6 text-2xl font-semibold">Proyectos</h2>
-                        <p className="mt-3 text-sm leading-6 text-neutral-400">
-                            Crear, editar y publicar proyectos del portfolio.
-                        </p>
-                    </article>
+                        <div className="mt-10 border-t border-white/10 pt-6">
+                            <p className="font-mono text-xs uppercase tracking-[0.25em] text-neutral-500">
+                                Management
+                            </p>
 
-                    <article className="border border-white/10 p-6">
-                        <p className="font-mono text-sm text-red-500">02</p>
-                        <h2 className="mt-6 text-2xl font-semibold">Blog</h2>
-                        <p className="mt-3 text-sm leading-6 text-neutral-400">
-                            Gestionar artículos técnicos, categorías y publicaciones.
-                        </p>
-                    </article>
+                            <nav className="mt-5 space-y-2">
+                                {adminNavItems.map((item) => (
+                                    <Link
+                                        key={item.href}
+                                        href={item.href}
+                                        className="block border border-white/10 px-4 py-3 text-sm text-neutral-300 transition hover:border-red-500 hover:bg-white/[0.03] hover:text-white"
+                                    >
+                                        {item.label}
+                                    </Link>
+                                ))}
+                            </nav>
+                        </div>
+                    </div>
 
-                    <article className="border border-white/10 p-6">
-                        <p className="font-mono text-sm text-red-500">03</p>
-                        <h2 className="mt-6 text-2xl font-semibold">Perfil</h2>
-                        <p className="mt-3 text-sm leading-6 text-neutral-400">
-                            Administrar experiencia, certificados y estudios.
+                    <div className="border-t border-white/10 pt-6">
+                        <Link
+                            href="/"
+                            className="block border border-white/10 px-4 py-3 text-sm text-neutral-300 transition hover:border-red-500 hover:bg-white/[0.03] hover:text-white"
+                        >
+                            Volver al sitio
+                        </Link>
+
+                        <p className="mt-6 font-mono text-xs uppercase tracking-[0.25em] text-neutral-600">
+                            Portfolio CMS
                         </p>
-                    </article>
+                    </div>
                 </div>
-            </Container>
-        </section>
+            </aside>
+
+            <main className="lg:pl-72">{children}</main>
+        </div>
     );
 }
