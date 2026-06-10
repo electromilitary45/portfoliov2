@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 const adminNavItems = [
     { label: "Dashboard", href: "/admin" },
@@ -7,11 +9,19 @@ const adminNavItems = [
     { label: "Perfil", href: "/admin/perfil" },
 ];
 
-export default function AdminLayout({
+export default async function AdminLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const supabase = await createSupabaseServerClient();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+        redirect("/admin/login");
+    }
     return (
         <div className="min-h-screen bg-neutral-950 text-white">
             <aside className="fixed left-0 top-0 hidden h-screen w-72 border-r border-white/10 bg-neutral-950 p-6 lg:block">

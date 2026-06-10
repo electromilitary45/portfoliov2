@@ -56,7 +56,7 @@ export async function getProjects(): Promise<Project[]> {
   }
 
   try {
-    const supabase = createSupabaseServerClient();
+    const supabase = await createSupabaseServerClient();
 
     const { data, error } = await supabase
       .from("projects")
@@ -82,7 +82,7 @@ export async function getFeaturedProjects(): Promise<Project[]> {
   }
 
   try {
-    const supabase = createSupabaseServerClient();
+    const supabase = await createSupabaseServerClient();
 
     const { data, error } = await supabase
       .from("projects")
@@ -109,7 +109,7 @@ export async function getProjectBySlug(slug: string): Promise<Project | null> {
   }
 
   try {
-    const supabase = createSupabaseServerClient();
+    const supabase = await createSupabaseServerClient();
 
     const { data, error } = await supabase
       .from("projects")

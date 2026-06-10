@@ -1,4 +1,4 @@
-import { createClient } from "@supabase/supabase-js";
+import { createBrowserClient } from "@supabase/ssr";
 
 function getEnv(name: string): string {
   const value = process.env[name];
@@ -10,7 +10,9 @@ function getEnv(name: string): string {
   return value;
 }
 
-const supabaseUrl = getEnv("NEXT_PUBLIC_SUPABASE_URL");
-const supabaseAnonKey = getEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY");
-
-export const supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
+export function createSupabaseBrowserClient() {
+  return createBrowserClient(
+    getEnv("NEXT_PUBLIC_SUPABASE_URL"),
+    getEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY"),
+  );
+}

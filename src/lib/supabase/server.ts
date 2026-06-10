@@ -1,4 +1,5 @@
-import { createClient } from "@supabase/supabase-js";
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
 
 function getEnv(name: string): string {
   const value = process.env[name];
@@ -10,9 +11,27 @@ function getEnv(name: string): string {
   return value;
 }
 
-export function createSupabaseServerClient() {
-  const supabaseUrl = getEnv("NEXT_PUBLIC_SUPABASE_URL");
-  const supabaseAnonKey = getEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY");
+export async function createSupabaseServerClient() {
+  const cookieStore = await cookies();
 
-  return createClient(supabaseUrl, supabaseAnonKey);
+  return createServerClient(
+    getEnv("NEXT_PUBLIC_SUPABASE_URL"),
+    getEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY"),
+    {
+      cookies: {
+        getAll() {
+          return cookieStore.getAll();
+        },
+        setAll(cookiesToSet) {
+          try {
+            cookiesToSet.forEach(({ name, value, options }) => {
+              cookieStore.set(name, value, options);
+            });
+          } catch {
+            // Server Components may have read-only cookies.
+          }
+        },
+      },
+    },
+  );
 }

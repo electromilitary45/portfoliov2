@@ -46,7 +46,7 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
   }
 
   try {
-    const supabase = createSupabaseServerClient();
+    const supabase = await createSupabaseServerClient();
 
     const { data, error } = await supabase
       .from("blog_posts")
@@ -78,7 +78,7 @@ export async function getBlogPostBySlug(
   }
 
   try {
-    const supabase = createSupabaseServerClient();
+    const supabase = await createSupabaseServerClient();
 
     const { data, error } = await supabase
       .from("blog_posts")
