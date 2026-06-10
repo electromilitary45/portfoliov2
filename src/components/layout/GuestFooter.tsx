@@ -1,9 +1,9 @@
 import Link from "next/link";
 
 const footerLinks = [
-    { label: "GitHub", href: "https://github.com/" },
-    { label: "LinkedIn", href: "https://linkedin.com/" },
-    { label: "Email", href: "/contactame" },
+    { label: "GitHub", href: "https://github.com/electromilitary45" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/villalobossebas/" },
+    { label: "Email", href: "mailto:dereklevilla45@gmail.com" },
 ];
 
 export function GuestFooter() {
