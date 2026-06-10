@@ -3,6 +3,7 @@ import { createProjectAction } from "@/app/actions/projects/create-project.actio
 export function CreateProjectForm() {
     return (
         <form action={createProjectAction} className="space-y-5">
+            {/* Título */}
             <div>
                 <label className="text-sm text-neutral-300" htmlFor="title">
                     Título
@@ -16,6 +17,7 @@ export function CreateProjectForm() {
                 />
             </div>
 
+            {/* Resumen */}
             <div>
                 <label className="text-sm text-neutral-300" htmlFor="summary">
                     Resumen
@@ -30,6 +32,7 @@ export function CreateProjectForm() {
                 />
             </div>
 
+            {/* Descripción */}
             <div>
                 <label className="text-sm text-neutral-300" htmlFor="description">
                     Descripción
@@ -43,6 +46,7 @@ export function CreateProjectForm() {
                 />
             </div>
 
+            {/* Stack */}
             <div>
                 <label className="text-sm text-neutral-300" htmlFor="stack">
                     Stack separado por comas
@@ -55,6 +59,7 @@ export function CreateProjectForm() {
                 />
             </div>
 
+            {/* URLs */}
             <div className="grid gap-5 md:grid-cols-2">
                 <div>
                     <label className="text-sm text-neutral-300" htmlFor="githubUrl">
@@ -83,6 +88,35 @@ export function CreateProjectForm() {
                 </div>
             </div>
 
+            {/* Imagen */}
+            <div className="grid gap-5 md:grid-cols-2">
+                <div>
+                    <label className="text-sm text-neutral-300" htmlFor="imageFile">
+                        Imagen del proyecto
+                    </label>
+                    <input
+                        id="imageFile"
+                        name="imageFile"
+                        type="file"
+                        accept="image/*"
+                        className="mt-2 w-full border border-white/10 bg-neutral-900 px-4 py-3 text-sm text-neutral-300 outline-none transition file:mr-4 file:border-0 file:bg-white file:px-4 file:py-2 file:text-sm file:font-medium file:text-neutral-950 focus:border-red-500"
+                    />
+                </div>
+
+                <div>
+                    <label className="text-sm text-neutral-300" htmlFor="imageAlt">
+                        Texto alternativo
+                    </label>
+                    <input
+                        id="imageAlt"
+                        name="imageAlt"
+                        className="mt-2 w-full border border-white/10 bg-neutral-900 px-4 py-3 text-white outline-none transition focus:border-red-500"
+                        placeholder="Screenshot del proyecto..."
+                    />
+                </div>
+            </div>
+
+            {/* Imagen */}
             <div className="grid gap-5 md:grid-cols-2">
                 <div>
                     <label className="text-sm text-neutral-300" htmlFor="status">

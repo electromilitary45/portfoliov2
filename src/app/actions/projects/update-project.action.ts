@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import type { ProjectStatus } from "@/features/projects/project.type";
+import { uploadProjectImage } from "@/lib/supabase/storage";
 
 const allowedStatuses: ProjectStatus[] = ["draft", "published", "archived"];
 
@@ -32,15 +33,29 @@ export async function updateProjectAction(formData: FormData) {
   const stack = parseStack(String(formData.get("stack") ?? ""));
   const githubUrl = String(formData.get("githubUrl") ?? "").trim() || null;
   const demoUrl = String(formData.get("demoUrl") ?? "").trim() || null;
-  const imageUrl = String(formData.get("imageUrl") ?? "").trim() || null;
   const imageAlt = String(formData.get("imageAlt") ?? "").trim() || null;
   const isFeatured = formData.get("isFeatured") === "on";
   const status = String(formData.get("status") ?? "draft") as ProjectStatus;
   const currentPublishedAt =
     String(formData.get("publishedAt") ?? "").trim() || null;
+  const currentImageUrl =
+    String(formData.get("currentImageUrl") ?? "").trim() || null;
 
   if (!projectId || !title || !summary || !allowedStatuses.includes(status)) {
     redirect("/admin/proyectos?error=invalid_project_update");
+  }
+
+  const slug = slugify(title);
+  const imageFile = formData.get("imageFile");
+
+  let imageUrl = currentImageUrl;
+
+  if (imageFile instanceof File && imageFile.size > 0) {
+    try {
+      imageUrl = await uploadProjectImage(imageFile, slug);
+    } catch {
+      redirect("/admin/proyectos?error=image_upload_failed");
+    }
   }
 
   const supabase = await createSupabaseServerClient();
@@ -49,7 +64,7 @@ export async function updateProjectAction(formData: FormData) {
     .from("projects")
     .update({
       title,
-      slug: slugify(title),
+      slug,
       summary,
       description: description || null,
       status,

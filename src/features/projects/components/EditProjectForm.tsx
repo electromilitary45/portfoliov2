@@ -10,7 +10,9 @@ export function EditProjectForm({ project }: EditProjectFormProps) {
         <form action={updateProjectAction} className="space-y-5">
             <input type="hidden" name="projectId" value={project.id} />
             <input type="hidden" name="publishedAt" value={project.publishedAt ?? ""} />
+            <input type="hidden" name="currentImageUrl" value={project.imageUrl ?? ""} />
 
+            {/* Título */}
             <div>
                 <label className="text-sm text-neutral-300" htmlFor={`title-${project.id}`}>
                     Título
@@ -24,6 +26,7 @@ export function EditProjectForm({ project }: EditProjectFormProps) {
                 />
             </div>
 
+            {/* Resumen */}
             <div>
                 <label className="text-sm text-neutral-300" htmlFor={`summary-${project.id}`}>
                     Resumen
@@ -38,6 +41,7 @@ export function EditProjectForm({ project }: EditProjectFormProps) {
                 />
             </div>
 
+            {/* Descripción */}
             <div>
                 <label
                     className="text-sm text-neutral-300"
@@ -54,6 +58,7 @@ export function EditProjectForm({ project }: EditProjectFormProps) {
                 />
             </div>
 
+            {/* Stack */}
             <div>
                 <label className="text-sm text-neutral-300" htmlFor={`stack-${project.id}`}>
                     Stack separado por comas
@@ -66,6 +71,7 @@ export function EditProjectForm({ project }: EditProjectFormProps) {
                 />
             </div>
 
+            {/* URLs */}
             <div className="grid gap-5 md:grid-cols-2">
                 <div>
                     <label
@@ -100,21 +106,27 @@ export function EditProjectForm({ project }: EditProjectFormProps) {
                 </div>
             </div>
 
+            {/* Image Upload */}
             <div className="grid gap-5 md:grid-cols-2">
                 <div>
                     <label
                         className="text-sm text-neutral-300"
-                        htmlFor={`imageUrl-${project.id}`}
+                        htmlFor={`imageFile-${project.id}`}
                     >
-                        Image URL
+                        Reemplazar imagen
                     </label>
                     <input
-                        id={`imageUrl-${project.id}`}
-                        name="imageUrl"
-                        type="url"
-                        defaultValue={project.imageUrl ?? ""}
-                        className="mt-2 w-full border border-white/10 bg-neutral-900 px-4 py-3 text-white outline-none transition focus:border-red-500"
+                        id={`imageFile-${project.id}`}
+                        name="imageFile"
+                        type="file"
+                        accept="image/*"
+                        className="mt-2 w-full border border-white/10 bg-neutral-900 px-4 py-3 text-sm text-neutral-300 outline-none transition file:mr-4 file:border-0 file:bg-white file:px-4 file:py-2 file:text-sm file:font-medium file:text-neutral-950 focus:border-red-500"
                     />
+                    {project.imageUrl ? (
+                        <p className="mt-2 text-xs text-neutral-500">
+                            Ya existe una imagen guardada. Si subes otra, se reemplazará la URL.
+                        </p>
+                    ) : null}
                 </div>
 
                 <div>
@@ -133,6 +145,7 @@ export function EditProjectForm({ project }: EditProjectFormProps) {
                 </div>
             </div>
 
+            {/* Status and Featured */}
             <div className="grid gap-5 md:grid-cols-2">
                 <div>
                     <label className="text-sm text-neutral-300" htmlFor={`status-${project.id}`}>

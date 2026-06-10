@@ -1,8 +1,11 @@
 "use server";
-
+import type { ProjectStatus } from "@/features/projects/project.type";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { uploadProjectImage } from "@/lib/supabase/storage";
+
+const allowedStatuses: ProjectStatus[] = ["draft", "published", "archived"];
 
 function slugify(value: string) {
   return value
@@ -28,24 +31,40 @@ export async function createProjectAction(formData: FormData) {
   const stack = parseStack(String(formData.get("stack") ?? ""));
   const githubUrl = String(formData.get("githubUrl") ?? "").trim() || null;
   const demoUrl = String(formData.get("demoUrl") ?? "").trim() || null;
+  const imageAlt = String(formData.get("imageAlt") ?? "").trim() || null;
   const isFeatured = formData.get("isFeatured") === "on";
-  const status = String(formData.get("status") ?? "draft");
+  const status = String(formData.get("status") ?? "draft") as ProjectStatus;
 
-  if (!title || !summary) {
+  if (!title || !summary || !allowedStatuses.includes(status)) {
     redirect("/admin/proyectos?error=missing_required_fields");
+  }
+
+  const slug = slugify(title);
+  const imageFile = formData.get("imageFile");
+
+  let imageUrl: string | null = null;
+
+  if (imageFile instanceof File && imageFile.size > 0) {
+    try {
+      imageUrl = await uploadProjectImage(imageFile, slug);
+    } catch {
+      redirect("/admin/proyectos?error=image_upload_failed");
+    }
   }
 
   const supabase = await createSupabaseServerClient();
 
   const { error } = await supabase.from("projects").insert({
     title,
-    slug: slugify(title),
+    slug,
     summary,
     description: description || null,
     status,
     stack,
     github_url: githubUrl,
     demo_url: demoUrl,
+    image_url: imageUrl,
+    image_alt: imageAlt,
     is_featured: isFeatured,
     published_at: status === "published" ? new Date().toISOString() : null,
   });
