@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { getAdminProjects } from "@/features/projects/project.service";
@@ -5,6 +6,7 @@ import { CreateProjectModal } from "@/features/projects/components/CreateProject
 import { DeleteProjectButton } from "@/features/projects/components/DeleteProjectButton";
 import { ProjectStatusAction } from "@/features/projects/components/ProjectStatusAction";
 import { EditProjectButton } from "@/features/projects/components/EditProjectButton";
+
 
 export default async function AdminProjectsPage() {
     const projects = await getAdminProjects();
@@ -31,8 +33,7 @@ export default async function AdminProjectsPage() {
                             </h2>
 
                             <p className="mt-4 max-w-2xl text-sm leading-6 text-neutral-500">
-                                Crea proyectos desde un modal y visualiza los publicados debajo. Luego
-                                agregaremos edición, borrado, filtros por estado e imágenes.
+                                Crea proyectos desde un modal, sube imágenes y administra su estado de publicación.
                             </p>
                         </div>
 
@@ -54,8 +55,7 @@ export default async function AdminProjectsPage() {
 
                         <p className="max-w-md text-sm leading-6 text-neutral-500">
                             Mostramos todos los proyectos registrados, incluyendo drafts,
-                            publicados y archivados. Luego agregaremos edición, borrado,
-                            filtros por estado y subida de imágenes.
+                            publicados y archivados, junto con su imagen principal.
                         </p>
                     </div>
 
@@ -63,8 +63,26 @@ export default async function AdminProjectsPage() {
                         {projects.map((project) => (
                             <article
                                 key={project.id}
-                                className="grid gap-4 border-b border-white/10 bg-neutral-950 p-5 last:border-b-0 md:grid-cols-[1fr_auto]"
+                                className="grid gap-5 border-b border-white/10 bg-neutral-950 p-5 last:border-b-0 md:grid-cols-[120px_1fr_auto]"
                             >
+                                <div className="relative aspect-[16/10] overflow-hidden border border-white/10 bg-neutral-900 md:aspect-square">
+                                    {project.imageUrl ? (
+                                        <Image
+                                            src={project.imageUrl}
+                                            alt={project.imageAlt ?? project.title}
+                                            fill
+                                            className="object-cover"
+                                            sizes="120px"
+                                        />
+                                    ) : (
+                                        <div className="flex h-full items-center justify-center px-3 text-center">
+                                            <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-neutral-600">
+                                                Sin imagen
+                                            </p>
+                                        </div>
+                                    )}
+                                </div>
+
                                 <div>
                                     <p
                                         className={`font-mono text-xs uppercase tracking-[0.2em] ${project.status === "published"
