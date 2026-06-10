@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
+
+const siteUrl = "https://portfolio.villalobossebas.me";
+const siteTitle = "Portfolio Derek Leiva";
+const siteDescription =
+  "Portfolio personal de desarrollo web, proyectos y blog.";
+const previewImage = `${siteUrl}/preview.png`;
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,19 +20,20 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio Derek Leiva",
-  description: "Portfolio personal de desarrollo web, proyectos y blog.",
+  metadataBase: new URL(siteUrl),
+  title: siteTitle,
+  description: siteDescription,
   openGraph: {
-    title: "Portfolio Derek Leiva",
-    description: "Portfolio personal de desarrollo web, proyectos y blog.",
-    url: "https://portfolio.villalobossebas.me/",
-    siteName: "Portfolio Derek Leiva",
+    title: siteTitle,
+    description: siteDescription,
+    url: siteUrl,
+    siteName: siteTitle,
     images: [
       {
-        url: "/preview.png",
+        url: previewImage,
         width: 1200,
         height: 630,
-        alt: "Portfolio Derek Leiva - Preview",
+        alt: `${siteTitle} - Preview`,
       },
     ],
     locale: "es_ES",
@@ -34,16 +41,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Portfolio Derek Leiva",
-    description: "Portfolio personal de desarrollo web, proyectos y blog.",
-    images: [
-      {
-        url: "/preview.png",
-        alt: "Portfolio Derek Leiva - Preview",
-      },
-    ],
+    title: siteTitle,
+    description: siteDescription,
+    images: [previewImage],
   },
-  
 };
 
 export default function RootLayout({
