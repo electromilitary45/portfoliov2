@@ -98,3 +98,56 @@ export async function getBlogPostBySlug(
     return blogPosts.find((post) => post.slug === slug) ?? null;
   }
 }
+
+// ==================== ADMIN METHODS ====================
+
+export async function getAllBlogPostsForAdmin(): Promise<BlogPost[]> {
+  if (shouldUseMockBlogPosts()) {
+    return blogPosts; // usamos el mock existente
+  }
+
+  try {
+    const supabase = await createSupabaseServerClient();
+
+    const { data, error } = await supabase
+      .from("blog_posts")
+      .select(
+        "id,title,slug,excerpt,content,status,reading_time,tags,cover_image_url,cover_image_alt,published_at",
+      )
+      .order("created_at", { ascending: false }); // orden descendente, más nuevos primero
+
+    if (error || !data) {
+      return blogPosts;
+    }
+
+    return data.map((row) => mapBlogPostRow(row as SupabaseBlogPostRow));
+  } catch {
+    return blogPosts;
+  }
+}
+
+export async function getBlogPostById(id: string): Promise<BlogPost | null> {
+  if (shouldUseMockBlogPosts()) {
+    return blogPosts.find((post) => post.id === id) ?? null;
+  }
+
+  try {
+    const supabase = await createSupabaseServerClient();
+
+    const { data, error } = await supabase
+      .from("blog_posts")
+      .select(
+        "id,title,slug,excerpt,content,status,reading_time,tags,cover_image_url,cover_image_alt,published_at",
+      )
+      .eq("id", id)
+      .single();
+
+    if (error || !data) {
+      return blogPosts.find((post) => post.id === id) ?? null;
+    }
+
+    return mapBlogPostRow(data as SupabaseBlogPostRow);
+  } catch {
+    return blogPosts.find((post) => post.id === id) ?? null;
+  }
+}
