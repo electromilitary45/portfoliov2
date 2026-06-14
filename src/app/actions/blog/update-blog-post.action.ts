@@ -5,6 +5,27 @@ import { revalidatePath } from 'next/cache';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 
+async function uploadBlogImage(file: File): Promise<string> {
+    const supabase = await createSupabaseServerClient();
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${crypto.randomUUID()}.${fileExt}`;
+    const filePath = `${fileName}`;
+
+    const { error: uploadError } = await supabase.storage
+        .from('blog-images')
+        .upload(filePath, file);
+
+    if (uploadError) {
+        throw new Error('Error al subir la imagen');
+    }
+
+    const { data: publicUrlData } = supabase.storage
+        .from('blog-images')
+        .getPublicUrl(filePath);
+
+    return publicUrlData.publicUrl;
+}
+
 export async function updateBlogPostAction(formData: FormData) {
     const supabase = await createSupabaseServerClient();
     const { data: { user } } = await supabase.auth.getUser();
@@ -21,10 +42,17 @@ export async function updateBlogPostAction(formData: FormData) {
     const tags = (formData.get('tags') as string).split(',').map(tag => tag.trim());
     const readingTime = formData.get('readingTime') as string;
     const status = formData.get('status') as 'draft' | 'published' | 'archived';
-    const coverImageUrl = formData.get('coverImageUrl') as string;
     const coverImageAlt = formData.get('coverImageAlt') as string;
+    const imageFile = formData.get('coverImageFile') as File;
+    const currentCoverImageUrl = formData.get('currentCoverImageUrl') as string;
 
-    // Mantener la fecha de publicación actual si ya estaba publicado
+    let coverImageUrl = currentCoverImageUrl;
+    if (imageFile && imageFile.size > 0) {
+        // Si hay archivo nuevo, subirlo y reemplazar
+        coverImageUrl = await uploadBlogImage(imageFile);
+    }
+
+    // Mantener published_at si ya estaba publicado
     let publishedAt = null;
     if (status === 'published') {
         const { data: currentPost } = await supabase

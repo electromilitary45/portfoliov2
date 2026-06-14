@@ -7,7 +7,6 @@ import { createBlogPostAction } from "@/app/actions/blog/create-blog-post.action
 export function CreateBlogPostForm() {
     const router = useRouter();
 
-    // Generar slug a partir del título (solo para previsualización, pero se puede editar)
     const generateSlug = (title: string) => {
         return title
             .toLowerCase()
@@ -72,7 +71,7 @@ export function CreateBlogPostForm() {
                 />
             </div>
 
-            {/* Contenido (por ahora textarea, luego se puede mejorar) */}
+            {/* Contenido */}
             <div>
                 <label className="text-sm text-neutral-300" htmlFor="content">
                     Contenido (Markdown o HTML)
@@ -117,18 +116,18 @@ export function CreateBlogPostForm() {
                 />
             </div>
 
-            {/* Imagen destacada (URL) */}
+            {/* Imagen destacada: input file */}
             <div className="grid gap-5 md:grid-cols-2">
                 <div>
-                    <label className="text-sm text-neutral-300" htmlFor="coverImageUrl">
-                        URL de imagen destacada
+                    <label className="text-sm text-neutral-300" htmlFor="coverImageFile">
+                        Imagen destacada
                     </label>
                     <input
-                        id="coverImageUrl"
-                        name="coverImageUrl"
-                        type="url"
-                        className="mt-2 w-full border border-white/10 bg-neutral-900 px-4 py-3 text-white outline-none transition focus:border-red-500"
-                        placeholder="https://..."
+                        id="coverImageFile"
+                        name="coverImageFile"
+                        type="file"
+                        accept="image/*"
+                        className="mt-2 w-full border border-white/10 bg-neutral-900 px-4 py-3 text-sm text-neutral-300 outline-none transition file:mr-4 file:border-0 file:bg-white file:px-4 file:py-2 file:text-sm file:font-medium file:text-neutral-950 focus:border-red-500"
                     />
                 </div>
                 <div>
@@ -145,22 +144,20 @@ export function CreateBlogPostForm() {
             </div>
 
             {/* Estado */}
-            <div className="grid gap-5 md:grid-cols-2">
-                <div>
-                    <label className="text-sm text-neutral-300" htmlFor="status">
-                        Estado
-                    </label>
-                    <select
-                        id="status"
-                        name="status"
-                        defaultValue="draft"
-                        className="mt-2 w-full border border-white/10 bg-neutral-900 px-4 py-3 text-white outline-none transition focus:border-red-500"
-                    >
-                        <option value="draft">Borrador</option>
-                        <option value="published">Publicado</option>
-                        <option value="archived">Archivado</option>
-                    </select>
-                </div>
+            <div>
+                <label className="text-sm text-neutral-300" htmlFor="status">
+                    Estado
+                </label>
+                <select
+                    id="status"
+                    name="status"
+                    defaultValue="draft"
+                    className="mt-2 w-full border border-white/10 bg-neutral-900 px-4 py-3 text-white outline-none transition focus:border-red-500"
+                >
+                    <option value="draft">Borrador</option>
+                    <option value="published">Publicado</option>
+                    <option value="archived">Archivado</option>
+                </select>
             </div>
 
             <button

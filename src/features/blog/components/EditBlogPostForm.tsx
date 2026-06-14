@@ -10,24 +10,12 @@ type EditBlogPostFormProps = {
 };
 
 export function EditBlogPostForm({ post }: EditBlogPostFormProps) {
-    // Función para generar slug (si cambia el título)
-    const generateSlug = (title: string) => {
-        return title
-            .toLowerCase()
-            .replace(/[^a-z0-9]+/g, "-")
-            .replace(/^-|-$/g, "");
-    };
-
-    const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const titleValue = e.target.value;
-        const slugInput = document.getElementById(`slug-${post.id}`) as HTMLInputElement;
-        // Solo auto-generar si el slug actual es el mismo que el slug original del título original? Mejor dejamos que el usuario decida.
-        // Por simplicidad, no auto-generamos.
-    };
-
     return (
         <form action={updateBlogPostAction} className="space-y-5">
             <input type="hidden" name="postId" value={post.id} />
+            {/* Si queremos mantener la URL actual por si no se sube nueva imagen */}
+            <input type="hidden" name="currentCoverImageUrl" value={post.coverImageUrl ?? ""} />
+            <input type="hidden" name="currentCoverImageAlt" value={post.coverImageAlt ?? ""} />
 
             {/* Título */}
             <div>
@@ -39,7 +27,6 @@ export function EditBlogPostForm({ post }: EditBlogPostFormProps) {
                     name="title"
                     required
                     defaultValue={post.title}
-                    onBlur={handleTitleChange}
                     className="mt-2 w-full border border-white/10 bg-neutral-900 px-4 py-3 text-white outline-none transition focus:border-red-500"
                 />
             </div>
@@ -115,9 +102,9 @@ export function EditBlogPostForm({ post }: EditBlogPostFormProps) {
                 />
             </div>
 
-            {/* Imagen destacada */}
+            {/* Imagen destacada: mostrar actual + input file */}
             <div className="space-y-4">
-                {post.coverImageUrl ? (
+                {post.coverImageUrl && (
                     <div>
                         <p className="text-sm text-neutral-300">Imagen actual</p>
                         <div className="relative mt-2 aspect-[16/9] overflow-hidden border border-white/10 bg-neutral-900">
@@ -133,30 +120,25 @@ export function EditBlogPostForm({ post }: EditBlogPostFormProps) {
                             {post.coverImageUrl}
                         </p>
                     </div>
-                ) : (
-                    <div className="border border-dashed border-white/10 bg-neutral-900/60 p-4">
-                        <p className="text-sm text-neutral-400">
-                            Este artículo no tiene imagen destacada.
-                        </p>
-                    </div>
                 )}
 
                 <div className="grid gap-5 md:grid-cols-2">
                     <div>
-                        <label className="text-sm text-neutral-300" htmlFor={`coverImageUrl-${post.id}`}>
-                            Nueva URL de imagen (reemplaza)
+                        <label className="text-sm text-neutral-300" htmlFor={`coverImageFile-${post.id}`}>
+                            {post.coverImageUrl ? "Reemplazar imagen" : "Subir imagen"}
                         </label>
                         <input
-                            id={`coverImageUrl-${post.id}`}
-                            name="coverImageUrl"
-                            type="url"
-                            defaultValue={post.coverImageUrl ?? ""}
-                            className="mt-2 w-full border border-white/10 bg-neutral-900 px-4 py-3 text-white outline-none transition focus:border-red-500"
-                            placeholder="https://..."
+                            id={`coverImageFile-${post.id}`}
+                            name="coverImageFile"
+                            type="file"
+                            accept="image/*"
+                            className="mt-2 w-full border border-white/10 bg-neutral-900 px-4 py-3 text-sm text-neutral-300 outline-none transition file:mr-4 file:border-0 file:bg-white file:px-4 file:py-2 file:text-sm file:font-medium file:text-neutral-950 focus:border-red-500"
                         />
-                        <p className="mt-1 text-xs text-neutral-500">
-                            Si quieres cambiar la imagen, introduce la nueva URL.
-                        </p>
+                        {post.coverImageUrl && (
+                            <p className="mt-1 text-xs text-neutral-500">
+                                Si no seleccionas un archivo, se mantendrá la imagen actual.
+                            </p>
+                        )}
                     </div>
                     <div>
                         <label className="text-sm text-neutral-300" htmlFor={`coverImageAlt-${post.id}`}>
@@ -174,22 +156,20 @@ export function EditBlogPostForm({ post }: EditBlogPostFormProps) {
             </div>
 
             {/* Estado */}
-            <div className="grid gap-5 md:grid-cols-2">
-                <div>
-                    <label className="text-sm text-neutral-300" htmlFor={`status-${post.id}`}>
-                        Estado
-                    </label>
-                    <select
-                        id={`status-${post.id}`}
-                        name="status"
-                        defaultValue={post.status}
-                        className="mt-2 w-full border border-white/10 bg-neutral-900 px-4 py-3 text-white outline-none transition focus:border-red-500"
-                    >
-                        <option value="draft">Borrador</option>
-                        <option value="published">Publicado</option>
-                        <option value="archived">Archivado</option>
-                    </select>
-                </div>
+            <div>
+                <label className="text-sm text-neutral-300" htmlFor={`status-${post.id}`}>
+                    Estado
+                </label>
+                <select
+                    id={`status-${post.id}`}
+                    name="status"
+                    defaultValue={post.status}
+                    className="mt-2 w-full border border-white/10 bg-neutral-900 px-4 py-3 text-white outline-none transition focus:border-red-500"
+                >
+                    <option value="draft">Borrador</option>
+                    <option value="published">Publicado</option>
+                    <option value="archived">Archivado</option>
+                </select>
             </div>
 
             <button
