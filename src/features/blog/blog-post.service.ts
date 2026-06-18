@@ -1,6 +1,6 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { blogPosts } from "@/features/blog/blog-post.mock";
-import type { BlogPost } from "@/features/blog/blog-post.type";
+import type { BlogPost, BlogPostImage } from "@/features/blog/blog-post.type";
 
 type SupabaseBlogPostRow = {
   id: string;
@@ -13,10 +13,14 @@ type SupabaseBlogPostRow = {
   tags: string[];
   cover_image_url: string | null;
   cover_image_alt: string | null;
+  images: BlogPostImage[] | null;   // ← AÑADE ESTA LÍNEA
   published_at: string | null;
 };
 
 function mapBlogPostRow(row: SupabaseBlogPostRow): BlogPost {
+  const images = row.images ?? [];
+  const coverImageUrl = images.length > 0 ? images[0].url : row.cover_image_url;
+  const coverImageAlt = images.length > 0 ? images[0].alt : row.cover_image_alt;
   return {
     id: row.id,
     title: row.title,
@@ -26,8 +30,9 @@ function mapBlogPostRow(row: SupabaseBlogPostRow): BlogPost {
     status: row.status,
     readingTime: row.reading_time,
     tags: row.tags,
-    coverImageUrl: row.cover_image_url,
-    coverImageAlt: row.cover_image_alt,
+    coverImageUrl,
+    coverImageAlt,
+    images,
     publishedAt: row.published_at,
     href: `/blog/${row.slug}`,
   };
@@ -51,7 +56,7 @@ export async function getBlogPosts(): Promise<BlogPost[]> {
     const { data, error } = await supabase
       .from("blog_posts")
       .select(
-        "id,title,slug,excerpt,content,status,reading_time,tags,cover_image_url,cover_image_alt,published_at",
+        "id,title,slug,excerpt,content,status,reading_time,tags,cover_image_url,cover_image_alt,published_at,images", // ← añadir images
       )
       .eq("status", "published")
       .order("published_at", { ascending: false });
@@ -83,7 +88,7 @@ export async function getBlogPostBySlug(
     const { data, error } = await supabase
       .from("blog_posts")
       .select(
-        "id,title,slug,excerpt,content,status,reading_time,tags,cover_image_url,cover_image_alt,published_at",
+        "id,title,slug,excerpt,content,status,reading_time,tags,cover_image_url,cover_image_alt,published_at,images", // ← añadir images
       )
       .eq("status", "published")
       .eq("slug", slug)
@@ -112,7 +117,7 @@ export async function getAllBlogPostsForAdmin(): Promise<BlogPost[]> {
     const { data, error } = await supabase
       .from("blog_posts")
       .select(
-        "id,title,slug,excerpt,content,status,reading_time,tags,cover_image_url,cover_image_alt,published_at",
+        "id,title,slug,excerpt,content,status,reading_time,tags,cover_image_url,cover_image_alt,published_at,images", // ← añadir images
       )
       .order("created_at", { ascending: false }); // orden descendente, más nuevos primero
 
@@ -137,7 +142,7 @@ export async function getBlogPostById(id: string): Promise<BlogPost | null> {
     const { data, error } = await supabase
       .from("blog_posts")
       .select(
-        "id,title,slug,excerpt,content,status,reading_time,tags,cover_image_url,cover_image_alt,published_at",
+        "id,title,slug,excerpt,content,status,reading_time,tags,cover_image_url,cover_image_alt,published_at,images", // ← añadir images
       )
       .eq("id", id)
       .single();
