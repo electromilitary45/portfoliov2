@@ -83,12 +83,12 @@ export default async function BlogPostDetailPage({
             </div>
           )}
 
-          <div className="mt-16 border-t border-neutral-200 bg-white p-8">
-            <div className="prose prose-neutral max-w-none">
+          <div className="mt-16 border-t border-neutral-200 pt-8">
+            <div className="prose prose-neutral prose-lg max-w-none text-neutral-800 [&_a]:text-red-600 [&_a]:underline [&_a]:hover:text-red-800 [&_strong]:text-neutral-900 [&_h2]:text-neutral-900 [&_h3]:text-neutral-900 [&_ul]:text-neutral-700 [&_ol]:text-neutral-700">
               {post.content ? (
                 <div dangerouslySetInnerHTML={{ __html: post.content }} />
               ) : (
-                <p className="leading-8 text-neutral-600">
+                <p className="leading-relaxed text-neutral-600">
                   Este es un placeholder para el contenido completo del artículo. Más adelante aquí renderizaremos contenido desde Supabase, MDX o un editor del admin.
                 </p>
               )}
