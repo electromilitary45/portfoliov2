@@ -25,6 +25,7 @@ export type Certificate = {
 export type Profile = {
   headline: string;
   summary: string;
+  avatarUrl?: string | null;
   experience: Experience[];
   education: Education[];
   certificates: Certificate[];

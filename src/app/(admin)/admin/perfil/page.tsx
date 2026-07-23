@@ -1,6 +1,6 @@
 import { Container } from "@/components/ui/Container";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { getAdminExperiences, getAdminEducation, getAdminCertificates } from "@/features/profile/profile.service";
+import { getAdminExperiences, getAdminEducation, getAdminCertificates, getAdminProfile } from "@/features/profile/profile.service";
 import { CreateExperienceModal } from "@/features/profile/components/CreateExperienceModal";
 import { UpdateExperienceModal } from "@/features/profile/components/UpdateExperienceModal";
 import { DeleteExperienceButton } from "@/features/profile/components/DeleteExperienceButton";
@@ -10,6 +10,7 @@ import { DeleteEducationButton } from "@/features/profile/components/DeleteEduca
 import { CreateCertificateModal } from "@/features/profile/components/CreateCertificateModal";
 import { UpdateCertificateModal } from "@/features/profile/components/UpdateCertificateModal";
 import { DeleteCertificateButton } from "@/features/profile/components/DeleteCertificateButton";
+import { ProfileAvatarUpload } from "@/features/profile/components/ProfileAvatarUpload";
 import { FeedbackBanner } from "@/features/profile/components/FeedbackBanner";
 
 type Props = {
@@ -21,6 +22,7 @@ export default async function AdminProfilePage({ searchParams }: Props) {
     const experiences = await getAdminExperiences();
     const educationList = await getAdminEducation();
     const certificates = await getAdminCertificates();
+    const { avatarUrl } = await getAdminProfile();
 
     return (
         <section className="min-h-screen py-20">
@@ -33,6 +35,28 @@ export default async function AdminProfilePage({ searchParams }: Props) {
                 />
 
                 <FeedbackBanner params={params} />
+
+                <section className="mt-14 border-t border-white/10 pt-10">
+                    <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+                        <div>
+                            <p className="font-mono text-xs uppercase tracking-[0.25em] text-red-500">
+                                Profile CMS
+                            </p>
+
+                            <h2 className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-white">
+                                Foto de perfil
+                            </h2>
+
+                            <p className="mt-4 max-w-2xl text-sm leading-6 text-neutral-500">
+                                Sube una foto tuya para mostrarla en la página Sobre mí.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="mt-6 border border-white/10 bg-neutral-950 p-6">
+                        <ProfileAvatarUpload currentAvatarUrl={avatarUrl} />
+                    </div>
+                </section>
 
                 <section className="mt-14 border-t border-white/10 pt-10">
                     <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">

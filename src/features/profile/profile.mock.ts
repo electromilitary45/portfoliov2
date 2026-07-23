@@ -5,6 +5,7 @@ export const profile: Profile = {
     "Developer enfocado en construir productos web limpios y mantenibles.",
   summary:
     "Me interesa crear interfaces claras, aprender buenas prácticas de arquitectura y documentar el proceso detrás de cada proyecto.",
+  avatarUrl: null,
   experience: [
     {
       id: "1",

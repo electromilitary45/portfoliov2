@@ -45,8 +45,61 @@ function shouldUseMock() {
   );
 }
 
+export async function getAdminProfile(): Promise<{ avatarUrl: string | null }> {
+  if (shouldUseMock()) {
+    return { avatarUrl: profile.avatarUrl ?? null };
+  }
+
+  try {
+    const supabase = await createSupabaseServerClient();
+
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("avatar_url")
+      .limit(1)
+      .maybeSingle();
+
+    if (error || !data) {
+      return { avatarUrl: null };
+    }
+
+    return { avatarUrl: data.avatar_url ?? null };
+  } catch {
+    return { avatarUrl: null };
+  }
+}
+
 export function getProfile(): Profile {
   return profile;
+}
+
+export async function getProfileWithAvatar(): Promise<Profile & { avatarUrl: string | null }> {
+  if (shouldUseMock()) {
+    return { ...profile, avatarUrl: profile.avatarUrl ?? null };
+  }
+
+  try {
+    const supabase = await createSupabaseServerClient();
+
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("avatar_url,headline,summary")
+      .limit(1)
+      .maybeSingle();
+
+    if (error || !data) {
+      return { ...profile, avatarUrl: null };
+    }
+
+    return {
+      ...profile,
+      headline: data.headline || profile.headline,
+      summary: data.summary || profile.summary,
+      avatarUrl: data.avatar_url ?? null,
+    };
+  } catch {
+    return { ...profile, avatarUrl: null };
+  }
 }
 
 export async function getExperiences(): Promise<Experience[]> {
