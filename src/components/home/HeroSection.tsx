@@ -31,12 +31,12 @@ export async function HeroSection() {
     ];
 
     return (
-        <section className="bg-neutral-50 py-20 lg:py-28">
+        <section className="bg-neutral-50 py-16 lg:py-20">
             <Container>
-                <div className="grid min-h-[calc(100vh-160px)] items-center gap-12 lg:grid-cols-[1.3fr_0.7fr]">
-                    <div>
+                <div className="grid items-center gap-16 lg:grid-cols-[2fr_0.8fr]">
+                    <div className="max-w-3xl">
                         {profile.avatarUrl && (
-                            <div className="relative mb-8 h-24 w-24 overflow-hidden rounded-full border-4 border-neutral-200">
+                            <div className="relative mb-10 h-32 w-32 overflow-hidden rounded-full border-4 border-neutral-200">
                                 <Image
                                     src={profile.avatarUrl}
                                     alt="Foto de perfil"
@@ -50,28 +50,28 @@ export async function HeroSection() {
                             Developer Portfolio
                         </p>
 
-                        <h1 className="mt-6 max-w-5xl text-5xl font-semibold tracking-[-0.06em] text-neutral-950 md:text-7xl">
+                        <h1 className="mt-8 max-w-5xl text-5xl font-semibold tracking-[-0.06em] text-neutral-950 md:text-7xl lg:text-8xl">
                             {profile.headline}
                         </h1>
 
-                        <p className="mt-6 max-w-2xl text-lg leading-8 text-neutral-600">
+                        <p className="mt-8 max-w-xl text-lg leading-8 text-neutral-600 lg:text-xl lg:leading-9">
                             {profile.summary}
                         </p>
 
-                        <div className="mt-8 flex flex-wrap gap-6">
+                        <div className="mt-10 flex flex-wrap gap-10">
                             {stats.map((stat) => (
                                 <div key={stat.label}>
-                                    <p className="text-2xl font-bold tracking-[-0.03em] text-neutral-950">
+                                    <p className="text-3xl font-bold tracking-[-0.03em] text-neutral-950 lg:text-4xl">
                                         {stat.value}
                                     </p>
-                                    <p className="font-mono text-xs uppercase tracking-[0.15em] text-neutral-500">
+                                    <p className="mt-1 font-mono text-xs uppercase tracking-[0.15em] text-neutral-500">
                                         {stat.label}
                                     </p>
                                 </div>
                             ))}
                         </div>
 
-                        <div className="mt-10 flex flex-wrap gap-4">
+                        <div className="mt-12 flex flex-wrap gap-4">
                             <Button href="/proyectos" variant="primary">
                                 Ver proyectos
                             </Button>
@@ -82,7 +82,7 @@ export async function HeroSection() {
                         </div>
                     </div>
 
-                    <div className="relative hidden min-h-[480px] flex-col overflow-hidden border border-neutral-200 bg-white p-6 shadow-sm lg:flex">
+                    <div className="relative hidden min-h-[400px] flex-col overflow-hidden border border-neutral-200 bg-white p-8 shadow-sm lg:flex">
                         <div className="absolute right-6 top-6 h-3 w-3 rounded-full bg-red-600" />
 
                         <div>
