@@ -1,6 +1,6 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { profile } from "@/features/profile/profile.mock";
-import type { Experience, Profile } from "@/features/profile/profile.type";
+import type { Education, Experience, Profile } from "@/features/profile/profile.type";
 
 type SupabaseExperienceRow = {
   id: string;
@@ -19,6 +19,22 @@ function mapExperienceRow(row: SupabaseExperienceRow): Experience {
     period: row.period,
     description: row.description ?? "",
     stack: row.stack ?? [],
+  };
+}
+
+type SupabaseEducationRow = {
+  id: string;
+  title: string;
+  institution: string;
+  period: string;
+};
+
+function mapEducationRow(row: SupabaseEducationRow): Education {
+  return {
+    id: row.id,
+    title: row.title,
+    institution: row.institution,
+    period: row.period,
   };
 }
 
@@ -82,5 +98,49 @@ export async function getAdminExperiences(): Promise<Experience[]> {
     console.error("=== SUPABASE ADMIN EXPERIENCES CATCH ===");
     console.error(err);
     return profile.experience;
+  }
+}
+
+export async function getEducation(): Promise<Education[]> {
+  if (shouldUseMock()) {
+    return profile.education;
+  }
+
+  try {
+    const supabase = await createSupabaseServerClient();
+
+    const { data, error } = await supabase
+      .from("education")
+      .select("id,title,institution,period");
+
+    if (error || !data) {
+      return profile.education;
+    }
+
+    return data.map((row) => mapEducationRow(row as unknown as SupabaseEducationRow));
+  } catch {
+    return profile.education;
+  }
+}
+
+export async function getAdminEducation(): Promise<Education[]> {
+  if (shouldUseMock()) {
+    return profile.education;
+  }
+
+  try {
+    const supabase = await createSupabaseServerClient();
+
+    const { data, error } = await supabase
+      .from("education")
+      .select("id,title,institution,period");
+
+    if (error || !data) {
+      return profile.education;
+    }
+
+    return data.map((row) => mapEducationRow(row as unknown as SupabaseEducationRow));
+  } catch {
+    return profile.education;
   }
 }

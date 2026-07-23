@@ -1,9 +1,12 @@
 import { Container } from "@/components/ui/Container";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { getAdminExperiences } from "@/features/profile/profile.service";
+import { getAdminExperiences, getAdminEducation } from "@/features/profile/profile.service";
 import { CreateExperienceModal } from "@/features/profile/components/CreateExperienceModal";
 import { UpdateExperienceModal } from "@/features/profile/components/UpdateExperienceModal";
 import { DeleteExperienceButton } from "@/features/profile/components/DeleteExperienceButton";
+import { CreateEducationModal } from "@/features/profile/components/CreateEducationModal";
+import { UpdateEducationModal } from "@/features/profile/components/UpdateEducationModal";
+import { DeleteEducationButton } from "@/features/profile/components/DeleteEducationButton";
 import { FeedbackBanner } from "@/features/profile/components/FeedbackBanner";
 
 type Props = {
@@ -13,6 +16,7 @@ type Props = {
 export default async function AdminProfilePage({ searchParams }: Props) {
     const params = await searchParams;
     const experiences = await getAdminExperiences();
+    const educationList = await getAdminEducation();
 
     return (
         <section className="min-h-screen py-20">
@@ -124,9 +128,44 @@ export default async function AdminProfilePage({ searchParams }: Props) {
                             </h2>
                         </div>
 
-                        <p className="max-w-md text-sm leading-6 text-neutral-500">
-                            Próximamente: registro de estudios.
-                        </p>
+                        <CreateEducationModal />
+                    </div>
+
+                    <div className="mt-10 overflow-hidden border border-white/10">
+                        {educationList.map((education) => (
+                            <article
+                                key={education.id}
+                                className="grid gap-5 border-b border-white/10 bg-neutral-950 p-5 last:border-b-0 md:grid-cols-[1fr_auto]"
+                            >
+                                <div>
+                                    <h3 className="text-xl font-semibold text-white">
+                                        {education.title}
+                                    </h3>
+
+                                    <p className="mt-1 font-mono text-xs uppercase tracking-[0.2em] text-red-500">
+                                        {education.institution} — {education.period}
+                                    </p>
+                                </div>
+
+                                <div className="flex flex-col items-start gap-3 md:items-end md:justify-center">
+                                    <div className="flex flex-wrap gap-2 md:justify-end">
+                                        <UpdateEducationModal education={education} />
+                                        <DeleteEducationButton educationId={education.id} title={education.title} />
+                                    </div>
+                                </div>
+                            </article>
+                        ))}
+
+                        {educationList.length === 0 && (
+                            <div className="bg-neutral-950 p-10 text-center">
+                                <p className="font-mono text-xs uppercase tracking-[0.25em] text-neutral-600">
+                                    No hay formación registrada
+                                </p>
+                                <p className="mt-2 text-sm text-neutral-500">
+                                    Crea tu primera formación usando el botón de arriba.
+                                </p>
+                            </div>
+                        )}
                     </div>
                 </section>
 

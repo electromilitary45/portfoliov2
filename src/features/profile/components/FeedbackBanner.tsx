@@ -12,6 +12,9 @@ const feedbackMessages: Record<string, { message: string; type: "success" | "err
     delete_failed: { message: "Error al eliminar la experiencia.", type: "error" },
     missing_experience_id: { message: "Falta el ID de la experiencia.", type: "error" },
     invalid_experience_update: { message: "Datos inválidos para actualizar.", type: "error" },
+    education_created: { message: "Formación creada correctamente.", type: "success" },
+    education_updated: { message: "Formación actualizada correctamente.", type: "success" },
+    education_deleted: { message: "Formación eliminada correctamente.", type: "success" },
 };
 
 export function FeedbackBanner({ params }: FeedbackBannerProps) {
@@ -23,7 +26,13 @@ export function FeedbackBanner({ params }: FeedbackBannerProps) {
                 ? "updated"
                 : typeof params.deleted === "string"
                     ? "deleted"
-                    : undefined;
+                    : typeof params.education_created === "string"
+                        ? "education_created"
+                        : typeof params.education_updated === "string"
+                            ? "education_updated"
+                            : typeof params.education_deleted === "string"
+                                ? "education_deleted"
+                                : undefined;
 
     const feedbackKey = error ?? successParam;
 
