@@ -81,24 +81,31 @@ export async function getProfileWithAvatar(): Promise<Profile & { avatarUrl: str
   try {
     const supabase = await createSupabaseServerClient();
 
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("avatar_url,headline,summary")
-      .limit(1)
-      .maybeSingle();
+    const [profileResult, experiences, educationList, certificates] = await Promise.all([
+      supabase.from("profiles").select("avatar_url,headline,summary").limit(1).maybeSingle(),
+      supabase.from("experiences").select("id,role,company,period,description,stack"),
+      supabase.from("education").select("id,title,institution,period"),
+      supabase.from("certificates").select("id,title,issuer,year,file_url"),
+    ]);
 
-    if (error || !data) {
-      return { ...profile, avatarUrl: null };
-    }
+    const profileData = profileResult.data;
 
     return {
-      ...profile,
-      headline: data.headline || profile.headline,
-      summary: data.summary || profile.summary,
-      avatarUrl: data.avatar_url ?? null,
+      headline: profileData?.headline ?? "",
+      summary: profileData?.summary ?? "",
+      avatarUrl: profileData?.avatar_url ?? null,
+      experience: experiences.data
+        ? experiences.data.map((row) => mapExperienceRow(row as unknown as SupabaseExperienceRow))
+        : [],
+      education: educationList.data
+        ? educationList.data.map((row) => mapEducationRow(row as unknown as SupabaseEducationRow))
+        : [],
+      certificates: certificates.data
+        ? certificates.data.map((row) => mapCertificateRow(row as unknown as SupabaseCertificateRow))
+        : [],
     };
   } catch {
-    return { ...profile, avatarUrl: null };
+    return { headline: "", summary: "", avatarUrl: null, experience: [], education: [], certificates: [] };
   }
 }
 
