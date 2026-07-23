@@ -15,11 +15,11 @@ export type Education = {
 };
 
 export type Certificate = {
-  id: number;
+  id: string;
   title: string;
   issuer: string;
   year: string;
-  url?: string;
+  fileUrl?: string | null;
 };
 
 export type Profile = {

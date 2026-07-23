@@ -15,6 +15,9 @@ const feedbackMessages: Record<string, { message: string; type: "success" | "err
     education_created: { message: "Formación creada correctamente.", type: "success" },
     education_updated: { message: "Formación actualizada correctamente.", type: "success" },
     education_deleted: { message: "Formación eliminada correctamente.", type: "success" },
+    certificate_created: { message: "Certificado creado correctamente.", type: "success" },
+    certificate_updated: { message: "Certificado actualizado correctamente.", type: "success" },
+    certificate_deleted: { message: "Certificado eliminado correctamente.", type: "success" },
 };
 
 export function FeedbackBanner({ params }: FeedbackBannerProps) {
@@ -30,9 +33,15 @@ export function FeedbackBanner({ params }: FeedbackBannerProps) {
                         ? "education_created"
                         : typeof params.education_updated === "string"
                             ? "education_updated"
-                            : typeof params.education_deleted === "string"
-                                ? "education_deleted"
-                                : undefined;
+                    : typeof params.education_deleted === "string"
+                        ? "education_deleted"
+                        : typeof params.certificate_created === "string"
+                            ? "certificate_created"
+                            : typeof params.certificate_updated === "string"
+                                ? "certificate_updated"
+                                : typeof params.certificate_deleted === "string"
+                                    ? "certificate_deleted"
+                                    : undefined;
 
     const feedbackKey = error ?? successParam;
 

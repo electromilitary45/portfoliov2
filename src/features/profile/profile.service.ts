@@ -1,6 +1,6 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { profile } from "@/features/profile/profile.mock";
-import type { Education, Experience, Profile } from "@/features/profile/profile.type";
+import type { Certificate, Education, Experience, Profile } from "@/features/profile/profile.type";
 
 type SupabaseExperienceRow = {
   id: string;
@@ -142,5 +142,67 @@ export async function getAdminEducation(): Promise<Education[]> {
     return data.map((row) => mapEducationRow(row as unknown as SupabaseEducationRow));
   } catch {
     return profile.education;
+  }
+}
+
+type SupabaseCertificateRow = {
+  id: string;
+  title: string;
+  issuer: string;
+  year: string;
+  file_url: string | null;
+};
+
+function mapCertificateRow(row: SupabaseCertificateRow): Certificate {
+  return {
+    id: row.id,
+    title: row.title,
+    issuer: row.issuer,
+    year: row.year,
+    fileUrl: row.file_url,
+  };
+}
+
+export async function getCertificates(): Promise<Certificate[]> {
+  if (shouldUseMock()) {
+    return profile.certificates;
+  }
+
+  try {
+    const supabase = await createSupabaseServerClient();
+
+    const { data, error } = await supabase
+      .from("certificates")
+      .select("id,title,issuer,year,file_url");
+
+    if (error || !data) {
+      return profile.certificates;
+    }
+
+    return data.map((row) => mapCertificateRow(row as unknown as SupabaseCertificateRow));
+  } catch {
+    return profile.certificates;
+  }
+}
+
+export async function getAdminCertificates(): Promise<Certificate[]> {
+  if (shouldUseMock()) {
+    return profile.certificates;
+  }
+
+  try {
+    const supabase = await createSupabaseServerClient();
+
+    const { data, error } = await supabase
+      .from("certificates")
+      .select("id,title,issuer,year,file_url");
+
+    if (error || !data) {
+      return profile.certificates;
+    }
+
+    return data.map((row) => mapCertificateRow(row as unknown as SupabaseCertificateRow));
+  } catch {
+    return profile.certificates;
   }
 }

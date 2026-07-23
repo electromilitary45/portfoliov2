@@ -1,12 +1,15 @@
 import { Container } from "@/components/ui/Container";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { getAdminExperiences, getAdminEducation } from "@/features/profile/profile.service";
+import { getAdminExperiences, getAdminEducation, getAdminCertificates } from "@/features/profile/profile.service";
 import { CreateExperienceModal } from "@/features/profile/components/CreateExperienceModal";
 import { UpdateExperienceModal } from "@/features/profile/components/UpdateExperienceModal";
 import { DeleteExperienceButton } from "@/features/profile/components/DeleteExperienceButton";
 import { CreateEducationModal } from "@/features/profile/components/CreateEducationModal";
 import { UpdateEducationModal } from "@/features/profile/components/UpdateEducationModal";
 import { DeleteEducationButton } from "@/features/profile/components/DeleteEducationButton";
+import { CreateCertificateModal } from "@/features/profile/components/CreateCertificateModal";
+import { UpdateCertificateModal } from "@/features/profile/components/UpdateCertificateModal";
+import { DeleteCertificateButton } from "@/features/profile/components/DeleteCertificateButton";
 import { FeedbackBanner } from "@/features/profile/components/FeedbackBanner";
 
 type Props = {
@@ -17,6 +20,7 @@ export default async function AdminProfilePage({ searchParams }: Props) {
     const params = await searchParams;
     const experiences = await getAdminExperiences();
     const educationList = await getAdminEducation();
+    const certificates = await getAdminCertificates();
 
     return (
         <section className="min-h-screen py-20">
@@ -181,9 +185,54 @@ export default async function AdminProfilePage({ searchParams }: Props) {
                             </h2>
                         </div>
 
-                        <p className="max-w-md text-sm leading-6 text-neutral-500">
-                            Próximamente: registro de certificados.
-                        </p>
+                        <CreateCertificateModal />
+                    </div>
+
+                    <div className="mt-10 overflow-hidden border border-white/10">
+                        {certificates.map((certificate) => (
+                            <article
+                                key={certificate.id}
+                                className="grid gap-5 border-b border-white/10 bg-neutral-950 p-5 last:border-b-0 md:grid-cols-[1fr_auto]"
+                            >
+                                <div>
+                                    <h3 className="text-xl font-semibold text-white">
+                                        {certificate.title}
+                                    </h3>
+
+                                    <p className="mt-1 font-mono text-xs uppercase tracking-[0.2em] text-red-500">
+                                        {certificate.issuer} — {certificate.year}
+                                    </p>
+
+                                    {certificate.fileUrl ? (
+                                        <a
+                                            href={certificate.fileUrl}
+                                            target="_blank"
+                                            className="mt-3 inline-block text-sm text-neutral-400 underline underline-offset-4 transition hover:text-white"
+                                        >
+                                            Ver archivo
+                                        </a>
+                                    ) : null}
+                                </div>
+
+                                <div className="flex flex-col items-start gap-3 md:items-end md:justify-center">
+                                    <div className="flex flex-wrap gap-2 md:justify-end">
+                                        <UpdateCertificateModal certificate={certificate} />
+                                        <DeleteCertificateButton certificateId={certificate.id} title={certificate.title} />
+                                    </div>
+                                </div>
+                            </article>
+                        ))}
+
+                        {certificates.length === 0 && (
+                            <div className="bg-neutral-950 p-10 text-center">
+                                <p className="font-mono text-xs uppercase tracking-[0.25em] text-neutral-600">
+                                    No hay certificados registrados
+                                </p>
+                                <p className="mt-2 text-sm text-neutral-500">
+                                    Crea tu primer certificado usando el botón de arriba.
+                                </p>
+                            </div>
+                        )}
                     </div>
                 </section>
             </Container>

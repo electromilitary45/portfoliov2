@@ -30,9 +30,9 @@ export function CertificateList({ items }: CertificateListProps) {
                             {item.issuer}
                         </p>
 
-                        {item.url ? (
+                        {item.fileUrl ? (
                             <Link
-                                href={item.url}
+                                href={item.fileUrl}
                                 className="mt-5 inline-flex text-sm font-medium text-neutral-950 underline underline-offset-4 transition group-hover:text-white"
                             >
                                 Ver certificado

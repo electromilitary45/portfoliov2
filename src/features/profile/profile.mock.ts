@@ -26,10 +26,11 @@ export const profile: Profile = {
   ],
   certificates: [
     {
-      id: 1,
+      id: "1",
       title: "Certificado pendiente",
       issuer: "Por definir",
       year: "2026",
+      fileUrl: null,
     },
   ],
 };
