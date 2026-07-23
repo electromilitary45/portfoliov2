@@ -7,7 +7,7 @@ export const profile: Profile = {
     "Me interesa crear interfaces claras, aprender buenas prácticas de arquitectura y documentar el proceso detrás de cada proyecto.",
   experience: [
     {
-      id: 1,
+      id: "1",
       role: "Frontend Developer",
       company: "Proyecto personal",
       period: "2026 - Presente",

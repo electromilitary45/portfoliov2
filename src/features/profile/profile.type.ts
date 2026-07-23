@@ -1,5 +1,5 @@
 export type Experience = {
-  id: number;
+  id: string;
   role: string;
   company: string;
   period: string;
