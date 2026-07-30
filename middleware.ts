@@ -2,10 +2,16 @@ import { NextResponse, type NextRequest } from "next/server";
 import { updateSession } from "@/lib/supabase/middleware";
 
 export async function middleware(request: NextRequest) {
-  const response = await updateSession(request);
-
   const isAdminRoute = request.nextUrl.pathname.startsWith("/admin");
   const isLoginRoute = request.nextUrl.pathname === "/admin/login";
+  const isAnalyticsApi = request.nextUrl.pathname.startsWith("/api/analytics");
+
+  // Skip auth session for analytics tracking (public endpoint)
+  if (isAnalyticsApi) {
+    return NextResponse.next();
+  }
+
+  const response = await updateSession(request);
 
   if (isAdminRoute && !isLoginRoute) {
     const loginUrl = request.nextUrl.clone();

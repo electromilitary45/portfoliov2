@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { createClient } from "@supabase/supabase-js";
 
 export const dynamic = "force-dynamic";
 
@@ -12,31 +13,27 @@ export async function POST(request: NextRequest) {
     }
 
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    const supabaseKey =
+      process.env.SUPABASE_SERVICE_ROLE_KEY ??
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-    if (!supabaseUrl || !supabaseAnonKey) {
-      return NextResponse.json({ ok: true });
+    if (!supabaseUrl || !supabaseKey) {
+      return NextResponse.json({ ok: true, note: "no config" });
     }
 
-    const res = await fetch(`${supabaseUrl}/rest/v1/page_views`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        apikey: supabaseAnonKey,
-        Authorization: `Bearer ${supabaseAnonKey}`,
-        Prefer: "return=minimal",
-      },
-      body: JSON.stringify({
-        path,
-        referrer: referrer ?? "",
-        visitor_id: visitor_id ?? null,
-      }),
+    const supabase = createClient(supabaseUrl, supabaseKey, {
+      auth: { persistSession: false },
     });
 
-    if (!res.ok) {
-      const text = await res.text();
-      console.error("Analytics track error:", res.status, text);
-      return NextResponse.json({ error: text }, { status: res.status });
+    const { error } = await supabase.from("page_views").insert({
+      path,
+      referrer: referrer ?? "",
+      visitor_id: visitor_id ?? null,
+    });
+
+    if (error) {
+      console.error("Analytics insert error:", error.message);
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
     return NextResponse.json({ ok: true });
