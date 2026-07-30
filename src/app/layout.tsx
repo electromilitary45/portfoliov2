@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { AnalyticsTracker } from "@/components/analytics/AnalyticsTracker";
 import "./globals.css";
 
 const siteUrl = "https://portfolio.villalobossebas.me";
@@ -59,6 +60,7 @@ export default function RootLayout({
       >
         {children}
         <Analytics />
+        <AnalyticsTracker />
       </body>
     </html>
   );
