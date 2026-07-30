@@ -17,32 +17,44 @@ function getVisitorId(): string {
   return id;
 }
 
+function trackVisit(path: string, referrer: string, visitorId: string) {
+  const payload = JSON.stringify({ path, referrer, visitor_id: visitorId });
+
+  if (navigator.sendBeacon) {
+    const blob = new Blob([payload], { type: "application/json" });
+    navigator.sendBeacon("/api/analytics/track", blob);
+  } else {
+    fetch("/api/analytics/track", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: payload,
+      keepalive: true,
+    }).catch(() => {});
+  }
+}
+
 export function AnalyticsTracker() {
   const pathname = usePathname();
   const lastPath = useRef("");
+  const initialised = useRef(false);
 
   useEffect(() => {
+    if (!initialised.current) {
+      initialised.current = true;
+      if (pathname.startsWith("/admin") || pathname.startsWith("/_")) return;
+      const id = setTimeout(
+        () => trackVisit(pathname, document.referrer, getVisitorId()),
+        500,
+      );
+      return () => clearTimeout(id);
+    }
+
     if (pathname === lastPath.current) return;
     lastPath.current = pathname;
 
     if (pathname.startsWith("/admin") || pathname.startsWith("/_")) return;
 
-    const payload = {
-      path: pathname,
-      referrer: document.referrer || "",
-      visitor_id: getVisitorId(),
-    };
-
-    if (navigator.sendBeacon) {
-      navigator.sendBeacon("/api/analytics/track", JSON.stringify(payload));
-    } else {
-      fetch("/api/analytics/track", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-        keepalive: true,
-      }).catch(() => {});
-    }
+    trackVisit(pathname, document.referrer, getVisitorId());
   }, [pathname]);
 
   return null;

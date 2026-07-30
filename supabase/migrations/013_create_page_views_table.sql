@@ -16,3 +16,9 @@ CREATE POLICY "Admins can read page_views"
     FOR SELECT
     TO authenticated
     USING (true);
+
+CREATE POLICY "Anyone can insert page_views"
+    ON page_views
+    FOR INSERT
+    TO anon
+    WITH CHECK (true);
