@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { Container } from "@/components/ui/Container";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { getBlogPostBySlug } from "@/features/blog/blog-post.service";
@@ -86,7 +88,9 @@ export default async function BlogPostDetailPage({
           <div className="mt-16 border-t border-neutral-200 pt-8">
             <div className="prose prose-neutral prose-lg max-w-none text-neutral-800 [&_a]:text-red-600 [&_a]:underline [&_a]:hover:text-red-800 [&_strong]:text-neutral-900 [&_h2]:text-neutral-900 [&_h3]:text-neutral-900 [&_ul]:text-neutral-700 [&_ol]:text-neutral-700">
               {post.content ? (
-                <div dangerouslySetInnerHTML={{ __html: post.content }} />
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {post.content}
+                </ReactMarkdown>
               ) : (
                 <p className="leading-relaxed text-neutral-600">
                   Este es un placeholder para el contenido completo del artículo. Más adelante aquí renderizaremos contenido desde Supabase, MDX o un editor del admin.

@@ -19,6 +19,7 @@ const feedbackMessages: Record<string, { message: string; type: "success" | "err
     certificate_updated: { message: "Certificado actualizado correctamente.", type: "success" },
     certificate_deleted: { message: "Certificado eliminado correctamente.", type: "success" },
     avatar_updated: { message: "Foto de perfil actualizada correctamente.", type: "success" },
+    profile_updated: { message: "Perfil actualizado correctamente.", type: "success" },
 };
 
 export function FeedbackBanner({ params }: FeedbackBannerProps) {
@@ -42,9 +43,11 @@ export function FeedbackBanner({ params }: FeedbackBannerProps) {
                                 ? "certificate_updated"
                                 : typeof params.certificate_deleted === "string"
                                     ? "certificate_deleted"
-                                    : typeof params.avatar_updated === "string"
-                                        ? "avatar_updated"
-                                        : undefined;
+                    : typeof params.avatar_updated === "string"
+                        ? "avatar_updated"
+                        : typeof params.profile_updated === "string"
+                            ? "profile_updated"
+                            : undefined;
 
     const feedbackKey = error ?? successParam;
 

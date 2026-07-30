@@ -45,9 +45,9 @@ function shouldUseMock() {
   );
 }
 
-export async function getAdminProfile(): Promise<{ avatarUrl: string | null }> {
+export async function getAdminProfile(): Promise<{ headline: string; summary: string; avatarUrl: string | null }> {
   if (shouldUseMock()) {
-    return { avatarUrl: profile.avatarUrl ?? null };
+    return { headline: profile.headline ?? "", summary: profile.summary ?? "", avatarUrl: profile.avatarUrl ?? null };
   }
 
   try {
@@ -55,17 +55,17 @@ export async function getAdminProfile(): Promise<{ avatarUrl: string | null }> {
 
     const { data, error } = await supabase
       .from("profiles")
-      .select("avatar_url")
+      .select("headline,summary,avatar_url")
       .limit(1)
       .maybeSingle();
 
     if (error || !data) {
-      return { avatarUrl: null };
+      return { headline: "", summary: "", avatarUrl: null };
     }
 
-    return { avatarUrl: data.avatar_url ?? null };
+    return { headline: data.headline ?? "", summary: data.summary ?? "", avatarUrl: data.avatar_url ?? null };
   } catch {
-    return { avatarUrl: null };
+    return { headline: "", summary: "", avatarUrl: null };
   }
 }
 

@@ -10,6 +10,7 @@ import { DeleteEducationButton } from "@/features/profile/components/DeleteEduca
 import { CreateCertificateModal } from "@/features/profile/components/CreateCertificateModal";
 import { AdminCertificateList } from "@/features/profile/components/AdminCertificateList";
 import { ProfileAvatarUpload } from "@/features/profile/components/ProfileAvatarUpload";
+import { ProfileAboutEditor } from "@/features/profile/components/ProfileAboutEditor";
 import { FeedbackBanner } from "@/features/profile/components/FeedbackBanner";
 
 type Props = {
@@ -21,7 +22,7 @@ export default async function AdminProfilePage({ searchParams }: Props) {
     const experiences = await getAdminExperiences();
     const educationList = await getAdminEducation();
     const certificates = await getAdminCertificates();
-    const { avatarUrl } = await getAdminProfile();
+    const { headline, summary, avatarUrl } = await getAdminProfile();
 
     return (
         <section className="min-h-screen py-20">
@@ -54,6 +55,42 @@ export default async function AdminProfilePage({ searchParams }: Props) {
 
                     <div className="mt-6 border border-white/10 bg-neutral-950 p-6">
                         <ProfileAvatarUpload currentAvatarUrl={avatarUrl} />
+                    </div>
+                </section>
+
+                <section className="mt-14 border-t border-white/10 pt-10">
+                    <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+                        <div>
+                            <p className="font-mono text-xs uppercase tracking-[0.25em] text-red-500">
+                                Profile CMS
+                            </p>
+
+                            <h2 className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-white">
+                                Sobre mí
+                            </h2>
+
+                            <p className="mt-4 max-w-2xl text-sm leading-6 text-neutral-500">
+                                Edita la frase principal y la descripción de la página Sobre mí.
+                            </p>
+                        </div>
+
+                        <ProfileAboutEditor headline={headline} summary={summary} />
+                    </div>
+
+                    <div className="mt-6 border border-white/10 bg-neutral-950 p-6">
+                        <p className="font-mono text-xs uppercase tracking-[0.25em] text-neutral-500">
+                            Frase principal
+                        </p>
+                        <p className="mt-2 text-white">
+                            {headline || "No definida"}
+                        </p>
+
+                        <p className="mt-6 font-mono text-xs uppercase tracking-[0.25em] text-neutral-500">
+                            Descripción
+                        </p>
+                        <p className="mt-2 whitespace-pre-wrap text-neutral-400">
+                            {summary || "No definida"}
+                        </p>
                     </div>
                 </section>
 
