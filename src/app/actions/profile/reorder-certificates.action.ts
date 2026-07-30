@@ -27,16 +27,16 @@ export async function reorderCertificatesAction(items: ReorderItem[]) {
     }
   }
 
-  const updates = items.map((item) => ({
-    id: item.id,
-    sort_order: item.sortOrder,
-  }));
+  for (const item of items) {
+    const { error } = await supabase
+      .from("certificates")
+      .update({ sort_order: item.sortOrder })
+      .eq("id", item.id);
 
-  const { error } = await supabase.from("certificates").upsert(updates, { onConflict: "id" });
-
-  if (error) {
-    console.error("Error al reordenar certificados:", error);
-    throw new Error("No se pudo reordenar los certificados");
+    if (error) {
+      console.error("Error al reordenar certificados:", error);
+      throw new Error("No se pudo reordenar los certificados");
+    }
   }
 
   revalidatePath("/");
