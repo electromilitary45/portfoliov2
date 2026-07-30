@@ -19,6 +19,7 @@ export async function createCertificateAction(formData: FormData) {
     const title = String(formData.get("title") ?? "").trim();
     const issuer = String(formData.get("issuer") ?? "").trim();
     const year = String(formData.get("year") ?? "").trim();
+    const linkUrl = String(formData.get("linkUrl") ?? "").trim() || null;
 
     if (!title || !issuer || !year) {
       throw new Error("Faltan campos obligatorios");
@@ -51,11 +52,22 @@ export async function createCertificateAction(formData: FormData) {
       fileUrl = publicUrlData.publicUrl;
     }
 
+    const { data: maxSort } = await supabase
+      .from("certificates")
+      .select("sort_order")
+      .order("sort_order", { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    const nextSortOrder = (maxSort?.sort_order ?? -1) + 1;
+
     const { error } = await supabase.from("certificates").insert({
       title,
       issuer,
       year,
       file_url: fileUrl,
+      link_url: linkUrl,
+      sort_order: nextSortOrder,
     });
 
     if (error) {

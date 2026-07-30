@@ -19,7 +19,7 @@ export function CreateCertificateModal() {
 
             <Modal
                 title="Crear certificado"
-                description="Registra un nuevo certificado y opcionalmente sube el archivo (imagen o PDF)."
+                description="Registra un nuevo certificado. Puedes subir un archivo, agregar un enlace, o ambos."
                 isOpen={isOpen}
                 onClose={() => setIsOpen(false)}
             >
@@ -73,6 +73,19 @@ export function CreateCertificateModal() {
                             type="file"
                             accept="image/*,application/pdf"
                             className="mt-2 w-full border border-white/10 bg-neutral-900 px-4 py-3 text-sm text-neutral-300 outline-none transition file:mr-4 file:border-0 file:bg-white file:px-4 file:py-2 file:text-sm file:font-medium file:text-neutral-950 focus:border-red-500"
+                        />
+                    </div>
+
+                    <div>
+                        <label className="text-sm text-neutral-300" htmlFor="linkUrl">
+                            Enlace (opcional)
+                        </label>
+                        <input
+                            id="linkUrl"
+                            name="linkUrl"
+                            type="url"
+                            className="mt-2 w-full border border-white/10 bg-neutral-900 px-4 py-3 text-white outline-none transition focus:border-red-500"
+                            placeholder="https://example.com/certificado"
                         />
                     </div>
 

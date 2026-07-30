@@ -90,6 +90,20 @@ export function UpdateCertificateModal({ certificate }: UpdateCertificateModalPr
                         ) : null}
                     </div>
 
+                    <div>
+                        <label className="text-sm text-neutral-300" htmlFor="linkUrl">
+                            Enlace (opcional)
+                        </label>
+                        <input
+                            id="linkUrl"
+                            name="linkUrl"
+                            type="url"
+                            defaultValue={certificate.linkUrl ?? ""}
+                            className="mt-2 w-full border border-white/10 bg-neutral-900 px-4 py-3 text-white outline-none transition focus:border-red-500"
+                            placeholder="https://example.com/certificado"
+                        />
+                    </div>
+
                     <button
                         type="submit"
                         className="w-full border border-white bg-white px-6 py-3 text-sm font-medium text-neutral-950 transition hover:border-red-500 hover:bg-red-500 hover:text-white"

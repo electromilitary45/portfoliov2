@@ -20,6 +20,8 @@ export type Certificate = {
   issuer: string;
   year: string;
   fileUrl?: string | null;
+  linkUrl?: string | null;
+  sortOrder: number;
 };
 
 export type Profile = {

@@ -85,7 +85,7 @@ export async function getProfileWithAvatar(): Promise<Profile & { avatarUrl: str
       supabase.from("profiles").select("avatar_url,headline,summary").limit(1).maybeSingle(),
       supabase.from("experiences").select("id,role,company,period,description,stack"),
       supabase.from("education").select("id,title,institution,period"),
-      supabase.from("certificates").select("id,title,issuer,year,file_url"),
+      supabase.from("certificates").select("id,title,issuer,year,file_url,link_url,sort_order").order("sort_order"),
     ]);
 
     const profileData = profileResult.data;
@@ -211,6 +211,8 @@ type SupabaseCertificateRow = {
   issuer: string;
   year: string;
   file_url: string | null;
+  link_url: string | null;
+  sort_order: number;
 };
 
 function mapCertificateRow(row: SupabaseCertificateRow): Certificate {
@@ -220,6 +222,8 @@ function mapCertificateRow(row: SupabaseCertificateRow): Certificate {
     issuer: row.issuer,
     year: row.year,
     fileUrl: row.file_url,
+    linkUrl: row.link_url,
+    sortOrder: row.sort_order,
   };
 }
 
@@ -233,7 +237,8 @@ export async function getCertificates(): Promise<Certificate[]> {
 
     const { data, error } = await supabase
       .from("certificates")
-      .select("id,title,issuer,year,file_url");
+      .select("id,title,issuer,year,file_url,link_url,sort_order")
+      .order("sort_order");
 
     if (error || !data) {
       return profile.certificates;

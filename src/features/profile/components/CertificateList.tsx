@@ -30,14 +30,25 @@ export function CertificateList({ items }: CertificateListProps) {
                             {item.issuer}
                         </p>
 
-                        {item.fileUrl ? (
-                            <Link
-                                href={item.fileUrl}
-                                className="mt-5 inline-flex text-sm font-medium text-neutral-950 underline underline-offset-4 transition group-hover:text-white"
-                            >
-                                Ver certificado
-                            </Link>
-                        ) : null}
+                        <div className="mt-5 flex flex-wrap gap-4">
+                            {item.fileUrl ? (
+                                <Link
+                                    href={item.fileUrl}
+                                    className="inline-flex text-sm font-medium text-neutral-950 underline underline-offset-4 transition group-hover:text-white"
+                                >
+                                    Ver certificado
+                                </Link>
+                            ) : null}
+
+                            {item.linkUrl ? (
+                                <Link
+                                    href={item.linkUrl}
+                                    className="inline-flex text-sm font-medium text-neutral-950 underline underline-offset-4 transition group-hover:text-white"
+                                >
+                                    Ver enlace
+                                </Link>
+                            ) : null}
+                        </div>
                     </article>
                 ))}
             </div>

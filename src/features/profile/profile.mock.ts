@@ -32,6 +32,8 @@ export const profile: Profile = {
       issuer: "Por definir",
       year: "2026",
       fileUrl: null,
+      linkUrl: null,
+      sortOrder: 0,
     },
   ],
 };

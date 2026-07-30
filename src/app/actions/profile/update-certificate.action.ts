@@ -21,6 +21,7 @@ export async function updateCertificateAction(formData: FormData) {
   const title = String(formData.get("title") ?? "").trim();
   const issuer = String(formData.get("issuer") ?? "").trim();
   const year = String(formData.get("year") ?? "").trim();
+  const linkUrl = String(formData.get("linkUrl") ?? "").trim() || null;
   const currentFileUrl = String(formData.get("currentFileUrl") ?? "").trim() || null;
 
   if (!certificateId || !title || !issuer || !year) {
@@ -63,6 +64,7 @@ export async function updateCertificateAction(formData: FormData) {
       issuer,
       year,
       file_url: fileUrl,
+      link_url: linkUrl,
     })
     .eq("id", certificateId);
 
