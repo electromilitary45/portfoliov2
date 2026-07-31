@@ -23,5 +23,6 @@ CREATE POLICY "Anyone can insert page_views"
     TO anon
     WITH CHECK (true);
 
-GRANT INSERT ON public.page_views TO anon;
-GRANT SELECT ON public.page_views TO authenticated;
+GRANT ALL ON public.page_views TO anon;
+GRANT ALL ON public.page_views TO authenticated;
+GRANT ALL ON public.page_views TO service_role;
