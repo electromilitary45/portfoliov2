@@ -11,9 +11,11 @@ export async function GET() {
 
   info.supabaseUrl = supabaseUrl ? "✓ configurado" : "✗ faltante";
   info.supabaseAnonKey = supabaseAnonKey
-    ? "✓ configurado"
+    ? "✓ configurado (prefix: " + supabaseAnonKey.slice(0, 10) + "...)"
     : "✗ faltante";
-  info.serviceRoleKey = serviceRoleKey ? "✓ configurado" : "✗ no configurado";
+  info.serviceRoleKey = serviceRoleKey
+    ? "✓ configurado (prefix: " + serviceRoleKey.slice(0, 10) + "...)"
+    : "✗ no configurado";
 
   // Test REST API insert
   const testId = crypto.randomUUID().slice(0, 8);
