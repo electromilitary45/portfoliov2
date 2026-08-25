@@ -58,6 +58,7 @@ Mappers convierten filas snake_case → `Project`.
 - Descripción: `summary`; keywords: `stack`.
 - Canonical: `/proyectos/<slug>`.
 - OpenGraph/Twitter: usa `image_url` (con `image_alt`) como imagen; sin imagen → card `summary`.
+- **OG image dinámica** (`opengraph-image.tsx`): tarjeta tipográfica 1200×630 generada con `ImageResponse`; se usa automáticamente cuando el proyecto no tiene `image_url`.
 
 ### Admin
 - `/admin/proyectos` — lista completa (draft/published/archived) con imagen, badge de estado, stack y acciones: editar (modal), publicar/archivar, eliminar (confirmación), enlace "Ver público".

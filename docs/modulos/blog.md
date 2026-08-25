@@ -61,6 +61,7 @@ Tabla Supabase: **`blog_posts`** (el select incluye la columna `images` jsonb). 
 - Keywords: `tags`; canonical: `/blog/<slug>`.
 - OpenGraph: `type: "article"` con `publishedTime` y tags; imagen = `coverImageUrl` o 1ª de `images`.
 - Twitter: `summary_large_image` si hay imagen, si no `summary`.
+- **OG image dinámica** (`opengraph-image.tsx`): tarjeta tipográfica 1200×630 con título/excerpt y hasta 3 tags; fallback cuando el post no tiene cover.
 
 ### Admin
 - `/admin/blog` — tabla con título, badge de estado (iconos Eye/EyeOff/Archive), fecha y acciones: editar, ciclo de estado, eliminar. Botón para crear.

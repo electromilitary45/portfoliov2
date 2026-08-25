@@ -6,8 +6,7 @@ Pendientes de mejora del portfolio, priorizados según referencia de portfolios 
 
 ## 🔴 Prioridad alta
 
-### 2. Infraestructura SEO técnica
-- [ ] Opcional: `opengraph-image` dinámico por post/proyecto (requiere `ImageResponse` de `next/og`).
+> Tarea 2 (Infraestructura SEO técnica) completada el 2026-08-25, incluido el `opengraph-image` dinámico opcional — ver "Hecho recientemente".
 
 > El resto (sitemap, robots, 404) completado el 2026-08-25 — ver "Hecho recientemente".
 
@@ -62,6 +61,7 @@ Pendientes de mejora del portfolio, priorizados según referencia de portfolios 
 
 ## ✅ Hecho recientemente
 
+- [x] **2026-08-25 — OpenGraph dinámico**: `opengraph-image.tsx` en `/proyectos/[slug]` y `/blog/[slug]` (`ImageResponse` de `next/og`, 1200×630, tarjeta tipográfica estilo del sitio con título/descripción/tags). Comportamiento: si el contenido tiene foto propia, el `generateMetadata` la prioriza; la tarjeta generada actúa como fallback automático cuando no hay imagen.
 - [x] **2026-08-25 — Páginas de error 500**: `src/app/error.tsx` (boundary por segmento, client component con `unstable_retry()`) y `src/app/global-error.tsx` (fallback crítico con html/body propio). Ambos muestran `error.digest` para rastrear logs.
 - [x] **2026-08-25 — Infraestructura SEO técnica**: `src/app/sitemap.ts` (5 rutas estáticas + slugs de proyectos/posts publicados, `revalidate: 3600`), `src/app/robots.ts` (bloquea `/admin` y `/api`, enlaza sitemap), `src/app/not-found.tsx` personalizado. Constantes del sitio extraídas a `src/lib/site.ts`. Sin migraciones (sin cambios de BD).
 - [x] **2026-08-25 — SEO por página**: `generateMetadata` dinámico en `/proyectos/[slug]` y `/blog/[slug]` (título, descripción, keywords, canonical, OpenGraph, Twitter card); metadata estática en `/sobre-mi`, `/proyectos`, `/blog`, `/contactame`; template de títulos `%s | Portfolio Derek Leiva` en root layout. Sin migraciones (usa columnas existentes).

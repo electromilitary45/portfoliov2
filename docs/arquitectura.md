@@ -159,5 +159,9 @@ Ver detalle en [Autenticación](./modulos/autenticacion.md).
 | `src/app/not-found.tsx` | 404 global | Página personalizada con estilo guest (label rojo, h1 grande, botones a inicio/proyectos) |
 | `src/app/error.tsx` | 500 por segmento | Error boundary (client) con botón "Intentar de nuevo" (`unstable_retry()`) y enlace al inicio; muestra `error.digest` como referencia para logs |
 | `src/app/global-error.tsx` | 500 crítico | Fallback si falla el root layout; define su propio `<html>/<body>` e importa `globals.css`; sin export de metadata (no soportado en client components) |
+| `(guest)/proyectos/[slug]/opengraph-image.tsx` | OG image dinámica | `ImageResponse` (next/og) 1200×630: tarjeta tipográfica con título/summary del proyecto. Fallback si no hay foto |
+| `(guest)/blog/[slug]/opengraph-image.tsx` | OG image dinámica | Igual para posts, incluye hasta 3 tags. Fallback si no hay cover |
+
+> Prioridad de imágenes OG: si `generateMetadata` define explícitamente `openGraph.images` (foto propia del contenido), esa gana sobre la imagen generada por convención de archivo; la tarjeta tipográfica solo se usa cuando no hay foto.
 
 Pendiente opcional: `opengraph-image` dinámico por post/proyecto (ver `docs/tareas.md`).
