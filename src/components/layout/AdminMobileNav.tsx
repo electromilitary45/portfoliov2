@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { signOutAction } from "@/app/actions/auth/sign-out.action";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 
 type AdminMobileNavProps = {
     navItems: { label: string; href: string }[];
@@ -22,15 +23,18 @@ export function AdminMobileNav({ navItems }: AdminMobileNavProps) {
                     </span>
                 </Link>
 
-                <button
-                    type="button"
-                    aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
-                    aria-expanded={menuOpen}
-                    onClick={() => setMenuOpen((open) => !open)}
-                    className="inline-flex items-center justify-center p-2 text-white"
-                >
-                    {menuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-                </button>
+                <div className="flex items-center gap-2">
+                    <ThemeToggle variant="admin" />
+                    <button
+                        type="button"
+                        aria-label={menuOpen ? "Cerrar menú" : "Abrir menú"}
+                        aria-expanded={menuOpen}
+                        onClick={() => setMenuOpen((open) => !open)}
+                        className="inline-flex items-center justify-center p-2 text-white"
+                    >
+                        {menuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+                    </button>
+                </div>
             </div>
 
             {menuOpen && (

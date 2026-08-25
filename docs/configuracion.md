@@ -78,7 +78,7 @@ experimental.serverActions.bodySizeLimit: "10mb"
 - `@import "tailwindcss";` (v4, sin `tailwind.config`).
 - `@custom-variant dark` basado en clase `.dark` en `<html>` (toggle manual además de `prefers-color-scheme`).
 - **Sistema de tema por inversión de variables**: Tailwind v4 compila los colores como `var(--color-*)`; bajo `.dark` se redefine la escala de neutrales/blanco/rojo para invertir el sitio público sin tocar clases de componentes.
-- `.palette-default` restaura la paleta original dentro de un árbol — la usan el layout admin y el login (que ya son oscuros fijos) para no verse afectados por el toggle.
+- **`.palette-admin`**: el CMS y el login están codificados con paleta oscura fija; esta clase los invierte a claro cuando el sitio está en modo claro, y bajo `.dark .palette-admin` restaura sus valores originales (oscuro). Un solo toggle gobierna todo. Incluye remapeo de badges (`green/yellow/red-400/500`) para contraste sobre fondo claro.
 - Script anti-FOUC inline en `src/app/layout.tsx`: aplica `.dark` antes del primer render leyendo `localStorage("portfolio-theme")`, con fallback a `prefers-color-scheme`.
 
 ---

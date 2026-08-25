@@ -49,7 +49,7 @@ Bloque de marca, descripción, links GitHub/LinkedIn/Email, © año dinámico.
 Barra oscura sticky para < lg; recibe `navItems`; incluye "Volver al sitio" y form de sign-out (server action).
 
 ### `ThemeToggle.tsx` (client)
-Botón sol/luna en el navbar guest (desktop + menú móvil). Alterna `.dark` en `<html>`, persiste en `localStorage("portfolio-theme")`. Renderiza placeholder hasta montar para evitar mismatch de hidratación. La inversión visual real vive en `globals.css` (variables CSS).
+Botón sol/luna presente en el navbar guest (desktop + menú móvil) y en el admin (sidebar desktop + barra móvil, `variant="admin"`). Alterna `.dark` en `<html>`, persiste en `localStorage("portfolio-theme")`. Renderiza placeholder hasta montar para evitar mismatch de hidratación. La inversión visual real vive en `globals.css` (variables CSS): guest invierte bajo `.dark`; admin invierte bajo `.palette-admin` y se restaura con `.dark .palette-admin`.
 
 ---
 
