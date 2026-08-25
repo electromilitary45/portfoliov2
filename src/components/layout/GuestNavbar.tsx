@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 
 const navItems = [
     { label: "Inicio", href: "/" },
@@ -38,9 +39,12 @@ export function GuestNavbar() {
                     ))}
                 </div>
 
-                <Button href="/admin" variant="dark" className="max-md:hidden">
-                    Admin
-                </Button>
+                <div className="flex items-center gap-3">
+                    <ThemeToggle />
+                    <Button href="/admin" variant="dark" className="max-md:hidden">
+                        Admin
+                    </Button>
+                </div>
 
                 <button
                     type="button"
@@ -69,6 +73,10 @@ export function GuestNavbar() {
                         <Button href="/admin" variant="dark" className="mt-2">
                             Admin
                         </Button>
+
+                        <div className="mt-2">
+                            <ThemeToggle className="w-full" />
+                        </div>
                     </div>
                 </div>
             )}

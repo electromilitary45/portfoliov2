@@ -17,10 +17,7 @@ Pendientes de mejora del portfolio, priorizados según referencia de portfolios 
 
 ## 🟡 Prioridad media
 
-### 5. Dark mode
-- [ ] Toggle claro/oscuro persistido (`localStorage` / `class` strategy).
-- [ ] Migrar clases hardcodeadas (`bg-neutral-50`, neutrales oscuros) a tokens del tema.
-- Ref: `docs/configuracion.md` §6.
+> Tarea 5 (Dark mode) completada el 2026-08-25 — ver "Hecho recientemente".
 
 ### 6. Descargar CV
 - [ ] PDF en `public/` + botón en hero y/o navbar.
@@ -54,6 +51,7 @@ Pendientes de mejora del portfolio, priorizados según referencia de portfolios 
 
 ## ✅ Hecho recientemente
 
+- [x] **2026-08-25 — Dark mode**: toggle sol/luna en navbar guest (`ThemeToggle.tsx`) persistido en `localStorage`; script anti-FOUC en root layout (respeta `prefers-color-scheme` por defecto); implementado por **inversión de variables CSS** bajo `.dark` en `globals.css` — cero cambios de clases en componentes. Admin y login blindados con `.palette-default` (mantienen su tema oscuro fijo). Nota: `global-error.tsx` queda siempre claro al tener su propio `<html>` sin el script.
 - [x] **2026-08-25 — Formulario de contacto funcional**: formulario en `/contactame` (honeypot + validación server-side) con doble canal: email vía **Resend** (`RESEND_API_KEY`, plantilla HTML propia) + respaldo en tabla `contact_messages` (**migraciones 014 y 015**). Bandeja nueva `/admin/mensajes` en el CMS (leer/no leer, eliminar, contadores). Env vars nuevas documentadas. Errores de canales ahora se loguean en consola.
 - [x] **2026-08-25 — OpenGraph dinámico**: `opengraph-image.tsx` en `/proyectos/[slug]` y `/blog/[slug]` (`ImageResponse` de `next/og`, 1200×630, tarjeta tipográfica estilo del sitio con título/descripción/tags). Comportamiento: si el contenido tiene foto propia, el `generateMetadata` la prioriza; la tarjeta generada actúa como fallback automático cuando no hay imagen.
 - [x] **2026-08-25 — Páginas de error 500**: `src/app/error.tsx` (boundary por segmento, client component con `unstable_retry()`) y `src/app/global-error.tsx` (fallback crítico con html/body propio). Ambos muestran `error.digest` para rastrear logs.

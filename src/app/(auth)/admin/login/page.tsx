@@ -24,7 +24,7 @@ export default async function AdminLoginPage() {
     }
 
     return (
-        <main className="min-h-screen bg-neutral-950 px-6 py-20 text-white">
+        <main className="palette-default min-h-screen bg-neutral-950 px-6 py-20 text-white">
             <section className="mx-auto max-w-md">
                 <p className="font-mono text-sm uppercase tracking-[0.35em] text-red-500">
                     Admin Login

@@ -48,6 +48,9 @@ Bloque de marca, descripción, links GitHub/LinkedIn/Email, © año dinámico.
 ### `AdminMobileNav.tsx` (client)
 Barra oscura sticky para < lg; recibe `navItems`; incluye "Volver al sitio" y form de sign-out (server action).
 
+### `ThemeToggle.tsx` (client)
+Botón sol/luna en el navbar guest (desktop + menú móvil). Alterna `.dark` en `<html>`, persiste en `localStorage("portfolio-theme")`. Renderiza placeholder hasta montar para evitar mismatch de hidratación. La inversión visual real vive en `globals.css` (variables CSS).
+
 ---
 
 ## 3. `home/` — secciones del home

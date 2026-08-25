@@ -76,8 +76,10 @@ experimental.serverActions.bodySizeLimit: "10mb"
 
 ### `globals.css`
 - `@import "tailwindcss";` (v4, sin `tailwind.config`).
-- Tema inline con variables Geist (sans/mono).
-- Variables light/dark declaradas, aunque las páginas mayormente fijan clases explícitas: guest usa `bg-neutral-50` (claro), admin usa neutrales oscuros.
+- `@custom-variant dark` basado en clase `.dark` en `<html>` (toggle manual además de `prefers-color-scheme`).
+- **Sistema de tema por inversión de variables**: Tailwind v4 compila los colores como `var(--color-*)`; bajo `.dark` se redefine la escala de neutrales/blanco/rojo para invertir el sitio público sin tocar clases de componentes.
+- `.palette-default` restaura la paleta original dentro de un árbol — la usan el layout admin y el login (que ya son oscuros fijos) para no verse afectados por el toggle.
+- Script anti-FOUC inline en `src/app/layout.tsx`: aplica `.dark` antes del primer render leyendo `localStorage("portfolio-theme")`, con fallback a `prefers-color-scheme`.
 
 ---
 

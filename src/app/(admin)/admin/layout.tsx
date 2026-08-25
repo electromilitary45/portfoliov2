@@ -28,7 +28,7 @@ export default async function AdminLayout({
     }
 
     return (
-        <div className="min-h-screen bg-neutral-950 text-white">
+        <div className="palette-default min-h-screen bg-neutral-950 text-white">
             <AdminMobileNav navItems={adminNavItems} />
             <aside className="fixed left-0 top-0 z-50 hidden h-screen w-72 overflow-y-auto border-r border-white/10 bg-neutral-950 p-6 lg:flex lg:flex-col">
                 <div className="flex min-h-full flex-col justify-between">
