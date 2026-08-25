@@ -139,3 +139,12 @@ Ver detalle en [Autenticación](./modulos/autenticacion.md).
 - Estados de contenido: `"draft" | "published" | "archived"` (proyectos, blog).
 - Fechas formateadas en español (`es-ES`) con `Intl.DateTimeFormat`.
 - Sin foreign keys en la BD: las relaciones se resuelven en código (`getProfileWithAvatar()` junta 4 tablas; `blog_posts.images` es jsonb embebido).
+
+---
+
+## 9. SEO / Metadata
+
+- Root layout (`src/app/layout.tsx`): `metadataBase`, título con template `%s | Portfolio Derek Leiva` y OG/Twitter por defecto (`/preview.png`, `es_ES`).
+- Rutas dinámicas (`/proyectos/[slug]`, `/blog/[slug]`): `generateMetadata` por contenido — title/description, keywords (stack/tags), canonical, OpenGraph completo y Twitter card.
+- Páginas estáticas guest: `export const metadata` con title + description + canonical.
+- Ojo: el merge de metadata es **shallow** — si una página define `openGraph`, reemplaza el del layout, por eso cada `generateMetadata` define su OG completo.

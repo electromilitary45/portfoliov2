@@ -53,8 +53,14 @@ Tabla Supabase: **`blog_posts`** (el select incluye la columna `images` jsonb). 
 ## 3. Rutas
 
 ### Público
-- `/blog` — grid de `BlogPostCard` ("Artículos publicados").
+- `/blog` — grid de `BlogPostCard` ("Artículos publicados"); metadata estática (title/description/canonical).
 - `/blog/[slug]` — detalle: tiempo de lectura, fecha `es-ES`, tags, **ImageCarousel (Embla + autoplay)** con las imágenes del post, contenido renderizado con `react-markdown` + `remark-gfm` bajo estilos `prose` (Tailwind Typography).
+
+### SEO (`generateMetadata` en `[slug]/page.tsx`)
+- Título: título del post (template `%s | Portfolio Derek Leiva`); descripción: `excerpt`.
+- Keywords: `tags`; canonical: `/blog/<slug>`.
+- OpenGraph: `type: "article"` con `publishedTime` y tags; imagen = `coverImageUrl` o 1ª de `images`.
+- Twitter: `summary_large_image` si hay imagen, si no `summary`.
 
 ### Admin
 - `/admin/blog` — tabla con título, badge de estado (iconos Eye/EyeOff/Archive), fecha y acciones: editar, ciclo de estado, eliminar. Botón para crear.

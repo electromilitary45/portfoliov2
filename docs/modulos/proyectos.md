@@ -53,6 +53,12 @@ Mappers convierten filas snake_case → `Project`.
 - `/proyectos` — grid de `ProjectCard` ("Archivo de proyectos").
 - `/proyectos/[slug]` — detalle: título, resumen, chips de stack, botones GitHub/demo, imagen hero, sección descripción.
 
+### SEO (`generateMetadata` en `[slug]/page.tsx`)
+- Título: nombre del proyecto (con template `%s | Portfolio Derek Leiva` del root layout).
+- Descripción: `summary`; keywords: `stack`.
+- Canonical: `/proyectos/<slug>`.
+- OpenGraph/Twitter: usa `image_url` (con `image_alt`) como imagen; sin imagen → card `summary`.
+
 ### Admin
 - `/admin/proyectos` — lista completa (draft/published/archived) con imagen, badge de estado, stack y acciones: editar (modal), publicar/archivar, eliminar (confirmación), enlace "Ver público".
 
