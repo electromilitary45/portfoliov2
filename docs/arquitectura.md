@@ -157,5 +157,7 @@ Ver detalle en [Autenticación](./modulos/autenticacion.md).
 | `src/app/sitemap.ts` | `/sitemap.xml` | 5 rutas estáticas + slugs de proyectos publicados (`getProjects`) y posts publicados (`getPublishedBlogPosts`). `revalidate: 3600` |
 | `src/app/robots.ts` | `/robots.txt` | Allow `/`; Disallow `/admin`, `/api`; enlaza al sitemap |
 | `src/app/not-found.tsx` | 404 global | Página personalizada con estilo guest (label rojo, h1 grande, botones a inicio/proyectos) |
+| `src/app/error.tsx` | 500 por segmento | Error boundary (client) con botón "Intentar de nuevo" (`unstable_retry()`) y enlace al inicio; muestra `error.digest` como referencia para logs |
+| `src/app/global-error.tsx` | 500 crítico | Fallback si falla el root layout; define su propio `<html>/<body>` e importa `globals.css`; sin export de metadata (no soportado en client components) |
 
 Pendiente opcional: `opengraph-image` dinámico por post/proyecto (ver `docs/tareas.md`).
