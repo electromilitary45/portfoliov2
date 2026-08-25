@@ -38,7 +38,7 @@ export function GuestNavbar() {
                     ))}
                 </div>
 
-                <Button href="/admin" variant="dark" className="hidden md:inline-flex">
+                <Button href="/admin" variant="dark" className="max-md:hidden">
                     Admin
                 </Button>
 
