@@ -6,12 +6,6 @@ Pendientes de mejora del portfolio, priorizados según referencia de portfolios 
 
 ## 🔴 Prioridad alta
 
-### 1. SEO por página (`generateMetadata`)
-- [ ] `generateMetadata` dinámico en `/proyectos/[slug]` (título, descripción, OG image del proyecto).
-- [ ] `generateMetadata` dinámico en `/blog/[slug]` (título, excerpt como descripción, cover como OG).
-- [ ] Metadata estática en páginas restantes: `/sobre-mi`, `/proyectos`, `/blog`, `/contactame`.
-- Refs: `src/app/layout.tsx` (hoy único lugar con metadata), `docs/modulos/proyectos.md`, `docs/modulos/blog.md`.
-
 ### 2. Infraestructura SEO técnica
 - [ ] `src/app/sitemap.ts` (rutas estáticas + slugs dinámicos de proyectos/posts).
 - [ ] `src/app/robots.ts`.
@@ -69,6 +63,7 @@ Pendientes de mejora del portfolio, priorizados según referencia de portfolios 
 
 ## ✅ Hecho recientemente
 
+- [x] **2026-08-25 — SEO por página**: `generateMetadata` dinámico en `/proyectos/[slug]` y `/blog/[slug]` (título, descripción, keywords, canonical, OpenGraph, Twitter card); metadata estática en `/sobre-mi`, `/proyectos`, `/blog`, `/contactame`; template de títulos `%s | Portfolio Derek Leiva` en root layout. Sin migraciones (usa columnas existentes).
 - [x] Hero del home horizontal `[foto | título/nombre]` en todos los dispositivos (`HeroSection.tsx`).
 - [x] Botón Admin duplicado en header móvil corregido (`GuestNavbar.tsx`).
 - [x] Carpeta `docs/` creada con documentación completa por módulo.

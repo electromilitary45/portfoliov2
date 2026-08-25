@@ -1,7 +1,15 @@
+import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { BlogPostCard } from "@/features/blog/components/BlogPostCard";
 import { getPublishedBlogPosts } from "@/features/blog/blog-post.service";
+
+export const metadata: Metadata = {
+    title: "Blog",
+    description:
+        "Notas, guías y bitácoras de desarrollo: aprendizajes, decisiones técnicas, errores resueltos y avances reales.",
+    alternates: { canonical: "/blog" },
+};
 
 export default async function BlogPage() {
     const posts = await getPublishedBlogPosts();

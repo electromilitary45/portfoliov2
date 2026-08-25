@@ -1,7 +1,15 @@
+import type { Metadata } from "next";
 import { Container } from "@/components/ui/Container";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { ProjectCard } from "@/features/projects/components/ProjectCard";
 import { getProjects } from "@/features/projects/project.service";
+
+export const metadata: Metadata = {
+    title: "Proyectos",
+    description:
+        "Archivo de proyectos donde documento el proceso, decisiones técnicas, stack utilizado, repositorios públicos y demos.",
+    alternates: { canonical: "/proyectos" },
+};
 
 export default async function ProjectsPage() {
     const projects = await getProjects();

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -11,6 +12,42 @@ type ProjectDetailPageProps = {
         slug: string;
     }>;
 };
+
+export async function generateMetadata({
+    params,
+}: ProjectDetailPageProps): Promise<Metadata> {
+    const { slug } = await params;
+    const project = await getProjectBySlug(slug);
+
+    if (!project) {
+        return { title: "Proyecto no encontrado" };
+    }
+
+    const canonical = `/proyectos/${project.slug}`;
+
+    return {
+        title: project.title,
+        description: project.summary,
+        keywords: project.stack,
+        alternates: { canonical },
+        openGraph: {
+            title: project.title,
+            description: project.summary,
+            url: canonical,
+            locale: "es_ES",
+            type: "website",
+            images: project.imageUrl
+                ? [{ url: project.imageUrl, alt: project.imageAlt ?? project.title }]
+                : undefined,
+        },
+        twitter: {
+            card: project.imageUrl ? "summary_large_image" : "summary",
+            title: project.title,
+            description: project.summary,
+            images: project.imageUrl ? [project.imageUrl] : undefined,
+        },
+    };
+}
 
 export default async function ProjectDetailPage({
     params,

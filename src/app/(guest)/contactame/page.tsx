@@ -1,6 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { PageHeader } from "@/components/ui/PageHeader";
+
+export const metadata: Metadata = {
+    title: "Contáctame",
+    description:
+        "Contáctame para conversar sobre desarrollo web, oportunidades profesionales, colaboración técnica o feedback de mis proyectos.",
+    alternates: { canonical: "/contactame" },
+};
 
 const contactLinks = [
     {

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -14,6 +15,45 @@ type BlogPostDetailPageProps = {
     slug: string;
   }>;
 };
+
+export async function generateMetadata({
+  params,
+}: BlogPostDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getBlogPostBySlug(slug);
+
+  if (!post) {
+    return { title: "Artículo no encontrado" };
+  }
+
+  const canonical = `/blog/${post.slug}`;
+  const ogImage =
+    post.coverImageUrl ?? post.images?.[0]?.url ?? undefined;
+  const ogImageAlt = post.coverImageAlt ?? post.title;
+
+  return {
+    title: post.title,
+    description: post.excerpt,
+    keywords: post.tags,
+    alternates: { canonical },
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      url: canonical,
+      locale: "es_ES",
+      type: "article",
+      publishedTime: post.publishedAt ?? undefined,
+      tags: post.tags,
+      images: ogImage ? [{ url: ogImage, alt: ogImageAlt }] : undefined,
+    },
+    twitter: {
+      card: ogImage ? "summary_large_image" : "summary",
+      title: post.title,
+      description: post.excerpt,
+      images: ogImage ? [ogImage] : undefined,
+    },
+  };
+}
 
 // Helper to get all images for display (cover + additional images)
 function getDisplayImages(post: { coverImageUrl?: string | null; coverImageAlt?: string | null; images?: BlogPostImage[] }): BlogPostImage[] {

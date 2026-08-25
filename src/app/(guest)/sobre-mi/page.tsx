@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { Container } from "@/components/ui/Container";
 import { PageHeader } from "@/components/ui/PageHeader";
@@ -5,6 +6,13 @@ import { CertificateList } from "@/features/profile/components/CertificateList";
 import { EducationList } from "@/features/profile/components/EducationList";
 import { ExperienceTimeline } from "@/features/profile/components/ExperienceTimeline";
 import { getProfileWithAvatar } from "@/features/profile/profile.service";
+
+export const metadata: Metadata = {
+    title: "Sobre mí",
+    description:
+        "Conoce mi trayectoria: experiencia laboral, formación académica y certificados en desarrollo web.",
+    alternates: { canonical: "/sobre-mi" },
+};
 
 export default async function AboutPage() {
     const profile = await getProfileWithAvatar();
