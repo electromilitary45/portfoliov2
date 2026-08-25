@@ -51,6 +51,7 @@ src/
 ├── features/                       # Lógica de negocio por módulo
 │   ├── analytics/
 │   ├── blog/
+│   ├── contact/                    # Formulario de contacto (Resend + BD)
 │   ├── dashboard/
 │   ├── github/
 │   ├── profile/

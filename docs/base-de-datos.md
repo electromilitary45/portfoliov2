@@ -114,6 +114,20 @@ RLS: lectura pública; authenticated gestiona.
 
 RLS: **anon puede INSERT** (tracking público); authenticated SELECT. Grants completos para anon/authenticated/service_role.
 
+### 1.8 `contact_messages` — [014]
+
+| Columna | Tipo | Notas |
+|---------|------|-------|
+| `id` | uuid PK | `gen_random_uuid()` |
+| `name` | text NOT NULL | |
+| `email` | text NOT NULL | usado como replyTo en la notificación |
+| `message` | text NOT NULL | |
+| `is_read` | boolean | default false (bandeja admin) |
+| `created_at` | timestamptz | default now() |
+
+Índices: `created_at`, `is_read`.
+RLS: **anon puede INSERT** (formulario de contacto); authenticated SELECT/UPDATE/DELETE.
+
 ---
 
 ## 2. Storage buckets
@@ -144,6 +158,7 @@ RLS: **anon puede INSERT** (tracking público); authenticated SELECT. Grants com
 | 011 | `add_avatars_storage_policies.sql` | Bucket avatars |
 | 012 | `add_certificates_link_and_sort.sql` | `link_url` + `sort_order` |
 | 013 | `create_page_views_table.sql` | Tabla page_views + INSERT anónimo |
+| 014 | `create_contact_messages_table.sql` | Tabla contact_messages + INSERT anónimo + gestión autenticada |
 
 ---
 

@@ -28,6 +28,7 @@ Documentación técnica del proyecto **Portfolio Derek Leiva**: portafolio perso
 | 2.5 | [Dashboard](./modulos/dashboard.md) | Panel `/admin`: estadísticas, recientes, acciones rápidas |
 | 2.6 | [Analytics](./modulos/analytics.md) | Tracking first-party de visitas, tabla `page_views`, gráficos |
 | 2.7 | [GitHub](./modulos/github.md) | Integración con la API pública de GitHub (stats, contribuciones) |
+| 2.8 | [Contacto](./modulos/contacto.md) | Formulario público, email vía Resend, bandeja en `/admin/mensajes` |
 
 ### 3. Referencias
 
@@ -60,6 +61,7 @@ Documentación técnica del proyecto **Portfolio Derek Leiva**: portafolio perso
 | `/admin/proyectos` | `src/app/(admin)/admin/proyectos/page.tsx` | Gestión de proyectos |
 | `/admin/blog` | `src/app/(admin)/admin/blog/page.tsx` | Gestión de posts |
 | `/admin/perfil` | `src/app/(admin)/admin/perfil/page.tsx` | Gestión de perfil/experiencia/educación/certificados |
+| `/admin/mensajes` | `src/app/(admin)/admin/mensajes/page.tsx` | Bandeja de mensajes del formulario de contacto |
 
 ### Autenticación `(auth)`
 

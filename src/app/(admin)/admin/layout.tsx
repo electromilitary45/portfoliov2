@@ -9,6 +9,7 @@ const adminNavItems = [
     { label: "Proyectos", href: "/admin/proyectos" },
     { label: "Blog", href: "/admin/blog" },
     { label: "Perfil", href: "/admin/perfil" },
+    { label: "Mensajes", href: "/admin/mensajes" },
 ];
 
 export default async function AdminLayout({

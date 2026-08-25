@@ -17,6 +17,9 @@ Variables de entorno, scripts, configuración de Next/TS y dependencias.
 |----------|----------|-----|
 | `SUPABASE_SERVICE_ROLE_KEY` | Producción | Usada por `POST /api/analytics/track` para insertar vistas sin RLS de usuario. Sin ella hace fallback a la anon key; sin ninguna devuelve `{ok:true}` sin insertar |
 | `GITHUB_USERNAME` | Opcional | Habilita stats de GitHub (hero, dashboard) y el gráfico de contribuciones (`ghchart.rshah.org`). Si falta, esas secciones se ocultan o muestran hint |
+| `RESEND_API_KEY` | Para email de contacto | API key de [resend.com](https://resend.com) — envía la notificación del formulario de contacto. Sin ella el mensaje solo se guarda en BD (`contact_messages`) |
+| `RESEND_FROM` | No | Remitente personalizado del email (ej. `"Portfolio <hola@tudominio.com>"`). Default: `onboarding@resend.dev` (requiere destinatario = email de la cuenta Resend hasta verificar dominio) |
+| `CONTACT_EMAIL_TO` | No | Destinatario de las notificaciones. Default: `dereklevilla45@gmail.com` |
 
 ---
 
