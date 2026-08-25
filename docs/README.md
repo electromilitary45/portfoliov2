@@ -34,6 +34,7 @@ Documentación técnica del proyecto **Portfolio Derek Leiva**: portafolio perso
 | # | Documento | Contenido |
 |---|-----------|-----------|
 | 3.1 | [Componentes UI compartidos](./componentes-ui.md) | `Button`, `Modal`, `PageHeader`, layout, home, etc. |
+| 3.2 | [Tareas y roadmap](./tareas.md) | Pendientes priorizados, convención de seguimiento |
 
 ---
 

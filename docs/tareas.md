@@ -1,0 +1,80 @@
+# Tareas y roadmap
+
+Pendientes de mejora del portfolio, priorizados según referencia de portfolios top (Brittany Chiang, Lee Robinson, Josh Comeau). Marca `[x]` al completar.
+
+---
+
+## 🔴 Prioridad alta
+
+### 1. SEO por página (`generateMetadata`)
+- [ ] `generateMetadata` dinámico en `/proyectos/[slug]` (título, descripción, OG image del proyecto).
+- [ ] `generateMetadata` dinámico en `/blog/[slug]` (título, excerpt como descripción, cover como OG).
+- [ ] Metadata estática en páginas restantes: `/sobre-mi`, `/proyectos`, `/blog`, `/contactame`.
+- Refs: `src/app/layout.tsx` (hoy único lugar con metadata), `docs/modulos/proyectos.md`, `docs/modulos/blog.md`.
+
+### 2. Infraestructura SEO técnica
+- [ ] `src/app/sitemap.ts` (rutas estáticas + slugs dinámicos de proyectos/posts).
+- [ ] `src/app/robots.ts`.
+- [ ] `src/app/not-found.tsx` personalizado (404 con estilo del sitio).
+- [ ] Opcional: `opengraph-image` dinámico por post/proyecto.
+
+### 3. Formulario de contacto funcional
+- [ ] Reemplazar tarjetas estáticas en `/contactame` por formulario (server action → email o guardado en Supabase).
+- [ ] Alternativa mínima: botón "Copiar email" con feedback visual.
+- Ref: `src/app/(guest)/contactame/page.tsx`.
+
+### 4. Casos de estudio en proyectos
+- [ ] Añadir campos de resultado/métricas al modelo (ej. `highlights jsonb`: problema → solución → resultado).
+- [ ] Migración SQL + formularios admin + render en detalle público.
+- Ref: `docs/base-de-datos.md` §1.1, `docs/modulos/proyectos.md`.
+
+---
+
+## 🟡 Prioridad media
+
+### 5. Dark mode
+- [ ] Toggle claro/oscuro persistido (`localStorage` / `class` strategy).
+- [ ] Migrar clases hardcodeadas (`bg-neutral-50`, neutrales oscuros) a tokens del tema.
+- Ref: `docs/configuracion.md` §6.
+
+### 6. Descargar CV
+- [ ] PDF en `public/` + botón en hero y/o navbar.
+- [ ] Campo opcional `cv_url` en `profiles` para gestionarlo desde el CMS.
+
+### 7. Testimonios / recomendaciones
+- [ ] Tabla `testimonials` (autor, cargo, quote, avatar) + CRUD en `/admin`.
+- [ ] Sección pública en home o `/sobre-mi`.
+
+### 8. Filtros y búsqueda
+- [ ] Filtro por stack en `/proyectos` (ya existe columna `stack text[]`).
+- [ ] Filtro por tag en `/blog` (ya existe `tags text[]`).
+- Implementación sugerida: query params + Server Components (sin JS extra).
+
+### 9. Contador de vistas público
+- [ ] Mostrar nº de lecturas en `/blog/[slug]` usando datos de `page_views`.
+- Ref: `docs/modulos/analytics.md`.
+
+---
+
+## 🟢 Nice to have
+
+- [ ] Micro-interacciones: reveals on scroll, hovers animados (`prefers-reduced-motion` friendly).
+- [ ] RSS feed (`src/app/feed.xml/route.ts`) + botón de suscripción.
+- [ ] Newsletter (integración externa).
+- [ ] Página `/now` o badge "Disponible para proyectos".
+- [ ] Sección open source separada (PRs destacados), además del heatmap.
+- [ ] i18n EN/ES.
+
+---
+
+## ✅ Hecho recientemente
+
+- [x] Hero del home horizontal `[foto | título/nombre]` en todos los dispositivos (`HeroSection.tsx`).
+- [x] Botón Admin duplicado en header móvil corregido (`GuestNavbar.tsx`).
+- [x] Carpeta `docs/` creada con documentación completa por módulo.
+
+---
+
+## Convención
+
+Formato de cada tarea: `- [ ] descripción` + refs a archivos/docs. Al terminar una tarea, moverla a "Hecho recientemente" con fecha.
