@@ -96,6 +96,7 @@ Ignora `.next/**`, `out/**`, `build/**`, `next-env.d.ts`.
 | `react` / `react-dom` | 19.2.4 | UI |
 | `@supabase/ssr` | ^0.12 | Cliente Supabase con cookies (SSR/middleware) |
 | `@supabase/supabase-js` | ^2.108 | Cliente base Supabase |
+| `resend` + `@react-email/render` | — | Envío de email del formulario de contacto (plantilla JSX) |
 | `@dnd-kit/core` + `sortable` + `utilities` | — | Drag & drop de certificados |
 | `embla-carousel-react` + `autoplay` | — | Carrusel de imágenes del blog |
 | `lucide-react` | — | Iconos |

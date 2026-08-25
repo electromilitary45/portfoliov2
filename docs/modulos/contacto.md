@@ -60,7 +60,7 @@ Bandeja /admin/mensajes (revalidatePath tras cada envío exitoso)
 
 - `features/contact/contact-message.type.ts`: `ContactMessage { id, name, email, message, isRead, createdAt }`.
 - `features/contact/contact.service.ts`: `getContactMessages()` (todos, `created_at` desc; mock `[]` sin config).
-- `features/contact/components/ContactNotificationEmail.tsx`: plantilla HTML del email (JSX inline styles, estilo del sitio).
+- `features/contact/components/ContactNotificationEmail.tsx`: plantilla HTML del email (JSX inline styles, estilo del sitio). Requiere `@react-email/render` instalado — `resend` lo usa para renderizar el componente `react:`; sin él lanza "Failed to render React component".
 
 ---
 
