@@ -144,7 +144,18 @@ Ver detalle en [Autenticación](./modulos/autenticacion.md).
 
 ## 9. SEO / Metadata
 
+- Constantes del sitio centralizadas en `src/lib/site.ts` (`SITE_URL`, `SITE_TITLE`, `SITE_DESCRIPTION`) — las consumen layout, sitemap y robots.
 - Root layout (`src/app/layout.tsx`): `metadataBase`, título con template `%s | Portfolio Derek Leiva` y OG/Twitter por defecto (`/preview.png`, `es_ES`).
 - Rutas dinámicas (`/proyectos/[slug]`, `/blog/[slug]`): `generateMetadata` por contenido — title/description, keywords (stack/tags), canonical, OpenGraph completo y Twitter card.
 - Páginas estáticas guest: `export const metadata` con title + description + canonical.
 - Ojo: el merge de metadata es **shallow** — si una página define `openGraph`, reemplaza el del layout, por eso cada `generateMetadata` define su OG completo.
+
+### Archivos de metadata técnica
+
+| Archivo | Salida | Contenido |
+|---------|--------|-----------|
+| `src/app/sitemap.ts` | `/sitemap.xml` | 5 rutas estáticas + slugs de proyectos publicados (`getProjects`) y posts publicados (`getPublishedBlogPosts`). `revalidate: 3600` |
+| `src/app/robots.ts` | `/robots.txt` | Allow `/`; Disallow `/admin`, `/api`; enlaza al sitemap |
+| `src/app/not-found.tsx` | 404 global | Página personalizada con estilo guest (label rojo, h1 grande, botones a inicio/proyectos) |
+
+Pendiente opcional: `opengraph-image` dinámico por post/proyecto (ver `docs/tareas.md`).

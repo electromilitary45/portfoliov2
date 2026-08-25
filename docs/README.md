@@ -72,6 +72,9 @@ Documentación técnica del proyecto **Portfolio Derek Leiva**: portafolio perso
 | Ruta | Archivo | Descripción |
 |------|---------|-------------|
 | `POST /api/analytics/track` | `src/app/api/analytics/track/route.ts` | Registra vistas de página |
+| `/sitemap.xml` | `src/app/sitemap.ts` | Sitemap: rutas estáticas + proyectos/posts publicados |
+| `/robots.txt` | `src/app/robots.ts` | Reglas de crawling (bloquea `/admin`, `/api`) |
+| 404 global | `src/app/not-found.tsx` | Página "no encontrada" personalizada |
 
 ---
 

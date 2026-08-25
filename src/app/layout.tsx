@@ -2,13 +2,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { AnalyticsTracker } from "@/components/analytics/AnalyticsTracker";
+import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
-const siteUrl = "https://portfolio.villalobossebas.me";
-const siteTitle = "Portfolio Derek Leiva";
-const siteDescription =
-  "Portfolio personal de desarrollo web, proyectos y blog.";
-const previewImage = `${siteUrl}/preview.png`;
+const previewImage = `${SITE_URL}/preview.png`;
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,23 +18,23 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: siteTitle,
-    template: `%s | ${siteTitle}`,
+    default: SITE_TITLE,
+    template: `%s | ${SITE_TITLE}`,
   },
-  description: siteDescription,
+  description: SITE_DESCRIPTION,
   openGraph: {
-    title: siteTitle,
-    description: siteDescription,
-    url: siteUrl,
-    siteName: siteTitle,
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    url: SITE_URL,
+    siteName: SITE_TITLE,
     images: [
       {
         url: previewImage,
         width: 1200,
         height: 630,
-        alt: `${siteTitle} - Preview`,
+        alt: `${SITE_TITLE} - Preview`,
       },
     ],
     locale: "es_ES",
@@ -45,8 +42,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: siteTitle,
-    description: siteDescription,
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
     images: [previewImage],
   },
 };

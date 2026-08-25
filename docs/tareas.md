@@ -7,10 +7,9 @@ Pendientes de mejora del portfolio, priorizados según referencia de portfolios 
 ## 🔴 Prioridad alta
 
 ### 2. Infraestructura SEO técnica
-- [ ] `src/app/sitemap.ts` (rutas estáticas + slugs dinámicos de proyectos/posts).
-- [ ] `src/app/robots.ts`.
-- [ ] `src/app/not-found.tsx` personalizado (404 con estilo del sitio).
-- [ ] Opcional: `opengraph-image` dinámico por post/proyecto.
+- [ ] Opcional: `opengraph-image` dinámico por post/proyecto (requiere `ImageResponse` de `next/og`).
+
+> El resto (sitemap, robots, 404) completado el 2026-08-25 — ver "Hecho recientemente".
 
 ### 3. Formulario de contacto funcional
 - [ ] Reemplazar tarjetas estáticas en `/contactame` por formulario (server action → email o guardado en Supabase).
@@ -63,6 +62,7 @@ Pendientes de mejora del portfolio, priorizados según referencia de portfolios 
 
 ## ✅ Hecho recientemente
 
+- [x] **2026-08-25 — Infraestructura SEO técnica**: `src/app/sitemap.ts` (5 rutas estáticas + slugs de proyectos/posts publicados, `revalidate: 3600`), `src/app/robots.ts` (bloquea `/admin` y `/api`, enlaza sitemap), `src/app/not-found.tsx` personalizado. Constantes del sitio extraídas a `src/lib/site.ts`. Sin migraciones (sin cambios de BD).
 - [x] **2026-08-25 — SEO por página**: `generateMetadata` dinámico en `/proyectos/[slug]` y `/blog/[slug]` (título, descripción, keywords, canonical, OpenGraph, Twitter card); metadata estática en `/sobre-mi`, `/proyectos`, `/blog`, `/contactame`; template de títulos `%s | Portfolio Derek Leiva` en root layout. Sin migraciones (usa columnas existentes).
 - [x] Hero del home horizontal `[foto | título/nombre]` en todos los dispositivos (`HeroSection.tsx`).
 - [x] Botón Admin duplicado en header móvil corregido (`GuestNavbar.tsx`).
