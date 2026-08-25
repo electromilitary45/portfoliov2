@@ -3,10 +3,8 @@ import { getAllBlogPostsForAdmin } from "@/features/blog/blog-post.service";
 import { getAdminExperiences } from "@/features/profile/profile.service";
 import { getAdminEducation } from "@/features/profile/profile.service";
 import { getAdminCertificates } from "@/features/profile/profile.service";
-import { getGitHubStats } from "@/features/github/github.service";
 import type { Project } from "@/features/projects/project.type";
 import type { BlogPost } from "@/features/blog/blog-post.type";
-import type { GitHubStats } from "@/features/github/github.type";
 
 export type ContentStats = {
   total: number;
@@ -36,7 +34,6 @@ export type DashboardData = {
     publishedAt?: string | null;
     href: string;
   }>;
-  github: GitHubStats;
 };
 
 function computeStats<T extends { status: string }>(items: T[]): ContentStats {
@@ -50,14 +47,13 @@ function computeStats<T extends { status: string }>(items: T[]): ContentStats {
 
 export async function getDashboardData(): Promise<DashboardData> {
   try {
-    const [projects, posts, experiences, education, certificates, github] =
+    const [projects, posts, experiences, education, certificates] =
       await Promise.all([
         getAdminProjects(),
         getAllBlogPostsForAdmin(),
         getAdminExperiences(),
         getAdminEducation(),
         getAdminCertificates(),
-        getGitHubStats(),
       ]);
 
     const sortedProjects = [...projects].sort(
@@ -93,7 +89,6 @@ export async function getDashboardData(): Promise<DashboardData> {
         publishedAt: p.publishedAt,
         href: p.href,
       })),
-      github,
     };
   } catch {
     return {
@@ -104,13 +99,6 @@ export async function getDashboardData(): Promise<DashboardData> {
       certificates: 0,
       recentProjects: [],
       recentPosts: [],
-      github: {
-        user: null,
-        totalStars: 0,
-        topRepos: [],
-        recentRepos: [],
-        topLanguages: [],
-      },
     };
   }
 }

@@ -28,10 +28,16 @@ export function TopPagesTable({ data }: TopPagesTableProps) {
 
       <div className="mt-4 space-y-1.5">
         {data.map((page) => (
-          <div key={page.path} className="group flex items-center gap-3 px-2 py-1.5">
+          <a
+            key={page.path}
+            href={page.path}
+            target="_blank"
+            rel="noreferrer"
+            className="group flex items-center gap-3 rounded px-2 py-1.5 transition hover:bg-white/[0.03]"
+          >
             <div className="flex-1 space-y-1">
               <div className="flex items-center justify-between">
-                <span className="flex items-center gap-1.5 text-sm text-neutral-300">
+                <span className="flex items-center gap-1.5 text-sm text-neutral-300 transition group-hover:text-white">
                   {page.path || "/"}
                   <ExternalLink size={10} className="text-neutral-600" />
                 </span>
@@ -46,7 +52,7 @@ export function TopPagesTable({ data }: TopPagesTableProps) {
                 />
               </div>
             </div>
-          </div>
+          </a>
         ))}
       </div>
     </div>

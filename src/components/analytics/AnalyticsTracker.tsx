@@ -33,6 +33,15 @@ function trackVisit(path: string, referrer: string, visitorId: string) {
   }
 }
 
+function isAdminSession(): boolean {
+  if (typeof document === "undefined") return false;
+
+  // Sesión activa del CMS: las cookies de Supabase Auth empiezan con "sb-".
+  return document.cookie
+    .split(";")
+    .some((cookie) => cookie.trim().startsWith("sb-"));
+}
+
 export function AnalyticsTracker() {
   const pathname = usePathname();
   const lastPath = useRef("");
@@ -41,7 +50,12 @@ export function AnalyticsTracker() {
   useEffect(() => {
     if (!initialised.current) {
       initialised.current = true;
-      if (pathname.startsWith("/admin") || pathname.startsWith("/_")) return;
+      if (
+        pathname.startsWith("/admin") ||
+        pathname.startsWith("/_") ||
+        isAdminSession()
+      )
+        return;
       const id = setTimeout(
         () => trackVisit(pathname, document.referrer, getVisitorId()),
         500,
@@ -52,7 +66,12 @@ export function AnalyticsTracker() {
     if (pathname === lastPath.current) return;
     lastPath.current = pathname;
 
-    if (pathname.startsWith("/admin") || pathname.startsWith("/_")) return;
+    if (
+      pathname.startsWith("/admin") ||
+      pathname.startsWith("/_") ||
+      isAdminSession()
+    )
+      return;
 
     trackVisit(pathname, document.referrer, getVisitorId());
   }, [pathname]);

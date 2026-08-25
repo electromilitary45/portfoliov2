@@ -1,6 +1,6 @@
 # Módulo: Dashboard
 
-Panel principal de `/admin` con métricas agregadas de todos los módulos.
+Panel principal de `/admin` con métricas agregadas de contenido y tráfico.
 
 ---
 
@@ -10,9 +10,10 @@ Panel principal de `/admin` con métricas agregadas de todos los módulos.
 
 Ejecuta en paralelo:
 ```ts
-const [data, analytics] = await Promise.all([
+const [data, analytics, unreadMessages] = await Promise.all([
     getDashboardData(),
     getAnalyticsSummary(),   // ver módulo Analytics
+    getUnreadMessagesCount(), // features/contact
 ]);
 ```
 
@@ -31,13 +32,12 @@ interface DashboardData {
     certificates: number;
     recentProjects: Project[];   // últimos 5
     recentPosts: BlogPost[];     // últimos 5
-    github: GitHubStats | null;
 }
 ```
+> `getGitHubStats()` fue retirado del dashboard (métricas públicas decorativas). Sigue usándose en el sitio público (hero/home).
 
 ### `getDashboardData()`
-Agrega en paralelo: `getAdminProjects`, `getAllBlogPostsForAdmin`, `getAdminExperiences`, `getAdminEducation`, `getAdminCertificates`, `getGitHubStats`.
-Calcula stats por estado y recortes de recientes. Si algo falla → estructura con ceros.
+Agrega en paralelo los services de proyectos, blog y perfil. Calcula stats por estado y recortes de recientes. Si algo falla → estructura con ceros.
 
 ---
 
@@ -45,12 +45,14 @@ Calcula stats por estado y recortes de recientes. Si algo falla → estructura c
 
 | Sección | Componentes | Datos |
 |---------|-------------|-------|
-| StatsCards | `StatsCard` ×N | Totales: proyectos, posts, experiencias, certificados |
-| Estado de contenido | `StatusBar` ×2 | Barras verde/amarilla/gris con proporciones draft/published/archived (proyectos y blog) |
-| Analítica | `AnalyticsCards`, `VisitsChart`, `TopPagesTable`, `TopReferrers` | Ver módulo [Analytics](./analytics.md) |
-| Recientes ×2 | `RecentList` | Últimos 5 proyectos y 5 posts con punto de estado + link "crear" |
-| GitHub | `GitHubCard` | Stars, repos, followers, top repos, top lenguajes; hint si falta `GITHUB_USERNAME` |
-| Acciones rápidas | Botones | Accesos directos a crear contenido |
+| StatsCards ×5 | `StatsCard` | Proyectos, Blog, Experiencia, Certificados y **Mensajes sin leer** (link a `/admin/mensajes`, acento rojo cuando hay pendientes) |
+| Estado de contenido | `StatusBar` ×2 | Barras verde/amarilla/gris draft/published/archived |
+| Analítica | `AnalyticsCards`, `VisitsChart`, `WeeklyTrend`, `TopPagesTable`, `TopReferrers` | Ver módulo [Analytics](./analytics.md) |
+| Recientes ×2 | `RecentList` | Últimos 5 proyectos/posts con punto de estado |
+| Acciones rápidas | Links | Crear proyecto/post, editar perfil, ver sitio público |
+
+### Tendencia semanal (`WeeklyTrend`)
+Suma de visitas últimos 7 días vs 7 anteriores (calculada en la página desde `analytics.dailyVisits`). Muestra delta % con flecha ▲/▼ coloreada, o "nuevo" si no había datos previos.
 
 ---
 
@@ -58,17 +60,20 @@ Calcula stats por estado y recortes de recientes. Si algo falla → estructura c
 
 | Componente | Rol |
 |------------|-----|
-| `StatsCard` | Icono + contador + link opcional + acento visual |
-| `StatusBar` | Barra proporcional de estados (published/draft/archived) |
-| `RecentList` | Lista compacta de los últimos 5 ítems con estado |
-| `GitHubCard` | Resumen de la cuenta de GitHub |
+| `StatsCard` | Icono + contador + sub + link opcional + acento |
+| `StatusBar` | Barra proporcional de estados |
+| `RecentList` | Últimos 5 ítems con estado |
+
+(AnalyticsCards/VisitsChart/WeeklyTrend/TopPagesTable/TopReferrers viven en `features/analytics/components/`.)
 
 ---
 
-## 5. Layout del admin
+## 5. Precisión de métricas
 
-`(admin)/admin/layout.tsx`:
-- Guardia de auth (`getUser()` → redirect login).
-- Sidebar fija en lg: Dashboard / Proyectos / Blog / Perfil.
-- En <lg: `AdminMobileNav` (barra oscura sticky).
-- Formulario de sign-out y enlace "Volver al sitio".
+- El tracker **excluye sesiones admin**: si existen cookies `sb-*` (usuario logueado en el CMS), `AnalyticsTracker` no envía eventos → tu propio tráfico no contamina.
+- Sigue excluyendo `/admin/**` y rutas internas.
+- Limitación conocida: no filtra bots que ejecuten JS; `uniqueVisitors` se calcula sobre la ventana de 30 días.
+
+## 6. Layout del admin
+
+`(admin)/admin/layout.tsx`: guardia de auth, sidebar fija en lg (Dashboard/Proyectos/Blog/Perfil/Mensajes), ThemeToggle variante admin, sign-out. En <lg: `AdminMobileNav`.

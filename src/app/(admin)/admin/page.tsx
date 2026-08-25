@@ -1,20 +1,22 @@
-import { FolderKanban, FileText, Briefcase, Award } from "lucide-react";
+import { FolderKanban, FileText, Briefcase, Award, Mail } from "lucide-react";
 import Link from "next/link";
 import { getDashboardData } from "@/features/dashboard/dashboard.service";
 import { getAnalyticsSummary } from "@/features/analytics/analytics.service";
+import { getUnreadMessagesCount } from "@/features/contact/contact.service";
 import { StatsCard } from "@/features/dashboard/components/StatsCard";
 import { RecentList } from "@/features/dashboard/components/RecentList";
-import { GitHubCard } from "@/features/dashboard/components/GitHubCard";
 import { StatusBar } from "@/features/dashboard/components/StatusBar";
 import { AnalyticsCards } from "@/features/analytics/components/AnalyticsCards";
 import { VisitsChart } from "@/features/analytics/components/VisitsChart";
 import { TopPagesTable } from "@/features/analytics/components/TopPagesTable";
 import { TopReferrers } from "@/features/analytics/components/TopReferrers";
+import { WeeklyTrend } from "@/features/analytics/components/WeeklyTrend";
 
 export default async function AdminDashboardPage() {
-  const [data, analytics] = await Promise.all([
+  const [data, analytics, unreadMessages] = await Promise.all([
     getDashboardData(),
     getAnalyticsSummary(),
+    getUnreadMessagesCount(),
   ]);
 
   const quickActions = [
@@ -22,6 +24,12 @@ export default async function AdminDashboardPage() {
     { label: "Nuevo Post", href: "/admin/blog" },
     { label: "Editar Perfil", href: "/admin/perfil" },
   ];
+
+  // Tendencia: últimos 7 días vs los 7 anteriores (dailyVisits va de más
+  // antiguo a más reciente).
+  const visits = analytics.dailyVisits.map((d) => d.visits);
+  const last7 = visits.slice(-7).reduce((sum, n) => sum + n, 0);
+  const prev7 = visits.slice(-14, -7).reduce((sum, n) => sum + n, 0);
 
   return (
     <div className="p-6 lg:p-10">
@@ -33,7 +41,7 @@ export default async function AdminDashboardPage() {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
         <StatsCard
           label="Proyectos"
           value={data.projects.total}
@@ -61,6 +69,16 @@ export default async function AdminDashboardPage() {
           icon={Award}
           href="/admin/perfil"
         />
+        <StatsCard
+          label="Mensajes"
+          value={unreadMessages}
+          icon={Mail}
+          sub={
+            unreadMessages > 0 ? "sin leer — revisa tu bandeja" : "todo al día"
+          }
+          href="/admin/mensajes"
+          accent={unreadMessages > 0}
+        />
       </div>
 
       {/* Status bars */}
@@ -84,7 +102,7 @@ export default async function AdminDashboardPage() {
         <div className="mb-6">
           <h2 className="text-xl font-light text-white">Analítica Web</h2>
           <p className="mt-1 font-mono text-xs uppercase tracking-[0.25em] text-neutral-500">
-            Tráfico y visitantes del sitio
+            Tráfico y visitantes del sitio público
           </p>
         </div>
 
@@ -98,15 +116,16 @@ export default async function AdminDashboardPage() {
           <div className="lg:col-span-2">
             <VisitsChart data={analytics.dailyVisits} />
           </div>
-          <TopPagesTable data={analytics.topPages} />
+          <WeeklyTrend current={last7} previous={prev7} />
         </div>
 
-        <div className="mt-4">
+        <div className="mt-4 grid gap-4 lg:grid-cols-2">
+          <TopPagesTable data={analytics.topPages} />
           <TopReferrers data={analytics.topReferrers} />
         </div>
       </div>
 
-      {/* Recent Items + GitHub */}
+      {/* Recent Items + Quick Actions */}
       <div className="mt-12 grid gap-6 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">
           <RecentList
@@ -125,10 +144,7 @@ export default async function AdminDashboardPage() {
           />
         </div>
 
-        <div className="space-y-6">
-          <GitHubCard stats={data.github} />
-
-          {/* Quick Actions */}
+        <div>
           <div className="border border-white/10 bg-white/[0.02] p-5">
             <p className="font-mono text-xs uppercase tracking-[0.25em] text-neutral-500">
               Acciones Rápidas

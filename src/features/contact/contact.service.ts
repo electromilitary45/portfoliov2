@@ -50,3 +50,26 @@ export async function getContactMessages(): Promise<ContactMessage[]> {
         return [];
     }
 }
+
+export async function getUnreadMessagesCount(): Promise<number> {
+    if (shouldUseMock()) {
+        return 0;
+    }
+
+    try {
+        const supabase = await createSupabaseServerClient();
+
+        const { count, error } = await supabase
+            .from("contact_messages")
+            .select("*", { count: "exact", head: true })
+            .eq("is_read", false);
+
+        if (error) {
+            return 0;
+        }
+
+        return count ?? 0;
+    } catch {
+        return 0;
+    }
+}

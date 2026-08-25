@@ -38,28 +38,28 @@ export function VisitsChart({ data }: VisitsChartProps) {
         </div>
       </div>
 
-      <div className="mt-6 flex items-end gap-[3px] h-40">
+      <div className="mt-6 flex h-40 gap-[3px]">
         {data.map((day) => {
           const visitsH = (day.visits / maxVisits) * 100;
           const uniqueH = (day.unique_visitors / maxVisits) * 100;
 
           return (
-            <div
-              key={day.date}
-              className="group relative flex flex-1 flex-col justify-end"
-            >
-              <div className="relative w-full">
-                <div
-                  className="w-full bg-red-500/20 transition hover:bg-red-500/30"
-                  style={{ height: `${Math.max(uniqueH, 0.5)}%` }}
-                />
-                <div
-                  className="absolute bottom-0 w-full bg-red-500/60 transition hover:bg-red-500/80"
-                  style={{ height: `${Math.max(visitsH, 0.5)}%` }}
-                />
-              </div>
+            <div key={day.date} className="group relative h-full flex-1">
+              <div
+                className="absolute inset-x-0 bottom-0 bg-red-500/20 transition hover:bg-red-500/30"
+                style={{
+                  height: `${day.unique_visitors > 0 ? Math.max(uniqueH, 0.75) : 0}%`,
+                }}
+              />
+              <div
+                className="absolute inset-x-0 bottom-0 bg-red-500/60 transition hover:bg-red-500/80"
+                style={{
+                  height: `${day.visits > 0 ? Math.max(visitsH, 0.75) : 0}%`,
+                }}
+              />
+
               <div className="absolute -top-8 left-1/2 z-10 hidden -translate-x-1/2 whitespace-nowrap rounded border border-white/10 bg-neutral-900 px-2 py-1 font-mono text-[11px] text-white shadow-lg group-hover:block">
-                {day.date}: {day.visits} visits
+                {day.date}: {day.visits} visitas · {day.unique_visitors} únicos
               </div>
             </div>
           );

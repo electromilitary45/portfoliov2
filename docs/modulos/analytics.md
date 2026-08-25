@@ -82,5 +82,5 @@ La agregación (Set de visitantes únicos, mapa diario, top-8 de páginas/referr
 
 - Genera UUID v4 y lo guarda en `localStorage`.
 - Escucha cambios de pathname con `usePathname()` + efecto.
-- **No trackea** `/admin/**` ni rutas internas `/_*`.
+- **No trackea** `/admin/**`, rutas internas `/_*`, ni **sesiones admin activas** (si existen cookies `sb-*` tu propio tráfico queda excluido de las métricas).
 - Envío con `navigator.sendBeacon` para no bloquear la navegación.
