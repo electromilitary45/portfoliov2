@@ -35,24 +35,28 @@ export async function HeroSection() {
             <Container>
                 <div className="grid items-center gap-16 lg:grid-cols-[2fr_0.8fr]">
                     <div className="max-w-3xl">
-                        {profile.avatarUrl && (
-                            <div className="relative mb-10 h-32 w-32 overflow-hidden rounded-full border-4 border-neutral-200">
-                                <Image
-                                    src={profile.avatarUrl}
-                                    alt="Foto de perfil"
-                                    fill
-                                    className="object-cover"
-                                />
+                        <div className="flex items-center gap-5 sm:gap-8">
+                            {profile.avatarUrl && (
+                                <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full border-4 border-neutral-200 md:h-24 md:w-24">
+                                    <Image
+                                        src={profile.avatarUrl}
+                                        alt="Foto de perfil"
+                                        fill
+                                        className="object-cover"
+                                    />
+                                </div>
+                            )}
+
+                            <div className="min-w-0">
+                                <p className="font-mono text-xs uppercase tracking-[0.45em] text-red-600 sm:text-sm">
+                                    Developer Portfolio
+                                </p>
+
+                                <h1 className="mt-4 max-w-5xl text-4xl font-semibold tracking-[-0.06em] text-neutral-950 sm:text-5xl md:text-7xl lg:text-8xl">
+                                    {profile.headline}
+                                </h1>
                             </div>
-                        )}
-
-                        <p className="font-mono text-sm uppercase tracking-[0.45em] text-red-600">
-                            Developer Portfolio
-                        </p>
-
-                        <h1 className="mt-8 max-w-5xl text-5xl font-semibold tracking-[-0.06em] text-neutral-950 md:text-7xl lg:text-8xl">
-                            {profile.headline}
-                        </h1>
+                        </div>
 
                         <p className="mt-8 max-w-xl text-lg leading-8 text-neutral-600 lg:text-xl lg:leading-9">
                             {profile.summary}
