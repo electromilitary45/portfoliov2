@@ -126,7 +126,7 @@ RLS: **anon puede INSERT** (tracking público); authenticated SELECT. Grants com
 | `created_at` | timestamptz | default now() |
 
 Índices: `created_at`, `is_read`.
-RLS: **anon puede INSERT** (formulario de contacto); authenticated SELECT/UPDATE/DELETE.
+RLS: **anon Y authenticated pueden INSERT** (el admin puede navegar el sitio con su sesión activa — ver [015]); authenticated SELECT/UPDATE/DELETE.
 
 ---
 
@@ -159,6 +159,7 @@ RLS: **anon puede INSERT** (formulario de contacto); authenticated SELECT/UPDATE
 | 012 | `add_certificates_link_and_sort.sql` | `link_url` + `sort_order` |
 | 013 | `create_page_views_table.sql` | Tabla page_views + INSERT anónimo |
 | 014 | `create_contact_messages_table.sql` | Tabla contact_messages + INSERT anónimo + gestión autenticada |
+| 015 | `add_authenticated_insert_contact_messages.sql` | INSERT policy para authenticated (form con sesión de admin activa) |
 
 ---
 

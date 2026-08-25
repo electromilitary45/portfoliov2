@@ -40,7 +40,11 @@ export async function sendContactMessageAction(formData: FormData) {
                 message,
             });
             savedToDb = !error;
-        } catch {
+            if (error) {
+                console.error("contact insert error:", error.message);
+            }
+        } catch (dbError) {
+            console.error("contact insert exception:", dbError);
             savedToDb = false;
         }
     }
@@ -58,7 +62,11 @@ export async function sendContactMessageAction(formData: FormData) {
                 react: ContactNotificationEmail({ name, email, message }),
             });
             emailed = !error;
-        } catch {
+            if (error) {
+                console.error("resend send error:", error.message);
+            }
+        } catch (emailError) {
+            console.error("resend exception:", emailError);
             emailed = false;
         }
     }

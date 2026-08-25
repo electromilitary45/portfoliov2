@@ -52,7 +52,7 @@ Bandeja /admin/mensajes (revalidatePath tras cada envío exitoso)
 | `mark-message-read.action.ts` | Requiere sesión (RLS) | Toggle `is_read` |
 | `delete-contact-message.action.ts` | Requiere sesión (RLS) | Elimina mensaje |
 
-> La acción de envío es pública por diseño (anon puede insertar vía RLS); las de gestión dependen de que el usuario autenticado del CMS dispare el form.
+> La acción de envío es pública por diseño (RLS permite INSERT a anon **y** authenticated — migración [015], porque el admin puede navegar el sitio logueado y su JWT viaja en las cookies); las acciones de gestión dependen del usuario autenticado del CMS.
 
 ---
 
