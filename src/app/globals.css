@@ -45,12 +45,35 @@ body {
 }
 
 /*
- * El CMS (/admin) y el login ya son oscuros por diseño con clases fijas;
- * esta clase restaura la paleta original dentro de su árbol para que la
- * inversión del modo claro/oscuro público no los afecte.
- * Debe declararse DESPUÉS de .dark para ganar con igual especificidad.
+ * El CMS (/admin) y el login están codificados con paleta oscura fija
+ * (bg-neutral-950, text-white, etc.). Esta clase invierte esa escala para
+ * renderizarlos EN MODO CLARO cuando el sitio no está en dark; bajo
+ * `.dark .palette-admin` se restauran los valores originales y se ven como
+ * fueron diseñados (oscuro). Así un solo toggle gobierna todo el sitio.
  */
-.palette-default {
+.palette-admin {
+  --color-white: #101012;
+  --color-black: #f4f4f5;
+  --color-neutral-50: #0a0a0b;
+  --color-neutral-100: #141416;
+  --color-neutral-200: #232326;
+  --color-neutral-300: #34343a;
+  --color-neutral-400: #9a9aa2;
+  --color-neutral-500: #8a8a92;
+  --color-neutral-600: #b4b4bc;
+  --color-neutral-700: #ccccd1;
+  --color-neutral-800: #e4e4e8;
+  --color-neutral-900: #efeff2;
+  --color-neutral-950: #fafafa;
+  --color-red-600: #ef4444;
+  /* badges de estado con mejor contraste sobre fondo claro */
+  --color-green-400: #15803d;
+  --color-yellow-400: #a16207;
+  --color-red-400: #dc2626;
+  --color-red-500: #b91c1c;
+}
+
+.dark .palette-admin {
   --color-white: #ffffff;
   --color-black: #000000;
   --color-neutral-50: #fafafa;
@@ -65,4 +88,8 @@ body {
   --color-neutral-900: #171717;
   --color-neutral-950: #0a0a0a;
   --color-red-600: #dc2626;
+  --color-green-400: #4ade80;
+  --color-yellow-400: #facc15;
+  --color-red-400: #f87171;
+  --color-red-500: #ef4444;
 }

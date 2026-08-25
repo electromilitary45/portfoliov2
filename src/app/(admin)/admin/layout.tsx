@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { signOutAction } from "@/app/actions/auth/sign-out.action";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { AdminMobileNav } from "@/components/layout/AdminMobileNav";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 
 const adminNavItems = [
     { label: "Dashboard", href: "/admin" },
@@ -28,7 +29,7 @@ export default async function AdminLayout({
     }
 
     return (
-        <div className="palette-default min-h-screen bg-neutral-950 text-white">
+        <div className="palette-admin min-h-screen bg-neutral-950 text-white">
             <AdminMobileNav navItems={adminNavItems} />
             <aside className="fixed left-0 top-0 z-50 hidden h-screen w-72 overflow-y-auto border-r border-white/10 bg-neutral-950 p-6 lg:flex lg:flex-col">
                 <div className="flex min-h-full flex-col justify-between">
@@ -60,6 +61,10 @@ export default async function AdminLayout({
                     </div>
 
                     <div className="mt-10 border-t border-white/10 pt-6">
+                        <div className="mb-3 flex justify-end">
+                            <ThemeToggle variant="admin" />
+                        </div>
+
                         <Link
                             href="/"
                             className="block border border-white/10 px-4 py-3 text-sm text-neutral-300 transition hover:border-red-500 hover:bg-white/[0.03] hover:text-white"

@@ -5,7 +5,22 @@ import { Moon, Sun } from "lucide-react";
 
 const STORAGE_KEY = "portfolio-theme";
 
-export function ThemeToggle({ className = "" }: { className?: string }) {
+type ThemeToggleProps = {
+    className?: string;
+    variant?: "guest" | "admin";
+};
+
+const variantClasses = {
+    guest:
+        "border-neutral-200 text-neutral-500 hover:border-neutral-950 hover:text-neutral-950",
+    admin:
+        "border-white/10 text-neutral-300 hover:border-red-500 hover:text-white",
+} as const;
+
+export function ThemeToggle({
+    className = "",
+    variant = "guest",
+}: ThemeToggleProps) {
     const [isDark, setIsDark] = useState(false);
     const [mounted, setMounted] = useState(false);
 
@@ -35,7 +50,7 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
                     ? "Cambiar a modo claro"
                     : "Cambiar a modo oscuro"
             }
-            className={`inline-flex h-10 w-10 items-center justify-center border border-neutral-200 text-neutral-500 transition hover:border-neutral-950 hover:text-neutral-950 ${className}`}
+            className={`inline-flex h-10 w-10 items-center justify-center border transition ${variantClasses[variant]} ${className}`}
         >
             {mounted ? (
                 isDark ? (
