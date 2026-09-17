@@ -4,9 +4,10 @@ import type { Project } from "@/features/projects/project.type";
 
 type ProjectCardProps = {
     project: Project;
+    index: number;
 };
 
-export function ProjectCard({ project }: ProjectCardProps) {
+export function ProjectCard({ project, index }: ProjectCardProps) {
     return (
         <Link
             href={project.href}
@@ -33,7 +34,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
                 <div className="mt-6 flex items-center justify-between gap-4">
                     <p className="font-mono text-sm text-red-600">
-                        {String(project.sortOrder).padStart(2, "0")}
+                        {String(index + 1).padStart(2, "0")}
                     </p>
 
                     <p className="font-mono text-xs uppercase tracking-[0.2em] text-neutral-400 transition group-hover:text-red-500">

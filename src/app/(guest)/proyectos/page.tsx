@@ -43,8 +43,8 @@ export default async function ProjectsPage() {
                     </div>
 
                     <div className="mt-10 grid overflow-hidden border border-neutral-200 bg-neutral-200 md:grid-cols-3">
-                        {projects.map((project) => (
-                            <ProjectCard key={project.id} project={project} />
+                        {projects.map((project, index) => (
+                            <ProjectCard key={project.id} project={project} index={index} />
                         ))}
                     </div>
                 </section>

@@ -25,8 +25,8 @@ export async function FeaturedProjectsSection() {
                 </div>
 
                 <div className="mt-14 grid overflow-hidden border border-neutral-200 bg-neutral-200 md:grid-cols-3 [grid-auto-rows:1fr]">
-                    {projects.map((project) => (
-                        <ProjectCard key={project.id} project={project} />
+                    {projects.map((project, index) => (
+                        <ProjectCard key={project.id} project={project} index={index} />
                     ))}
                 </div>
             </Container>
