@@ -10,7 +10,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
     return (
         <Link
             href={project.href}
-            className="group flex min-h-[460px] flex-col justify-between bg-white p-6 transition hover:bg-neutral-950"
+            className="group flex h-full flex-col justify-between bg-white p-6 transition hover:bg-neutral-950"
         >
             <div>
                 <div className="relative aspect-[16/10] overflow-hidden border border-neutral-200 bg-neutral-100 transition group-hover:border-white/10 group-hover:bg-neutral-900">
@@ -45,13 +45,16 @@ export function ProjectCard({ project }: ProjectCardProps) {
                     {project.title}
                 </h3>
 
-                <p className="mt-5 leading-7 text-neutral-600 transition group-hover:text-neutral-400">
+                <p
+                    className="mt-5 line-clamp-3 leading-7 text-neutral-600 transition group-hover:text-neutral-400"
+                    title={project.summary}
+                >
                     {project.summary}
                 </p>
             </div>
 
             <div className="mt-10 flex flex-wrap gap-2">
-                {project.stack.map((tech) => (
+                {project.stack.slice(0, 3).map((tech) => (
                     <span
                         key={tech}
                         className="border border-neutral-200 px-3 py-1 font-mono text-xs uppercase tracking-[0.18em] text-neutral-500 transition group-hover:border-white/10 group-hover:text-neutral-400"
@@ -59,6 +62,14 @@ export function ProjectCard({ project }: ProjectCardProps) {
                         {tech}
                     </span>
                 ))}
+                {project.stack.length > 3 && (
+                    <span
+                        className="border border-neutral-200 px-3 py-1 font-mono text-xs uppercase tracking-[0.18em] text-neutral-500 transition group-hover:border-white/10 group-hover:text-neutral-400"
+                        title={project.stack.slice(3).join(", ")}
+                    >
+                        +{project.stack.length - 3}
+                    </span>
+                )}
             </div>
         </Link>
     );
