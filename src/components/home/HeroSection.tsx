@@ -42,6 +42,7 @@ export async function HeroSection() {
                                         src={profile.avatarUrl}
                                         alt="Foto de perfil"
                                         fill
+                                        sizes="96px"
                                         className="object-cover"
                                     />
                                 </div>

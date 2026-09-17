@@ -27,6 +27,7 @@ export default async function AboutPage() {
                                 src={profile.avatarUrl}
                                 alt="Foto de perfil"
                                 fill
+                                sizes="160px"
                                 className="object-cover"
                             />
                         </div>
