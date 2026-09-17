@@ -27,7 +27,7 @@ export default async function BlogPage() {
                     <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
                         <div>
                             <p className="font-mono text-xs uppercase tracking-[0.25em] text-red-600">
-                                Writing Log
+                                Bitácora de escritura
                             </p>
 
                             <h2 className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-neutral-950">
@@ -36,8 +36,8 @@ export default async function BlogPage() {
                         </div>
 
                         <p className="max-w-md text-sm leading-6 text-neutral-500">
-                            Estos posts vienen desde Supabase cuando las variables de entorno
-                            están configuradas; en local puede usarse mock como respaldo.
+                            Notas técnicas, guías, errores resueltos y aprendizajes reales
+                            documentados mientras construyo proyectos.
                         </p>
                     </div>
 

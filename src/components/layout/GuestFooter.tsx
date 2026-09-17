@@ -38,7 +38,7 @@ export function GuestFooter() {
                     </div>
 
                     <p className="font-mono text-xs uppercase tracking-[0.25em] text-neutral-400">
-                        © {new Date().getFullYear()} / Built with Next.js
+                        © {new Date().getFullYear()} / Derek Leiva
                     </p>
                 </div>
             </div>

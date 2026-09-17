@@ -107,7 +107,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
 
                     <form
                         action={sendContactMessageAction}
-                        className="mt-10 grid gap-6 bg-white p-8 md:p-10"
+                        className="relative mt-10 grid gap-6 bg-white p-8 md:p-10"
                     >
                         <div className="grid gap-6 md:grid-cols-2">
                             <label className="block">
@@ -185,7 +185,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                     <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
                         <div>
                             <p className="font-mono text-xs uppercase tracking-[0.25em] text-red-600">
-                                Contact Channels
+                                Canales de contacto
                             </p>
 
                             <h2 className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-neutral-950">

@@ -18,7 +18,7 @@ export function TechStackSection() {
             <Container>
                 <div className="grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
                     <div>
-                        <SectionLabel variant="admin">Stack</SectionLabel>
+                        <SectionLabel variant="admin">Stack tecnológico</SectionLabel>
 
                         <h2 className="mt-6 max-w-xl text-4xl font-semibold tracking-[-0.05em] md:text-5xl">
                             Herramientas con las que construyo.

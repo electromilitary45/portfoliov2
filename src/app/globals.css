@@ -102,6 +102,59 @@ body {
   --color-red-500: #b91c1c;
 }
 
+/* Google Translate widget — ocultar el widget default, mantener funcional */
+#google_translate_element {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+}
+
+/* Estilos del dropdown de Google Translate */
+.goog-te-menu-frame {
+  border: 1px solid #e5e5e5 !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+  border-radius: 0 !important;
+  z-index: 200 !important;
+}
+
+.dark .goog-te-menu-frame {
+  border-color: #34343a !important;
+  background: #141416 !important;
+}
+
+.goog-te-menu {
+  border: none !important;
+}
+
+.dark .goog-te-menu {
+  background: #141416 !important;
+}
+
+.dark .goog-te-menu-item {
+  color: #9a9aa2 !important;
+}
+
+.dark .goog-te-menu-item:hover {
+  background: #232326 !important;
+  color: #fafafa !important;
+}
+
+/* Ocultar el banner de "Traducido por Google" */
+.goog-te-banner-frame {
+  display: none !important;
+}
+body {
+  top: 0 !important;
+}
+#goog-gt-tt {
+  display: none !important;
+}
+
 .dark .palette-admin {
   --color-white: #ffffff;
   --color-black: #000000;

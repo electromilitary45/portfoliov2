@@ -50,6 +50,8 @@ export const metadata: Metadata = {
 
 const themeScript = `(function(){try{var t=localStorage.getItem("portfolio-theme");if(t==="dark"||(!t&&window.matchMedia("(prefers-color-scheme: dark)").matches)){document.documentElement.classList.add("dark")}}catch(e){}})()`;
 
+const googleTranslateScript = `(function(){var gtScript=document.createElement('script');gtScript.src='https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';document.head.appendChild(gtScript);window.googleTranslateElementInit=function(){new google.translate.TranslateElement({pageLanguage:'es',includedLanguages:'en,es',layout:google.translate.TranslateElement.FloatPosition.TOP_RIGHT,autoDisplay:false},'google_translate_element');}})()`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -59,6 +61,7 @@ export default function RootLayout({
     <html lang="es" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <script dangerouslySetInnerHTML={{ __html: googleTranslateScript }} />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} bg-neutral-50 text-neutral-950 antialiased`}

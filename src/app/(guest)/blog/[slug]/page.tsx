@@ -133,7 +133,7 @@ export default async function BlogPostDetailPage({
                 </ReactMarkdown>
               ) : (
                 <p className="leading-relaxed text-neutral-600">
-                  Este es un placeholder para el contenido completo del artículo. Más adelante aquí renderizaremos contenido desde Supabase, MDX o un editor del admin.
+                  Este artículo aún no tiene contenido. Próximamente se documentará el proceso, decisiones técnicas y aprendizajes.
                 </p>
               )}
             </div>

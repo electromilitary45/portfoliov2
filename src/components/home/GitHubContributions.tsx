@@ -25,7 +25,7 @@ export async function GitHubContributions() {
             <Container>
                 <div className="mx-auto max-w-3xl">
                     <p className="font-mono text-xs uppercase tracking-[0.35em] text-red-600">
-                        GitHub Activity
+                        Actividad de GitHub
                     </p>
 
                     <h2 className="mt-6 text-3xl font-semibold tracking-[-0.04em] text-neutral-950">

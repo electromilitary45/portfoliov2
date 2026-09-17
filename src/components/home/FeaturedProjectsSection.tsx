@@ -12,7 +12,7 @@ export async function FeaturedProjectsSection() {
             <Container>
                 <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
                     <div>
-                        <SectionLabel>Featured Projects</SectionLabel>
+                        <SectionLabel>Proyectos destacados</SectionLabel>
 
                         <h2 className="mt-6 max-w-3xl text-4xl font-semibold tracking-[-0.05em] text-neutral-950 md:text-5xl">
                             Proyectos que muestran proceso, código y decisiones técnicas.

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
+import { LanguageToggle } from "@/components/layout/LanguageToggle";
 
 const navItems = [
     { label: "Inicio", href: "/" },
@@ -40,6 +41,13 @@ export function GuestNavbar() {
                 </div>
 
                 <div className="flex items-center gap-3">
+                    <div className="relative">
+                        <LanguageToggle />
+                        <div
+                            id="google_translate_element"
+                            className="absolute inset-0 opacity-0"
+                        />
+                    </div>
                     <ThemeToggle />
                     <Button href="/admin" variant="dark" className="max-md:hidden">
                         Admin
@@ -74,7 +82,8 @@ export function GuestNavbar() {
                             Admin
                         </Button>
 
-                        <div className="mt-2">
+                        <div className="mt-2 flex gap-2">
+                            <LanguageToggle className="w-full" />
                             <ThemeToggle className="w-full" />
                         </div>
                     </div>

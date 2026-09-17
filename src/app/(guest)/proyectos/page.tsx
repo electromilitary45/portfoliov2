@@ -27,7 +27,7 @@ export default async function ProjectsPage() {
                     <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
                         <div>
                             <p className="font-mono text-xs uppercase tracking-[0.25em] text-red-600">
-                                Project Index
+                                Índice de proyectos
                             </p>
 
                             <h2 className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-neutral-950">
@@ -36,9 +36,8 @@ export default async function ProjectsPage() {
                         </div>
 
                         <p className="max-w-md text-sm leading-6 text-neutral-500">
-                            Estos proyectos vienen desde Supabase cuando las variables de
-                            entorno están configuradas; en local puede usarse mock como
-                            respaldo.
+                            Explora todos los proyectos documentados con proceso, decisiones
+                            técnicas, stack utilizado, repositorios públicos y demos.
                         </p>
                     </div>
 
