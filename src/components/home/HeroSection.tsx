@@ -138,30 +138,22 @@ export async function HeroSection() {
                                                 (sum, l) => sum + l.bytes,
                                                 0
                                             );
+                                            const barColors = [
+                                                "bg-blue-400", "bg-orange-400", "bg-purple-400",
+                                                "bg-cyan-400", "bg-pink-400", "bg-yellow-400",
+                                                "bg-green-400", "bg-red-400", "bg-indigo-400",
+                                                "bg-teal-400", "bg-amber-400", "bg-fuchsia-400",
+                                            ];
+                                            const hashColor = (str: string) => {
+                                                let h = 0;
+                                                for (let i = 0; i < str.length; i++) {
+                                                    h = str.charCodeAt(i) + ((h << 5) - h);
+                                                }
+                                                return barColors[Math.abs(h) % barColors.length];
+                                            };
                                             return github.topLanguages.map((lang) => {
                                                 const pct = Math.round((lang.bytes / totalBytes) * 100);
-                                                const barColor =
-                                                    lang.language === "Python"
-                                                        ? "bg-blue-400"
-                                                        : lang.language === "Java"
-                                                          ? "bg-orange-400"
-                                                          : lang.language === "TypeScript"
-                                                            ? "bg-blue-500"
-                                                            : lang.language === "JavaScript"
-                                                              ? "bg-yellow-400"
-                                                              : lang.language === "HTML"
-                                                                ? "bg-orange-500"
-                                                                : lang.language === "CSS"
-                                                                  ? "bg-purple-400"
-                                                                  : lang.language === "C"
-                                                                    ? "bg-gray-400"
-                                                                    : lang.language === "C++"
-                                                                      ? "bg-pink-400"
-                                                                      : lang.language === "Go"
-                                                                        ? "bg-cyan-400"
-                                                                        : lang.language === "Rust"
-                                                                          ? "bg-amber-600"
-                                                                          : "bg-neutral-400";
+                                                const barColor = hashColor(lang.language);
                                                 return (
                                                     <div key={lang.language} className="flex items-center gap-3">
                                                         <span className="w-20 shrink-0 truncate text-xs text-neutral-400">
