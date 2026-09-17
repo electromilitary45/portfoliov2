@@ -21,5 +21,5 @@ export type GitHubStats = {
   totalStars: number;
   topRepos: GitHubRepo[];
   recentRepos: GitHubRepo[];
-  topLanguages: { language: string; count: number }[];
+  topLanguages: { language: string; bytes: number }[];
 };

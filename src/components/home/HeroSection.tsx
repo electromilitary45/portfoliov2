@@ -134,12 +134,12 @@ export async function HeroSection() {
                                     </div>
                                     <div className="space-y-2.5">
                                         {(() => {
-                                            const totalCount = github.topLanguages.reduce(
-                                                (sum, l) => sum + l.count,
+                                            const totalBytes = github.topLanguages.reduce(
+                                                (sum, l) => sum + l.bytes,
                                                 0
                                             );
                                             return github.topLanguages.map((lang) => {
-                                                const pct = Math.round((lang.count / totalCount) * 100);
+                                                const pct = Math.round((lang.bytes / totalBytes) * 100);
                                                 const barColor =
                                                     lang.language === "Python"
                                                         ? "bg-blue-400"
