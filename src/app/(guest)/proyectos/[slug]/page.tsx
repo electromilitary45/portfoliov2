@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { SectionLabel } from "@/components/ui/SectionLabel";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { getProjectBySlug } from "@/features/projects/project.service";
 
 type ProjectDetailPageProps = {
@@ -63,12 +64,12 @@ export default async function ProjectDetailPage({
         <main className="min-h-[calc(100vh-161px)] bg-neutral-50 py-20">
             <Container>
                 <article className="mx-auto max-w-4xl">
-                    <Link
-                        href="/proyectos"
-                        className="mb-10 inline-flex font-mono text-xs uppercase tracking-[0.25em] text-neutral-500 transition hover:text-neutral-950"
-                    >
-                        ← Volver a proyectos
-                    </Link>
+                    <Breadcrumbs
+                        items={[
+                            { label: "Proyectos", href: "/proyectos" },
+                            { label: project.title },
+                        ]}
+                    />
 
                     <SectionLabel>Proyecto</SectionLabel>
 

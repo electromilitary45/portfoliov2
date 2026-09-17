@@ -4,9 +4,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { SectionLabel } from "@/components/ui/SectionLabel";
-import { getBlogPostBySlug } from "@/features/blog/blog-post.service";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+import { getBlogPostBySlug, getPublishedBlogPosts } from "@/features/blog/blog-post.service";
 import type { BlogPostImage } from "@/features/blog/blog-post.type";
 import { ImageCarousel } from "@/components/ui/ImageCarousel";
 
@@ -81,16 +83,21 @@ export default async function BlogPostDetailPage({
   const displayImages = getDisplayImages(post);
   const hasImages = displayImages.length > 0;
 
+  const allPosts = await getPublishedBlogPosts();
+  const currentIndex = allPosts.findIndex((p) => p.slug === post.slug);
+  const prevPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
+  const nextPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
+
   return (
     <main className="min-h-[calc(100vh-161px)] bg-neutral-50 py-20">
       <Container>
         <article className="mx-auto max-w-3xl">
-          <Link
-            href="/blog"
-            className="mb-10 inline-flex font-mono text-xs uppercase tracking-[0.25em] text-neutral-500 transition hover:text-neutral-950"
-          >
-            ← Volver al blog
-          </Link>
+          <Breadcrumbs
+            items={[
+              { label: "Blog", href: "/blog" },
+              { label: post.title },
+            ]}
+          />
 
           <SectionLabel>Blog</SectionLabel>
 
@@ -138,6 +145,48 @@ export default async function BlogPostDetailPage({
               )}
             </div>
           </div>
+
+          {(prevPost || nextPost) && (
+            <nav className="mt-16 border-t border-neutral-200 pt-8" aria-label="Navegación de artículos">
+              <p className="font-mono text-xs uppercase tracking-[0.25em] text-neutral-400 mb-6">
+                Más artículos
+              </p>
+              <div className="grid gap-4 md:grid-cols-2">
+                {prevPost ? (
+                  <Link
+                    href={prevPost.href}
+                    className="group flex flex-col border border-neutral-200 bg-white p-6 transition hover:border-neutral-950 hover:bg-neutral-950"
+                  >
+                    <span className="flex items-center gap-1 font-mono text-xs uppercase tracking-[0.2em] text-neutral-400 transition group-hover:text-neutral-500">
+                      <ChevronLeft className="h-3 w-3" />
+                      Anterior
+                    </span>
+                    <span className="mt-3 text-lg font-semibold tracking-[-0.03em] text-neutral-950 transition group-hover:text-white">
+                      {prevPost.title}
+                    </span>
+                  </Link>
+                ) : (
+                  <div />
+                )}
+                {nextPost ? (
+                  <Link
+                    href={nextPost.href}
+                    className="group flex flex-col items-end border border-neutral-200 bg-white p-6 text-right transition hover:border-neutral-950 hover:bg-neutral-950"
+                  >
+                    <span className="flex items-center gap-1 font-mono text-xs uppercase tracking-[0.2em] text-neutral-400 transition group-hover:text-neutral-500">
+                      Siguiente
+                      <ChevronRight className="h-3 w-3" />
+                    </span>
+                    <span className="mt-3 text-lg font-semibold tracking-[-0.03em] text-neutral-950 transition group-hover:text-white">
+                      {nextPost.title}
+                    </span>
+                  </Link>
+                ) : (
+                  <div />
+                )}
+              </div>
+            </nav>
+          )}
         </article>
       </Container>
     </main>

@@ -1,5 +1,6 @@
 import { GuestFooter } from "@/components/layout/GuestFooter";
 import { GuestNavbar } from "@/components/layout/GuestNavbar";
+import { ScrollToTop } from "@/components/layout/ScrollToTop";
 
 export default function GuestLayout({
     children,
@@ -11,6 +12,7 @@ export default function GuestLayout({
             <GuestNavbar />
             {children}
             <GuestFooter />
+            <ScrollToTop />
         </>
     );
 }

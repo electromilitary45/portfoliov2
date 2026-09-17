@@ -7,6 +7,14 @@ export const metadata: Metadata = {
     title: "Página no encontrada",
 };
 
+const popularPages = [
+    { label: "Inicio", href: "/" },
+    { label: "Proyectos", href: "/proyectos" },
+    { label: "Blog", href: "/blog" },
+    { label: "Sobre mí", href: "/sobre-mi" },
+    { label: "Contáctame", href: "/contactame" },
+];
+
 export default function NotFound() {
     return (
         <main className="flex min-h-[calc(100vh-80px)] items-center bg-neutral-50 py-20">
@@ -22,7 +30,7 @@ export default function NotFound() {
 
                     <p className="mt-8 max-w-xl text-lg leading-8 text-neutral-600">
                         La página que buscas no existe o fue movida. Revisa la
-                        dirección o vuelve al inicio para seguir explorando.
+                        dirección o elige una de las páginas populares.
                     </p>
 
                     <div className="mt-10 flex flex-wrap gap-4">
@@ -36,6 +44,28 @@ export default function NotFound() {
                         >
                             Ver proyectos
                         </Link>
+                    </div>
+
+                    <div className="mt-14 border-t border-neutral-200 pt-10">
+                        <p className="font-mono text-xs uppercase tracking-[0.25em] text-neutral-400 mb-6">
+                            Páginas populares
+                        </p>
+                        <div className="grid gap-2 sm:grid-cols-2">
+                            {popularPages.map((page) => (
+                                <Link
+                                    key={page.href}
+                                    href={page.href}
+                                    className="group flex items-center justify-between border border-neutral-200 bg-white px-5 py-3 transition hover:border-neutral-950 hover:bg-neutral-950"
+                                >
+                                    <span className="text-sm text-neutral-600 transition group-hover:text-neutral-400">
+                                        {page.label}
+                                    </span>
+                                    <span className="font-mono text-xs text-neutral-400 transition group-hover:text-red-500">
+                                        →
+                                    </span>
+                                </Link>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </Container>

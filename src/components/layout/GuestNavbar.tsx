@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
@@ -17,6 +18,12 @@ const navItems = [
 
 export function GuestNavbar() {
     const [menuOpen, setMenuOpen] = useState(false);
+    const pathname = usePathname();
+
+    function isActive(href: string) {
+        if (href === "/") return pathname === "/";
+        return pathname.startsWith(href);
+    }
 
     return (
         <header className="sticky top-0 z-50 border-b border-neutral-200 bg-white/80 backdrop-blur-xl">
@@ -33,7 +40,11 @@ export function GuestNavbar() {
                         <Link
                             key={item.href}
                             href={item.href}
-                            className="text-sm text-neutral-500 transition hover:text-neutral-950"
+                            className={`text-sm transition ${
+                                isActive(item.href)
+                                    ? "font-medium text-neutral-950 underline underline-offset-4 decoration-red-600 decoration-2"
+                                    : "text-neutral-500 hover:text-neutral-950"
+                            }`}
                         >
                             {item.label}
                         </Link>
@@ -65,30 +76,36 @@ export function GuestNavbar() {
                 </button>
             </nav>
 
-            {menuOpen && (
-                <div className="border-t border-neutral-200 bg-white/80 backdrop-blur-xl md:hidden">
-                    <div className="mx-auto flex max-w-7xl flex-col gap-1 px-6 py-4">
-                        {navItems.map((item) => (
-                            <Link
-                                key={item.href}
-                                href={item.href}
-                                onClick={() => setMenuOpen(false)}
-                                className="rounded px-2 py-3 text-sm text-neutral-500 transition hover:bg-neutral-100 hover:text-neutral-950"
-                            >
-                                {item.label}
-                            </Link>
-                        ))}
-                        <Button href="/admin" variant="dark" className="mt-2">
-                            Admin
-                        </Button>
+            <div
+                className={`overflow-hidden border-t border-neutral-200 bg-white/80 backdrop-blur-xl transition-all duration-300 ease-in-out md:hidden ${
+                    menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0 border-t-0"
+                }`}
+            >
+                <div className="mx-auto flex max-w-7xl flex-col gap-1 px-6 py-4">
+                    {navItems.map((item) => (
+                        <Link
+                            key={item.href}
+                            href={item.href}
+                            onClick={() => setMenuOpen(false)}
+                            className={`rounded px-2 py-3 text-sm transition ${
+                                isActive(item.href)
+                                    ? "bg-neutral-100 font-medium text-neutral-950"
+                                    : "text-neutral-500 hover:bg-neutral-100 hover:text-neutral-950"
+                            }`}
+                        >
+                            {item.label}
+                        </Link>
+                    ))}
+                    <Button href="/admin" variant="dark" className="mt-2">
+                        Admin
+                    </Button>
 
-                        <div className="mt-2 flex gap-2">
-                            <LanguageToggle className="w-full" />
-                            <ThemeToggle className="w-full" />
-                        </div>
+                    <div className="mt-2 flex gap-2">
+                        <LanguageToggle className="w-full" />
+                        <ThemeToggle className="w-full" />
                     </div>
                 </div>
-            )}
+            </div>
         </header>
     );
 }

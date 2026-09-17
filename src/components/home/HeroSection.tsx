@@ -87,7 +87,7 @@ export async function HeroSection() {
                         </div>
                     </div>
 
-                    <div className="relative hidden min-h-[400px] flex-col overflow-hidden rounded-xl border border-neutral-200 bg-neutral-950 shadow-2xl lg:flex dark:border-neutral-800">
+                    <div className="relative min-h-[400px] flex-col overflow-hidden rounded-xl border border-neutral-200 bg-neutral-950 shadow-2xl flex lg:hidden xl:flex dark:border-neutral-800">
                         {/* Scan line overlay */}
                         <div className="pointer-events-none absolute inset-0 z-10 overflow-hidden opacity-[0.03]">
                             <div className="animate-scanline h-full w-full bg-gradient-to-b from-transparent via-white to-transparent" />
