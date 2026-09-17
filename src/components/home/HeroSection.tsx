@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Folder, ExternalLink, Monitor } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { getProfileWithAvatar } from "@/features/profile/profile.service";
@@ -23,7 +24,6 @@ export async function HeroSection() {
         getGitHubStats(),
     ]);
 
-    const topLanguages = github.topLanguages.map((l) => l.language).slice(0, 3);
     const stats = [
         { label: "Repos", value: github.user?.public_repos ?? 0 },
         { label: "Estrellas", value: github.totalStars },
@@ -87,61 +87,157 @@ export async function HeroSection() {
                         </div>
                     </div>
 
-                    <div className="relative hidden min-h-[400px] flex-col overflow-hidden border border-neutral-200 bg-white p-8 shadow-sm lg:flex">
-                        <div className="absolute right-6 top-6 h-3 w-3 rounded-full bg-red-600" />
-
-                        <div>
-                            <p className="font-mono text-xs uppercase tracking-[0.35em] text-neutral-400">
-                                Actividad reciente
-                            </p>
-
-                            {github.user && (
-                                <a
-                                    href={github.user.html_url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="mt-4 inline-flex items-center gap-2 text-lg font-semibold text-neutral-950 transition hover:text-red-600"
-                                >
-                                    <span>@{github.user.login}</span>
-                                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                                    </svg>
-                                </a>
-                            )}
+                    <div className="relative hidden min-h-[400px] flex-col overflow-hidden rounded-xl border border-neutral-200 bg-neutral-950 shadow-2xl lg:flex dark:border-neutral-800">
+                        {/* Scan line overlay */}
+                        <div className="pointer-events-none absolute inset-0 z-10 overflow-hidden opacity-[0.03]">
+                            <div className="animate-scanline h-full w-full bg-gradient-to-b from-transparent via-white to-transparent" />
                         </div>
 
-                        <div className="mt-auto space-y-4 font-mono text-sm text-neutral-500">
-                            {topLanguages.length > 0 && (
-                                <div className="flex justify-between border-t border-neutral-200 pt-4">
-                                    <span>Lenguajes</span>
-                                    <span className="text-neutral-950">{topLanguages.join(", ")}</span>
+                        {/* Title bar */}
+                        <div className="flex items-center gap-2 border-b border-neutral-800 bg-neutral-900 px-4 py-3">
+                            <div className="h-3 w-3 rounded-full bg-red-500" />
+                            <div className="h-3 w-3 rounded-full bg-yellow-500" />
+                            <div className="h-3 w-3 rounded-full bg-green-500" />
+                            <div className="ml-3 flex items-center gap-2 text-xs text-neutral-500">
+                                <Monitor className="h-3.5 w-3.5" />
+                                <span className="font-mono">actividad reciente</span>
+                            </div>
+                        </div>
+
+                        {/* Terminal content */}
+                        <div className="flex flex-1 flex-col p-6 font-mono text-sm">
+                            {/* Username prompt */}
+                            {github.user && (
+                                <div className="mb-5">
+                                    <span className="text-green-400">❯</span>
+                                    <span className="ml-2 text-neutral-500">whoami</span>
+                                    <div className="mt-2 pl-4">
+                                        <a
+                                            href={github.user.html_url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-flex items-center gap-2 text-base font-semibold text-white transition hover:text-red-400"
+                                        >
+                                            @{github.user.login}
+                                            <ExternalLink className="h-3.5 w-3.5 text-neutral-500" />
+                                        </a>
+                                    </div>
                                 </div>
                             )}
 
-                            {github.recentRepos.slice(0, 4).map((repo) => (
-                                <div key={repo.name} className="flex items-center justify-between border-t border-neutral-200 pt-4">
-                                    <a
-                                        href={repo.html_url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="max-w-[65%] truncate text-neutral-950 transition hover:text-red-600"
-                                    >
-                                        {repo.name}
-                                    </a>
-                                    <span className="shrink-0 text-xs text-neutral-400">
-                                        {formatRelativeTime(repo.pushed_at)}
-                                    </span>
+                            {/* Languages with progress bars */}
+                            {github.topLanguages.length > 0 && (
+                                <div className="mb-5">
+                                    <div className="mb-3 flex items-center gap-2 text-xs uppercase tracking-widest text-neutral-600">
+                                         <span className="text-red-400">{"//"}</span>
+                                        <span>top languages</span>
+                                    </div>
+                                    <div className="space-y-2.5">
+                                        {(() => {
+                                            const totalCount = github.topLanguages.reduce(
+                                                (sum, l) => sum + l.count,
+                                                0
+                                            );
+                                            return github.topLanguages.map((lang) => {
+                                                const pct = Math.round((lang.count / totalCount) * 100);
+                                                const barColor =
+                                                    lang.language === "Python"
+                                                        ? "bg-blue-400"
+                                                        : lang.language === "Java"
+                                                          ? "bg-orange-400"
+                                                          : lang.language === "TypeScript"
+                                                            ? "bg-blue-500"
+                                                            : lang.language === "JavaScript"
+                                                              ? "bg-yellow-400"
+                                                              : lang.language === "HTML"
+                                                                ? "bg-orange-500"
+                                                                : lang.language === "CSS"
+                                                                  ? "bg-purple-400"
+                                                                  : lang.language === "C"
+                                                                    ? "bg-gray-400"
+                                                                    : lang.language === "C++"
+                                                                      ? "bg-pink-400"
+                                                                      : lang.language === "Go"
+                                                                        ? "bg-cyan-400"
+                                                                        : lang.language === "Rust"
+                                                                          ? "bg-amber-600"
+                                                                          : "bg-neutral-400";
+                                                return (
+                                                    <div key={lang.language} className="flex items-center gap-3">
+                                                        <span className="w-20 shrink-0 truncate text-xs text-neutral-400">
+                                                            {lang.language}
+                                                        </span>
+                                                        <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-neutral-800">
+                                                            <div
+                                                                className={`h-full rounded-full ${barColor} transition-all duration-700`}
+                                                                style={{ width: `${pct}%` }}
+                                                            />
+                                                        </div>
+                                                        <span className="w-8 text-right text-xs text-neutral-600">
+                                                            {pct}%
+                                                        </span>
+                                                    </div>
+                                                );
+                                            });
+                                        })()}
+                                    </div>
                                 </div>
-                            ))}
+                            )}
 
-                            <div className="flex justify-between border-t border-neutral-200 pt-4">
-                                <span>Stack</span>
-                                <span className="text-neutral-950">Next.js</span>
+                            {/* Recent repos */}
+                            <div className="mb-5">
+                                <div className="mb-3 flex items-center gap-2 text-xs uppercase tracking-widest text-neutral-600">
+                                     <span className="text-red-400">{"//"}</span>
+                                    <span>recent repos</span>
+                                </div>
+                                <div className="space-y-2">
+                                    {github.recentRepos.slice(0, 4).map((repo) => (
+                                        <a
+                                            key={repo.name}
+                                            href={repo.html_url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="group flex items-center justify-between rounded-lg px-2 py-1.5 -mx-2 transition hover:bg-neutral-900"
+                                        >
+                                            <div className="flex items-center gap-2.5 min-w-0">
+                                                <Folder className="h-4 w-4 shrink-0 text-yellow-500/70 group-hover:text-yellow-400" />
+                                                <span className="truncate text-sm text-neutral-300 group-hover:text-white transition">
+                                                    {repo.name}
+                                                </span>
+                                                {repo.language && (
+                                                    <span className="hidden shrink-0 text-xs text-neutral-600 sm:inline">
+                                                        {repo.language}
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <span className="shrink-0 pl-3 text-xs text-neutral-600">
+                                                {formatRelativeTime(repo.pushed_at)}
+                                            </span>
+                                        </a>
+                                    ))}
+                                </div>
                             </div>
 
-                            <div className="flex justify-between border-t border-neutral-200 pt-4">
-                                <span>Deploy</span>
-                                <span className="text-neutral-950">Vercel</span>
+                            {/* Meta info */}
+                            <div className="mt-auto border-t border-neutral-800 pt-4">
+                                <div className="flex items-center gap-6 text-xs text-neutral-600">
+                                    <div className="flex items-center gap-1.5">
+                                        <span className="text-red-400">→</span>
+                                        <span className="text-neutral-500">Stack:</span>
+                                        <span className="text-neutral-400">Next.js</span>
+                                    </div>
+                                    <div className="flex items-center gap-1.5">
+                                        <span className="text-red-400">→</span>
+                                        <span className="text-neutral-500">Deploy:</span>
+                                        <span className="text-neutral-400">Vercel</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Blinking cursor */}
+                            <div className="mt-4 flex items-center gap-1.5 text-sm">
+                                <span className="text-green-400">❯</span>
+                                <span className="inline-block h-4 w-2 animate-blink bg-green-400" />
                             </div>
                         </div>
                     </div>
