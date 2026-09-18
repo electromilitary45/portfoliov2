@@ -13,6 +13,9 @@ Pendientes de mejora del portfolio, priorizados según referencia de portfolios 
 - [ ] Migración SQL + formularios admin + render en detalle público.
 - Ref: `docs/base-de-datos.md` §1.1, `docs/modulos/proyectos.md`.
 
+### 5. Proyectos relacionados
+- [x] Sección "Proyectos relacionados" al fondo del detalle (`/proyectos/[slug]`): algoritmo de overlap de stack, muestra 2 proyectos con más tecnologías en común. Reutiliza `ProjectCard` existente.
+
 ---
 
 ## 🟡 Prioridad media
@@ -51,6 +54,7 @@ Pendientes de mejora del portfolio, priorizados según referencia de portfolios 
 
 ## ✅ Hecho recientemente
 
+- [x] **2026-09-17 — Proyectos relacionados**: nueva función `getRelatedProjects()` en `project.service.ts` que calcula relevancia por overlap de stack (count de tecnologías compartidas). Se muestra al fondo de `/proyectos/[slug]` una sección "Proyectos relacionados" con 2 `ProjectCard` en grid de 2 columnas. Incluye fallback: si no hay overlap, muestra los 2 más recientes. Si solo hay 1 proyecto publicado, no se muestra la sección.
 - [x] **2026-09-17 — Análisis UI/UX completo + correcciones**: revisión integral del sitio público con 17 mejoras implementadas:
   - **Textos**: 7 etiquetas en inglés traducidas a español (`Featured Projects` → `Proyectos destacados`, `Latest Posts` → `Últimas publicaciones`, `Contact Channels` → `Canales de contacto`, `GitHub Activity` → `Actividad de GitHub`, `Stack` → `Stack tecnológico`, `Project Index` → `Índice de proyectos`, `Writing Log` → `Bitácora de escritura`). Textos de developer expuestos al público eliminados (menciones a Supabase/mock, placeholder text). Footer: `Built with Next.js` → `Derek Leiva`.
   - **Google Translate widget**: widget de Google integrado en navbar con botón custom (`LanguageToggle.tsx`) que activa el dropdown oculto. Detecta idioma del navegador automáticamente. CSS custom para dark/light mode y ocultar branding de Google. Fix de hydration mismatch (`suppressHydrationWarning` + estilos body).
