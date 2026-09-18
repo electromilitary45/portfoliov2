@@ -154,3 +154,23 @@ export async function getAdminProjects(): Promise<Project[]> {
     return featuredProjects;
   }
 }
+
+export async function getRelatedProjects(
+  currentSlug: string,
+  currentStack: string[],
+  limit = 2,
+): Promise<Project[]> {
+  const allProjects = await getProjects();
+
+  const candidates = allProjects
+    .filter((p) => p.slug !== currentSlug)
+    .map((p) => {
+      const overlap = p.stack.filter((tech) =>
+        currentStack.includes(tech),
+      ).length;
+      return { project: p, overlap };
+    })
+    .sort((a, b) => b.overlap - a.overlap);
+
+  return candidates.slice(0, limit).map((c) => c.project);
+}

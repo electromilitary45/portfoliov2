@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
-import { getProjectBySlug } from "@/features/projects/project.service";
+import { getProjectBySlug, getRelatedProjects } from "@/features/projects/project.service";
+import { ProjectCard } from "@/features/projects/components/ProjectCard";
 
 type ProjectDetailPageProps = {
     params: Promise<{
@@ -59,6 +60,8 @@ export default async function ProjectDetailPage({
     if (!project) {
         notFound();
     }
+
+    const relatedProjects = await getRelatedProjects(project.slug, project.stack);
 
     return (
         <main className="min-h-[calc(100vh-161px)] bg-neutral-50 py-20">
@@ -130,6 +133,26 @@ export default async function ProjectDetailPage({
                         </p>
                     </section>
                 </article>
+
+                {relatedProjects.length > 0 && (
+                    <section className="mx-auto mt-20 max-w-4xl border-t border-neutral-200 pt-16">
+                        <SectionLabel>Proyectos relacionados</SectionLabel>
+
+                        <h2 className="mt-6 text-3xl font-semibold tracking-[-0.04em] text-neutral-950">
+                            Otros proyectos que podrían interesarte.
+                        </h2>
+
+                        <div className="mt-10 grid gap-4 md:grid-cols-2">
+                            {relatedProjects.map((related, index) => (
+                                <ProjectCard
+                                    key={related.id}
+                                    project={related}
+                                    index={index}
+                                />
+                            ))}
+                        </div>
+                    </section>
+                )}
             </Container>
         </main>
     );
