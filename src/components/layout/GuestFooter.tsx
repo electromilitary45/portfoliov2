@@ -37,9 +37,18 @@ export function GuestFooter() {
                         ))}
                     </div>
 
-                    <p className="font-mono text-xs uppercase tracking-[0.25em] text-neutral-400">
-                        © {new Date().getFullYear()} / Derek Leiva
-                    </p>
+                    <div className="flex items-center gap-4">
+                        <Link
+                            href="/admin"
+                            className="font-mono text-xs uppercase tracking-[0.25em] text-neutral-400 transition hover:text-neutral-950"
+                        >
+                            Admin
+                        </Link>
+                        <span className="text-neutral-300">·</span>
+                        <p className="font-mono text-xs uppercase tracking-[0.25em] text-neutral-400">
+                            © {new Date().getFullYear()} / Derek Leiva
+                        </p>
+                    </div>
                 </div>
             </div>
         </footer>

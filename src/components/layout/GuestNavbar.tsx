@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/Button";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { LanguageToggle } from "@/components/layout/LanguageToggle";
 
@@ -60,9 +59,6 @@ export function GuestNavbar() {
                         />
                     </div>
                     <ThemeToggle />
-                    <Button href="/admin" variant="dark" className="max-md:hidden">
-                        Admin
-                    </Button>
                 </div>
 
                 <button
@@ -96,9 +92,6 @@ export function GuestNavbar() {
                             {item.label}
                         </Link>
                     ))}
-                    <Button href="/admin" variant="dark" className="mt-2">
-                        Admin
-                    </Button>
 
                     <div className="mt-2 flex gap-2">
                         <LanguageToggle className="w-full" />
