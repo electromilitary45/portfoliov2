@@ -55,9 +55,9 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             </div>
 
             <div className="mt-10 flex flex-wrap gap-2">
-                {project.stack.slice(0, 3).map((tech) => (
+                {project.stack.slice(0, 3).map((tech, i) => (
                     <span
-                        key={tech}
+                        key={`${tech}-${i}`}
                         className="border border-neutral-200 px-3 py-1 font-mono text-xs uppercase tracking-[0.18em] text-neutral-500 transition group-hover:border-white/10 group-hover:text-neutral-400"
                     >
                         {tech}

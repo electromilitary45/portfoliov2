@@ -34,9 +34,9 @@ export function ExperienceTimeline({ items }: ExperienceTimelineProps) {
                         </p>
 
                         <div className="mt-6 flex flex-wrap gap-2">
-                            {item.stack.map((tech) => (
+                            {item.stack.map((tech, i) => (
                                 <span
-                                    key={tech}
+                                    key={`${tech}-${i}`}
                                     className="border border-neutral-200 px-3 py-1 font-mono text-xs uppercase tracking-[0.18em] text-neutral-500 transition group-hover:border-white/10 group-hover:text-neutral-400"
                                 >
                                     {tech}

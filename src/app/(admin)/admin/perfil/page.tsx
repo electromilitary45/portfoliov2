@@ -147,9 +147,9 @@ export default async function AdminProfilePage({ searchParams }: Props) {
                                     </p>
 
                                     <div className="mt-4 flex flex-wrap gap-2">
-                                        {experience.stack.map((tech) => (
+                                        {experience.stack.map((tech, i) => (
                                             <span
-                                                key={tech}
+                                                key={`${tech}-${i}`}
                                                 className="border border-white/10 px-3 py-1 font-mono text-xs uppercase tracking-[0.18em] text-neutral-500"
                                             >
                                                 {tech}

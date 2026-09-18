@@ -85,9 +85,9 @@ export default async function ProjectDetailPage({
                     </p>
 
                     <div className="mt-10 flex flex-wrap gap-2">
-                        {project.stack.map((tech) => (
+                        {project.stack.map((tech, i) => (
                             <span
-                                key={tech}
+                                key={`${tech}-${i}`}
                                 className="border border-neutral-200 bg-white px-3 py-1 font-mono text-xs uppercase tracking-[0.18em] text-neutral-500"
                             >
                                 {tech}
