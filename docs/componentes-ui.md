@@ -32,6 +32,9 @@ Header `h1` + descripción. `variant: "guest" | "admin"`. Slot `children`. Envue
 ### `SectionLabel.tsx`
 Eyebrow monospace uppercase rojo (`text-red-600` guest / `text-red-500` admin).
 
+### `Breadcrumbs.tsx`
+Navegación tipo `Inicio > Categoría > Página actual`. Recibe `items: BreadcrumbItem[]` donde el último item no tiene `href` (es la página actual). Usa `ChevronRight` como separador. Estilo monospace uppercase consistente con el sitio.
+
 ### `ImageCarousel.tsx` (client)
 Carrusel Embla sobre `BlogPostImage[]`: flechas prev/next, dots de snap, captions con alt.
 
@@ -40,16 +43,22 @@ Carrusel Embla sobre `BlogPostImage[]`: flechas prev/next, dots de snap, caption
 ## 2. `layout/`
 
 ### `GuestNavbar.tsx` (client)
-Header sticky translúcido (blur). Links: Inicio, Sobre mí, Proyectos, Blog, Contáctame + botón oscuro "Admin" → `/admin` (visible solo ≥ md). Menú hamburguesa < md con los mismos links + botón Admin dentro del desplegable.
+Header sticky translúcido (blur). Links: Inicio, Sobre mí, Proyectos, Blog, Contáctame. Indicador de página activa con `usePathname()` (underline rojo + font-medium). Menú hamburguesa < md con animación `max-h` + `opacity` + `transition-all duration-300`. Incluye `LanguageToggle` + `ThemeToggle`. El botón Admin se movió al footer.
 
 ### `GuestFooter.tsx`
-Bloque de marca, descripción, links GitHub/LinkedIn/Email, © año dinámico.
+Bloque de marca, descripción, links GitHub/LinkedIn/Email, link discreto a Admin, © año dinámico.
 
 ### `AdminMobileNav.tsx` (client)
 Barra oscura sticky para < lg; recibe `navItems`; incluye "Volver al sitio" y form de sign-out (server action).
 
 ### `ThemeToggle.tsx` (client)
 Botón sol/luna presente en el navbar guest (desktop + menú móvil) y en el admin (sidebar desktop + barra móvil, `variant="admin"`). Alterna `.dark` en `<html>`, persiste en `localStorage("portfolio-theme")`. Renderiza placeholder hasta montar para evitar mismatch de hidratación. La inversión visual real vive en `globals.css` (variables CSS): guest invierte bajo `.dark`; admin invierte bajo `.palette-admin` y se restaura con `.dark .palette-admin`.
+
+### `LanguageToggle.tsx` (client)
+Botón con icono `Globe` que activa el dropdown de Google Translate. El widget de Google está oculto visualmente (`opacity: 0`) pero funcional, superpuesto al botón. Al hacer click, dispara el click en el widget oculto y aparece el dropdown de idiomas.
+
+### `ScrollToTop.tsx` (client)
+Botón fijo bottom-right (`z-50`) con icono `ArrowUp`. Aparece al scroll > 400px con fade-in (`translate-y` + `opacity`). Scroll suave al top.
 
 ---
 
@@ -72,3 +81,10 @@ Todos son Server Components async (salvo indicación).
 
 ### `AnalyticsTracker.tsx` (client)
 Montado en el root layout. Genera/persiste UUID en localStorage y envía `{path, referrer, visitor_id}` por beacon a `/api/analytics/track` en cada cambio de ruta (excluye `/admin` y `/_`). Ver [Analytics](./modulos/analytics.md).
+
+---
+
+## 5. `contact/`
+
+### `ContactFormClient.tsx` (client)
+Formulario de contacto con estado de carga. Muestra spinner (`Loader2` animado) y texto "Enviando..." durante el envío. Botón deshabilitado para prevenir doble envío. Honeypot anti-spam invisible. Server Action: `sendContactMessageAction`.

@@ -45,11 +45,25 @@ Pendientes de mejora del portfolio, priorizados según referencia de portfolios 
 - [ ] Newsletter (integración externa).
 - [ ] Página `/now` o badge "Disponible para proyectos".
 - [ ] Sección open source separada (PRs destacados), además del heatmap.
-- [ ] i18n EN/ES.
+- [x] i18n EN/ES (Google Translate widget integrado en navbar).
 
 ---
 
 ## ✅ Hecho recientemente
+
+- [x] **2026-09-17 — Análisis UI/UX completo + correcciones**: revisión integral del sitio público con 17 mejoras implementadas:
+  - **Textos**: 7 etiquetas en inglés traducidas a español (`Featured Projects` → `Proyectos destacados`, `Latest Posts` → `Últimas publicaciones`, `Contact Channels` → `Canales de contacto`, `GitHub Activity` → `Actividad de GitHub`, `Stack` → `Stack tecnológico`, `Project Index` → `Índice de proyectos`, `Writing Log` → `Bitácora de escritura`). Textos de developer expuestos al público eliminados (menciones a Supabase/mock, placeholder text). Footer: `Built with Next.js` → `Derek Leiva`.
+  - **Google Translate widget**: widget de Google integrado en navbar con botón custom (`LanguageToggle.tsx`) que activa el dropdown oculto. Detecta idioma del navegador automáticamente. CSS custom para dark/light mode y ocultar branding de Google. Fix de hydration mismatch (`suppressHydrationWarning` + estilos body).
+  - **Navbar**: indicador de página activa con `usePathname()` (underline rojo + font-medium). Menú móvil con animación `max-h` + `opacity` + `transition-all duration-300`.
+  - **Formulario contacto**: componente `ContactFormClient.tsx` con estado de carga (spinner `Loader2` + texto "Enviando..."), botón deshabilitado para prevenir doble envío. Honeypot con `position: relative` en form.
+  - **Dark mode**: contraste corregido — `neutral-400` ajustado a `#7a7a82`, `neutral-500` a `#9a9aa2` para escala progresiva correcta.
+  - **Scroll-to-top**: `ScrollToTop.tsx` — botón fijo que aparece al scroll > 400px con fade-in/out.
+  - **GitHub en móvil**: terminal de actividad visible en `lg:hidden xl:flex` (antes estaba oculta en toda vista que no fuera `lg:`).
+  - **404 mejorada**: sección "Páginas populares" con links a Inicio, Proyectos, Blog, Sobre mí, Contáctame.
+  - **Breadcrumbs**: `Breadcrumbs.tsx` en detalle de proyectos y blog (`Inicio > Categoría > Página`).
+  - **Blog nav**: navegación next/previous al final de cada artículo.
+  - **Admin button**: movido del navbar al footer como link discreto junto al copyright.
+  - Archivos nuevos: `LanguageToggle.tsx`, `ScrollToTop.tsx`, `Breadcrumbs.tsx`, `ContactFormClient.tsx`.
 
 - [x] **2026-09-16 — Optimización de cards en Featured Projects**: eliminado `min-h-[460px]` fijo, cards ahora usan `h-full` para igualar altura por fila del grid; `line-clamp-3` en summary y badge `+N` para exceso de tags; tooltips nativos al hover muestran contenido completo; grid con `[grid-auto-rows:1fr]` para distribución uniforme. Numeración secuencial automática basada en índice del array en vez de `sort_order` de BD.
 - [x] **2026-08-25 — Fix gráfico "Tráfico Diario"**: las barras medían siempre 0px (alturas % sobre contenedor con altura auto + `items-end` que colapsaba las columnas). Ahora las columnas ocupan la altura completa del contenedor y las barras se anclan al fondo con posicionamiento absoluto; hover en toda la columna y mínimo visual 0.75% para días con datos.
