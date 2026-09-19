@@ -85,7 +85,7 @@ Todas verifican sesión. Tras cada mutación: `revalidatePath("/admin/perfil")` 
 |------------|------|-----|
 | `CreateExperienceModal` / `UpdateExperienceModal(exp)` / `DeleteExperienceButton` | Client+Form | CRUD experiencia |
 | `CreateEducationModal` / `UpdateEducationModal(edu)` / `DeleteEducationButton` | Client+Form | CRUD educación |
-| `CreateCertificateModal` / `UpdateCertificateModal(cert)` / `DeleteCertificateButton` | Client+Form | CRUD certificados |
+| `CreateCertificateModal` / `UpdateCertificateModal(cert)` / `DeleteCertificateButton` | Client+Form | CRUD certificados con previsualización de archivos |
 | `AdminCertificateList` | Client (@dnd-kit) | Sortable list; al soltar llama `reorderCertificatesAction` |
 | `ProfileAvatarUpload` | Client | File picker + preview → acción de avatar |
 | `ProfileAboutEditor` | Client | Modal inline para headline/summary |
