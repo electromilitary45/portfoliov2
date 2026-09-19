@@ -260,7 +260,8 @@ export async function getAdminCertificates(): Promise<Certificate[]> {
 
     const { data, error } = await supabase
       .from("certificates")
-      .select("id,title,issuer,year,file_url");
+      .select("id,title,issuer,year,file_url,link_url,sort_order")
+      .order("sort_order");
 
     if (error || !data) {
       return profile.certificates;

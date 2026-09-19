@@ -27,7 +27,7 @@ interface Profile     { headline; summary; avatarUrl?; experience[]; education[]
 | `getExperiences()` / `getAdminExperiences()` | experiences | Lista |
 | `getEducation()` / `getAdminEducation()` | education | Lista |
 | `getCertificates()` | certificates | Orden `sort_order` |
-| `getAdminCertificates()` | certificates | Sin cláusula de orden |
+| `getAdminCertificates()` | certificates | Orden `sort_order` (misma query que pública) |
 
 Fallback a `profile.mock.ts`.
 
