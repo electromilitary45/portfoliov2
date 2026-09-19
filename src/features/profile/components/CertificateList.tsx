@@ -22,11 +22,11 @@ export function CertificateList({ items }: CertificateListProps) {
                         key={item.id}
                         className="group border border-neutral-200 border-l-4 border-l-amber-500 bg-white p-6 transition hover:border-amber-500/30 hover:shadow-[0_0_0_1px_rgba(245,158,11,0.1)]"
                     >
-                        <div className="flex items-center justify-between">
+                        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                             <p className="font-mono text-xs uppercase tracking-[0.2em] text-amber-600">
                                 {item.issuer}
                             </p>
-                            <span className="rounded-full bg-neutral-100 px-3 py-1 font-mono text-xs tracking-wider text-neutral-600 transition group-hover:bg-amber-50 group-hover:text-amber-700">
+                            <span className="w-fit rounded-full bg-neutral-100 px-3 py-1 font-mono text-xs tracking-wider text-neutral-600 transition group-hover:bg-amber-50 group-hover:text-amber-700">
                                 {item.year}
                             </span>
                         </div>

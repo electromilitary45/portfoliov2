@@ -15,13 +15,13 @@ export function ExperienceTimeline({ items }: ExperienceTimelineProps) {
                 </h2>
             </div>
 
-            <div className="relative mt-8 ml-4 space-y-0 border-l-2 border-neutral-200 pl-8">
+            <div className="relative mt-8 ml-0 space-y-0 border-l-2 border-neutral-200 pl-6 md:ml-4 md:pl-8">
                 {items.map((item, index) => (
                     <article
                         key={item.id}
                         className="group relative pb-10 last:pb-0"
                     >
-                        <div className="absolute -left-[41px] top-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-neutral-200 bg-white transition group-hover:border-red-600 group-hover:bg-red-600">
+                        <div className="absolute -left-[33px] top-1 flex h-5 w-5 items-center justify-center rounded-full border-2 border-neutral-200 bg-white transition group-hover:border-red-600 group-hover:bg-red-600 md:-left-[41px]">
                             <div className="h-2 w-2 rounded-full bg-neutral-400 transition group-hover:bg-white" />
                         </div>
 
