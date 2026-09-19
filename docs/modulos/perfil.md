@@ -36,7 +36,7 @@ Fallback a `profile.mock.ts`.
 ## 3. Rutas
 
 ### Público
-- `/sobre-mi` — avatar, headline, summary, `ExperienceTimeline`, `EducationList`, `CertificateList`.
+- `/sobre-mi` — avatar, headline, summary, `ExperienceTimeline` (timeline visual vertical), `EducationList` (cards borde azul), `CertificateList` (cards borde amber). Scroll reveal animations con `ScrollReveal`.
 
 ### Admin
 - `/admin/perfil` — CMS completo:
@@ -76,9 +76,9 @@ Todas verifican sesión. Tras cada mutación: `revalidatePath("/admin/perfil")` 
 ### Públicos
 | Componente | Rol |
 |------------|-----|
-| `ExperienceTimeline` | Timeline de experiencia laboral |
-| `EducationList` | Lista de estudios |
-| `CertificateList` | Lista de certificados con enlaces/archivo |
+| `ExperienceTimeline` | Timeline visual vertical con línea, dots y cards con borde rojo |
+| `EducationList` | Lista de estudios con cards de borde azul |
+| `CertificateList` | Lista de certificados con cards de borde amber y badge de año |
 
 ### Admin (CRUD)
 | Componente | Tipo | Rol |

@@ -43,7 +43,7 @@ Pendientes de mejora del portfolio, priorizados según referencia de portfolios 
 
 ## 🟢 Nice to have
 
-- [ ] Micro-interacciones: reveals on scroll, hovers animados (`prefers-reduced-motion` friendly).
+- [x] Micro-interacciones: reveals on scroll, hovers animados (`prefers-reduced-motion` friendly).
 - [ ] RSS feed (`src/app/feed.xml/route.ts`) + botón de suscripción.
 - [ ] Newsletter (integración externa).
 - [ ] Página `/now` o badge "Disponible para proyectos".
@@ -54,6 +54,12 @@ Pendientes de mejora del portfolio, priorizados según referencia de portfolios 
 
 ## ✅ Hecho recientemente
 
+- [x] **2026-09-18 — UI/UX mejora `/sobre-mi`**: rediseño visual de la página "Sobre mí" con mejoras de presentación:
+  - **Timeline visual real** en `ExperienceTimeline`: línea vertical con dots/conectores, borde lateral rojo, icono `Briefcase`.
+  - **Cards diferenciadas por sección**: Experience (border rojo), Education (border azul `border-l-blue-600` + icono `GraduationCap`), Certificates (border amber `border-l-amber-500` + icono `Award` + badge de año con `rounded-full`).
+  - **Scroll reveal animations**: componente `ScrollReveal` reutilizable con Intersection Observer + CSS `fade-in-up`, soporte `prefers-reduced-motion`, delays escalonados (100ms, 200ms, 300ms).
+  - **Links de certificados** con icono `ExternalLink`.
+  - Archivos: `ScrollReveal.tsx` (nuevo), `ExperienceTimeline.tsx`, `EducationList.tsx`, `CertificateList.tsx`, `page.tsx`, `globals.css`.
 - [x] **2026-09-18 — Fix certificados admin**: `getAdminCertificates()` en `profile.service.ts` no seleccionaba `link_url` ni `sort_order`, por lo que el panel admin no mostraba enlaces ni respetaba el orden de drag & drop al recargar. Corregido para incluir ambos campos y ordenar por `sort_order`, igual que la función pública.
 - [x] **2026-09-18 — Previsualización de archivos en certificados**: componentes `UpdateCertificateModal` y `CreateCertificateModal` ahora muestran vista previa del archivo: imágenes inline con enlace, PDFs con icono y nombre. En edición se muestra el archivo actual; al seleccionar uno nuevo se reemplaza la vista previa. Limpieza de ObjectURLs al desmontar.
 - [x] **2026-09-17 — Proyectos relacionados**: nueva función `getRelatedProjects()` en `project.service.ts` que calcula relevancia por overlap de stack (count de tecnologías compartidas). Se muestra al fondo de `/proyectos/[slug]` una sección "Proyectos relacionados" con 2 `ProjectCard` en grid de 2 columnas. Incluye fallback: si no hay overlap, muestra los 2 más recientes. Si solo hay 1 proyecto publicado, no se muestra la sección.

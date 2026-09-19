@@ -35,6 +35,9 @@ Eyebrow monospace uppercase rojo (`text-red-600` guest / `text-red-500` admin).
 ### `Breadcrumbs.tsx`
 Navegación tipo `Inicio > Categoría > Página actual`. Recibe `items: BreadcrumbItem[]` donde el último item no tiene `href` (es la página actual). Usa `ChevronRight` como separador. Estilo monospace uppercase consistente con el sitio.
 
+### `ScrollReveal.tsx` (client)
+Wrapper con Intersection Observer que aplica animación `fade-in-up` al entrar en viewport. Props: `children`, `className?`, `delay?` (ms, para stagger). Respeta `prefers-reduced-motion`. Reutilizable en cualquier página.
+
 ### `ImageCarousel.tsx` (client)
 Carrusel Embla sobre `BlogPostImage[]`: flechas prev/next, dots de snap, captions con alt.
 
